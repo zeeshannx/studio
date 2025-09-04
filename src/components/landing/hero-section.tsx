@@ -49,18 +49,8 @@ export function HeroSection() {
   const animationDuration = `${animationSteps * 0.15}s`; // Adjust speed of typing
 
   return (
-    <section className="relative py-20 md:py-32 bg-background overflow-hidden">
-       <GridPattern
-        width={30}
-        height={30}
-        x={-1}
-        y={-1}
-        className={cn(
-          "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
-          "animate-[float_6s_ease-in-out_infinite]"
-        )}
-      />
-      <div className="container mx-auto px-4 text-center relative z-10">
+    <section className="py-20 md:py-32 bg-transparent">
+      <div className="container mx-auto px-4 text-center">
         <div className="animate-in fade-in slide-in-from-top-8 duration-1000 ease-out">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 font-headline h-24 md:h-32">
             Find Your Next Social Media Job — Across{` `}
