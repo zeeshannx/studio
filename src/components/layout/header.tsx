@@ -22,7 +22,7 @@ import { cn } from '@/lib/utils';
 import React from 'react';
 
 const menuItems = [
-  { href: '#jobs', label: 'Jobs', icon: <Briefcase className="size-5 shrink-0" />, description: "Find your next role in the creator economy." },
+  { href: '/jobs', label: 'Jobs', icon: <Briefcase className="size-5 shrink-0" />, description: "Find your next role in the creator economy." },
   { href: '#talent', label: 'Talent', icon: <Star className="size-5 shrink-0" />, description: "Discover top-tier creators and professionals." },
   { href: '#leaderboards', label: 'Leaderboards', icon: <TrendingUp className="size-5 shrink-0" />, description: "See who's making waves in the industry." },
 ];
@@ -57,7 +57,7 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                 <Link href="#jobs" legacyBehavior={false} passHref>
+                 <Link href="/jobs" legacyBehavior={false} passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Jobs
                   </NavigationMenuLink>
@@ -131,7 +131,7 @@ export function Header() {
                   </AccordionItem>
                 </Accordion>
                 <div className='flex flex-col gap-4'>
-                  <Link href="#jobs" className="text-base font-semibold">Jobs</Link>
+                  <Link href="/jobs" className="text-base font-semibold">Jobs</Link>
                   <Link href="#talent" className="text-base font-semibold">Talent</Link>
                   <Link href="#leaderboards" className="text-base font-semibold">Leaderboards</Link>
                 </div>
