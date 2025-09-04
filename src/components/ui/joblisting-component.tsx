@@ -5,11 +5,13 @@ import type { SVGProps } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useOnClickOutside } from "usehooks-ts"
 import { Button } from "@/components/ui/button"
+import { SocialIcon, type SocialPlatform } from "@/components/shared/social-icon";
 
 export interface Job {
   company: string
   title: string
   logo: React.ReactNode
+  platform?: SocialPlatform
   job_description: string
   salary: string
   location: string
@@ -178,6 +180,12 @@ export default function JobListingComponent({
                         className="text-foreground flex flex-row gap-2 text-xs"
                         layoutId={`workItemExtras-${activeItem.company}`}
                       >
+                         {activeItem.platform && (
+                          <div className="flex items-center gap-1">
+                            <SocialIcon platform={activeItem.platform} className="h-3 w-3" />
+                            {activeItem.platform}
+                          </div>
+                        )}
                         {activeItem.remote === "Yes" &&
                           ` ${activeItem.location} `}
                         {activeItem.remote === "No" &&
@@ -245,6 +253,12 @@ export default function JobListingComponent({
                   className="text-foreground flex flex-row gap-2 text-xs"
                   layoutId={`workItemExtras-${role.company}`}
                 >
+                  {role.platform && (
+                    <div className="flex items-center gap-1">
+                      <SocialIcon platform={role.platform} className="h-3 w-3" />
+                      {role.platform}
+                    </div>
+                  )}
                   {role.remote === "Yes" && ` ${role.location} `}
                   {role.remote === "No" && ` ${role.location} `}
                   {role.remote === "Hybrid" &&
