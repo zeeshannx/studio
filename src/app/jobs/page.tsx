@@ -166,8 +166,11 @@ const allJobs: Job[] = [
     },
 ];
 
+const JOBS_PER_PAGE = 8;
+
 export default function JobsPage() {
-    const [jobs, setJobs] = useState(allJobs);
+    const [filteredJobs, setFilteredJobs] = useState(allJobs);
+    const [visibleJobsCount, setVisibleJobsCount] = useState(JOBS_PER_PAGE);
     const [searchQuery, setSearchQuery] = useState('');
     const [platformFilter, setPlatformFilter] = useState('All Platforms');
     const [typeFilter, setTypeFilter] = useState('All Types');
@@ -182,8 +185,16 @@ export default function JobsPage() {
             const matchesType = typeFilter === 'All Types' || job.job_time === typeFilter;
             return matchesSearch && matchesPlatform && matchesType;
         });
-        setJobs(filtered);
+        setFilteredJobs(filtered);
+        setVisibleJobsCount(JOBS_PER_PAGE);
     }, [searchQuery, platformFilter, typeFilter]);
+
+    const jobs = filteredJobs.slice(0, visibleJobsCount);
+
+    const handleLoadMore = () => {
+        setVisibleJobsCount(prevCount => prevCount + JOBS_PER_PAGE);
+    };
+
 
     return (
         <div className="bg-background min-h-screen">
@@ -230,9 +241,14 @@ export default function JobsPage() {
 
                 <main className="w-full">
                     <div className="flex justify-between items-center mb-6">
-                        <p className="text-muted-foreground">Showing {jobs.length} results</p>
+                        <p className="text-muted-foreground">Showing {jobs.length} of {filteredJobs.length} results</p>
                     </div>
                     <JobListingComponent jobs={jobs} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" />
+                    {visibleJobsCount < filteredJobs.length && (
+                        <div className="text-center mt-12">
+                            <Button onClick={handleLoadMore}>Load More</Button>
+                        </div>
+                    )}
                 </main>
             </div>
         </div>
