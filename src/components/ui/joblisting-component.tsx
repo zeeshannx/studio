@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type JSX } from "react"
 import type { SVGProps } from "react"
-import { AnimatePresence, motion } from "motion/react"
+import { AnimatePresence, motion } from "framer-motion"
 import { useOnClickOutside } from "usehooks-ts"
 
 export interface Job {
