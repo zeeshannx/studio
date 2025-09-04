@@ -7,6 +7,7 @@ import { TopTalent } from '@/components/landing/top-talent';
 import { AnimatedSection } from '@/components/shared/animated-section';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
+import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
           'animate-[float_6s_ease-in-out_infinite]'
         )}
       />
+      <SocialIconsAnimation />
       <div className="relative z-10">
         <HeroSection />
         <div className="container mx-auto px-4">
