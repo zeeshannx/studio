@@ -8,6 +8,7 @@ import { allTalents as fetchAllTalents } from '@/lib/talent';
 import { ChevronRight, ListFilter, ArrowUpDown } from 'lucide-react';
 import Link from 'next/link';
 import { SocialIcon } from '@/components/shared/social-icon';
+import TalentListingComponent from '@/components/ui/talentlisting-component';
 
 const allTalents = fetchAllTalents;
 
@@ -99,31 +100,7 @@ export default function TalentPage() {
                         </p>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {visibleTalents.map((talent) => (
-                             <Link href="#" key={talent.name} className="group">
-                                <div className="flex items-center gap-4 rounded-lg border bg-card p-3 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20">
-                                    <Avatar className="size-12">
-                                        <AvatarImage src={talent.src} alt={talent.name} data-ai-hint="person" />
-                                        <AvatarFallback>{talent.name.charAt(0)}</AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex-grow min-w-0">
-                                        <div className="flex items-center gap-2">
-                                            <p className="font-semibold truncate">{talent.name}</p>
-                                            <div className="size-2 bg-pink-500 rounded-full shrink-0"></div>
-                                        </div>
-                                        <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                                            {talent.platform && <SocialIcon platform={talent.platform} className="h-4 w-4" />}
-                                            <span className="block truncate">
-                                                {talent.role}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
-                                </div>
-                             </Link>
-                        ))}
-                    </div>
+                    <TalentListingComponent talents={visibleTalents} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3" />
 
                     <div className="flex justify-center items-center gap-2 mt-12">
                         <Button variant="outline" size="icon" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
@@ -149,4 +126,3 @@ export default function TalentPage() {
         </div>
     );
 }
-

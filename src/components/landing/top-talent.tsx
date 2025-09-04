@@ -31,7 +31,7 @@ export function TopTalent() {
             </Link>
           </Button>
         </div>
-        <TalentListingComponent talents={talents} />
+        <TalentListingComponent talents={talents} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3" />
       </div>
     </section>
   )
