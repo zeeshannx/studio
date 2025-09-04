@@ -20,7 +20,7 @@ export function HeroSection() {
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="animate-in fade-in slide-in-from-top-8 duration-1000 ease-out">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 font-headline">
-            Find Your Next Social Media Gig
+            The Premier Marketplace for Creator Economy Jobs
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             The #1 job board for creators, influencers, and social media professionals. Your next opportunity is just a search away.
