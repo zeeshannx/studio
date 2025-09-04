@@ -1,14 +1,20 @@
 'use client';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import JobListingComponent, { Job } from "@/components/ui/joblisting-component";
-import { ArrowRight, PenSquare, Video } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 const jobs: Job[] = [
     { 
         company: 'Marques Brownlee', 
         title: 'Video Editor', 
-        logo: <Video className="h-8 w-8 text-primary" />,
+        logo: (
+            <Avatar className="h-10 w-10">
+                <AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/mkbhd/40/40" alt="Marques Brownlee" />
+                <AvatarFallback>MB</AvatarFallback>
+            </Avatar>
+        ),
         platform: 'YouTube',
         job_description: 'We are looking for a creative and driven Video Editor to join our team. You will be responsible for editing and implementing user interfaces for our web and mobile applications.',
         salary: 'Per project', 
@@ -19,7 +25,12 @@ const jobs: Job[] = [
     { 
         company: 'Emma Chamberlain', 
         title: 'Scriptwriter', 
-        logo: <PenSquare className="h-8 w-8 text-primary" />,
+        logo: (
+            <Avatar className="h-10 w-10">
+                <AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/emma/40/40" alt="Emma Chamberlain" />
+                <AvatarFallback>EC</AvatarFallback>
+            </Avatar>
+        ),
         platform: 'TikTok',
         job_description: 'Seeking an experienced Scriptwriter to work on our latest project. The ideal candidate will have strong skills in storytelling and a keen eye for detail.',
         salary: '$300-$600', 
@@ -30,7 +41,12 @@ const jobs: Job[] = [
     { 
         company: 'MrBeast', 
         title: 'Lead Video Editor & Content...', 
-        logo: <Video className="h-8 w-8 text-primary" />,
+        logo: (
+            <Avatar className="h-10 w-10">
+                <AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/mrbeast/40/40" alt="MrBeast" />
+                <AvatarFallback>MB</AvatarFallback>
+            </Avatar>
+        ),
         platform: 'Instagram',
         job_description: 'We are in search of a talented Lead Video Editor with UI experience to help create stunning visuals for our clients. This role involves collaboration with the design team and clients to deliver high-quality work.',
         salary: '$850-$1,200', 
