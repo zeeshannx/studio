@@ -1,3 +1,4 @@
+
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -23,7 +24,7 @@ import React from 'react';
 
 const menuItems = [
   { href: '/jobs', label: 'Jobs', icon: <Briefcase className="size-5 shrink-0" />, description: "Find your next role in the creator economy." },
-  { href: '#talent', label: 'Talent', icon: <Star className="size-5 shrink-0" />, description: "Discover top-tier creators and professionals." },
+  { href: '/talent', label: 'Talent', icon: <Star className="size-5 shrink-0" />, description: "Discover top-tier creators and professionals." },
   { href: '#leaderboards', label: 'Leaderboards', icon: <TrendingUp className="size-5 shrink-0" />, description: "See who's making waves in the industry." },
 ];
 
@@ -64,7 +65,7 @@ export function Header() {
                 </Link>
               </NavigationMenuItem>
                <NavigationMenuItem>
-                <Link href="#talent" legacyBehavior passHref>
+                <Link href="/talent" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Talent
                   </NavigationMenuLink>
@@ -132,7 +133,7 @@ export function Header() {
                 </Accordion>
                 <div className='flex flex-col gap-4'>
                   <Link href="/jobs" className="text-base font-semibold">Jobs</Link>
-                  <Link href="#talent" className="text-base font-semibold">Talent</Link>
+                  <Link href="/talent" className="text-base font-semibold">Talent</Link>
                   <Link href="#leaderboards" className="text-base font-semibold">Leaderboards</Link>
                 </div>
 
