@@ -235,18 +235,18 @@ export default function JobListingComponent({
               <motion.div layoutId={`workItemLogo-${role.company}`}>
                 {role.logo}
               </motion.div>
-              <div className="flex w-full flex-col items-start justify-between gap-0.5">
+              <div className="flex w-full flex-col items-start justify-between gap-1">
                 <motion.div
-                  className="text-foreground  font-medium"
+                  className="text-foreground font-medium"
                   layoutId={`workItemCompany-${role.company}`}
                 >
                   {role.company}
                 </motion.div>
                 <motion.div
-                  className="text-foreground text-xs"
+                  className="text-foreground text-sm"
                   layoutId={`workItemTitle-${role.company}`}
                 >
-                  {role.title} / {role.salary}
+                  {role.title}
                 </motion.div>
 
                 <motion.div
@@ -259,11 +259,6 @@ export default function JobListingComponent({
                       {role.platform}
                     </div>
                   )}
-                  {role.remote === "Yes" && ` ${role.location} `}
-                  {role.remote === "No" && ` ${role.location} `}
-                  {role.remote === "Hybrid" &&
-                    ` ${role.remote} / ${role.location} `}
-                  | {role.job_time}
                 </motion.div>
               </div>
             </motion.div>
