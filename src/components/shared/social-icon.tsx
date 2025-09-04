@@ -67,7 +67,7 @@ export function SocialIcon({ platform, className }: SocialIconProps) {
                 {...props}
             >
                 <path fill="#FFFC00" stroke="#000000" strokeWidth="0.5" d="M21.5,2H2.5A2.5,2.5,0,0,0,0,4.5v15A2.5,2.5,0,0,0,2.5,22h19A2.5,2.5,0,0,0,24,19.5V4.5A2.5,2.5,0,0,0,21.5,2Z"/>
-                <path fill="none" stroke="#000000" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" d="M8.5,12.5v-2c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5v2c0,1.55-1.04,2.9-2.5,3.54l-1.46,0.63c-0.37,0.16-0.81,0.16-1.18,0L11,16.04c-1.46-0.64-2.5-2-2.5-3.54Z"/>
+                <path fill="#FFFFFF" stroke="#000000" strokeWidth="0.5" d="M8.5,12.5v-2c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5v2c0,1.55-1.04,2.9-2.5,3.54l-1.46,0.63c-0.37,0.16-0.81,0.16-1.18,0L11,16.04c-1.46-0.64-2.5-2-2.5-3.54Z"/>
             </svg>
         );
     case 'Tumblr':
@@ -134,5 +134,6 @@ export function SocialIcon({ platform, className }: SocialIconProps) {
       return null;
   }
 }
+
 
 
