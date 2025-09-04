@@ -26,7 +26,7 @@ export function Header() {
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <Button variant="ghost">Sign In</Button>
-          <Button className="bg-primary hover:bg-primary/90">Post a Job</Button>
+          <Button>Post a Job</Button>
         </div>
         <div className="md:hidden">
           <Sheet>
