@@ -9,8 +9,10 @@ import { cn } from "@/lib/utils"
 import { Badge } from "./badge"
 import { Card, CardContent } from "./card"
 import { MapPin, Clock, DollarSign, Users } from "lucide-react"
+import Link from "next/link"
 
 export interface Job {
+  id: string;
   company: string
   title: string
   logo: React.ReactNode
@@ -53,7 +55,7 @@ export default function JobListingComponent({
 
   const handleCardClick = (job: Job, e: React.MouseEvent<HTMLDivElement>) => {
     // Don't open the modal if the user clicks a button inside the card
-    if ((e.target as HTMLElement).closest('button')) {
+    if ((e.target as HTMLElement).closest('a, button')) {
       return;
     }
     setActiveItem(job)
@@ -81,15 +83,15 @@ export default function JobListingComponent({
                 className="bg-background flex h-fit w-[90%] max-w-lg cursor-default flex-col items-start gap-4 overflow-hidden border p-4 shadow-lg"
                 ref={ref}
                 onClick={(e) => e.stopPropagation()}
-                layoutId={`job-card-${activeItem.company}-${activeItem.title}`}
+                layoutId={`job-card-${activeItem.id}`}
                 style={{ borderRadius: 12 }}
               >
                 <div className="flex w-full items-start justify-between">
-                  <motion.div layoutId={`job-logo-${activeItem.company}-${activeItem.title}`}>
+                  <motion.div layoutId={`job-logo-${activeItem.id}`}>
                     {activeItem.logo}
                   </motion.div>
                    {activeItem.platform &&
-                    <motion.div layoutId={`job-platform-${activeItem.company}-${activeItem.title}`}>
+                    <motion.div layoutId={`job-platform-${activeItem.id}`}>
                       <Badge variant="outline" className="flex items-center gap-1.5">
                         <SocialIcon platform={activeItem.platform} className="h-4 w-4" />
                         {activeItem.platform}
@@ -98,22 +100,22 @@ export default function JobListingComponent({
                   }
                 </div>
                  <div>
-                    <motion.h3 className="text-2xl font-bold" layoutId={`job-title-${activeItem.company}-${activeItem.title}`}>{activeItem.title}</motion.h3>
-                    <motion.p className="text-muted-foreground" layoutId={`job-company-${activeItem.company}-${activeItem.title}`}>{activeItem.company}</motion.p>
+                    <motion.h3 className="text-2xl font-bold" layoutId={`job-title-${activeItem.id}`}>{activeItem.title}</motion.h3>
+                    <motion.p className="text-muted-foreground" layoutId={`job-company-${activeItem.id}`}>{activeItem.company}</motion.p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm text-muted-foreground mt-2">
-                    <motion.div className="flex items-center gap-2" layoutId={`job-location-${activeItem.company}-${activeItem.title}`}>
+                    <motion.div className="flex items-center gap-2" layoutId={`job-location-${activeItem.id}`}>
                       <MapPin className="h-4 w-4" /> {activeItem.location}
                     </motion.div>
-                    <motion.div className="flex items-center gap-2" layoutId={`job-time-${activeItem.company}-${activeItem.title}`}>
+                    <motion.div className="flex items-center gap-2" layoutId={`job-time-${activeItem.id}`}>
                       <Clock className="h-4 w-4" /> {activeItem.job_time}
                     </motion.div>
-                    <motion.div className="flex items-center gap-2" layoutId={`job-salary-${activeItem.company}-${activeItem.title}`}>
+                    <motion.div className="flex items-center gap-2" layoutId={`job-salary-${activeItem.id}`}>
                       <DollarSign className="h-4 w-4 text-green-500" /> <span className="text-green-500 font-semibold">{activeItem.salary}</span>
                     </motion.div>
                     {activeItem.applicants &&
-                      <motion.div className="flex items-center gap-2" layoutId={`job-applicants-${activeItem.company}-${activeItem.title}`}>
+                      <motion.div className="flex items-center gap-2" layoutId={`job-applicants-${activeItem.id}`}>
                         <Users className="h-4 w-4" /> {activeItem.applicants} applicants
                       </motion.div>
                     }
@@ -136,7 +138,9 @@ export default function JobListingComponent({
                   className="w-full flex items-center justify-between"
                 >
                   <span className="text-xs text-muted-foreground">{activeItem.posted_at}</span>
-                  <Button className="w-1/2 bg-primary-gradient">View Details</Button>
+                  <Button asChild className="w-1/2 bg-primary-gradient">
+                    <Link href={`/jobs/${activeItem.id}`}>View Details</Link>
+                  </Button>
                 </motion.div>
               </motion.div>
             </div>
@@ -147,16 +151,16 @@ export default function JobListingComponent({
       <div className={cn("relative grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-6", className)}>
           {jobs.map((job) => (
             <motion.div
-              layoutId={`job-card-${job.company}-${job.title}`}
-              key={`${job.company}-${job.title}`}
+              layoutId={`job-card-${job.id}`}
+              key={job.id}
               onClick={(e) => handleCardClick(job, e)}
             >
               <Card className="p-6 cursor-pointer hover:shadow-primary/20 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
                 <CardContent className="p-0 flex flex-col gap-4 flex-grow">
                   <div className="flex items-start justify-between">
-                    <motion.div layoutId={`job-logo-${job.company}-${job.title}`}>{job.logo}</motion.div>
+                    <motion.div layoutId={`job-logo-${job.id}`}>{job.logo}</motion.div>
                     {job.platform &&
-                      <motion.div layoutId={`job-platform-${job.company}-${job.title}`}>
+                      <motion.div layoutId={`job-platform-${job.id}`}>
                         <Badge variant="outline" className="flex items-center gap-1.5">
                           <SocialIcon platform={job.platform} className="h-4 w-4" />
                           {job.platform}
@@ -165,21 +169,21 @@ export default function JobListingComponent({
                     }
                   </div>
                   <div className="flex-grow">
-                    <motion.h3 className="text-xl font-bold" layoutId={`job-title-${job.company}-${job.title}`}>{job.title}</motion.h3>
-                    <motion.p className="text-muted-foreground text-sm" layoutId={`job-company-${job.company}-${job.title}`}>{job.company}</motion.p>
+                    <motion.h3 className="text-xl font-bold" layoutId={`job-title-${job.id}`}>{job.title}</motion.h3>
+                    <motion.p className="text-muted-foreground text-sm" layoutId={`job-company-${job.id}`}>{job.company}</motion.p>
                   </div>
                   <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground mt-2">
-                    <motion.div className="flex items-center gap-2 truncate" layoutId={`job-location-${job.company}-${job.title}`}>
+                    <motion.div className="flex items-center gap-2 truncate" layoutId={`job-location-${job.id}`}>
                       <MapPin className="h-4 w-4 shrink-0" /> <span className="truncate">{job.location}</span>
                     </motion.div>
-                    <motion.div className="flex items-center gap-2 truncate" layoutId={`job-time-${job.company}-${job.title}`}>
+                    <motion.div className="flex items-center gap-2 truncate" layoutId={`job-time-${job.id}`}>
                       <Clock className="h-4 w-4 shrink-0" /> <span className="truncate">{job.job_time}</span>
                     </motion.div>
-                    <motion.div className="flex items-center gap-2" layoutId={`job-salary-${job.company}-${job.title}`}>
+                    <motion.div className="flex items-center gap-2" layoutId={`job-salary-${job.id}`}>
                       <DollarSign className="h-4 w-4 shrink-0 text-green-500" /> <span className="font-semibold text-green-500">{job.salary}</span>
                     </motion.div>
                     {job.applicants !== undefined &&
-                      <motion.div className="flex items-center gap-2" layoutId={`job-applicants-${job.company}-${job.title}`}>
+                      <motion.div className="flex items-center gap-2" layoutId={`job-applicants-${job.id}`}>
                         <Users className="h-4 w-4 shrink-0" /> {job.applicants} applicants
                       </motion.div>
                     }
@@ -192,7 +196,9 @@ export default function JobListingComponent({
                 </CardContent>
                 <div className="flex items-center justify-between mt-6">
                   <span className="text-xs text-muted-foreground">{job.posted_at}</span>
-                  <Button variant="default" size="sm" className="bg-primary-gradient">View Details</Button>
+                  <Button asChild variant="default" size="sm" className="bg-primary-gradient">
+                     <Link href={`/jobs/${job.id}`}>View Details</Link>
+                  </Button>
                 </div>
               </Card>
             </motion.div>
