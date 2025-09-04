@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useOnClickOutside } from "usehooks-ts"
 import { Button } from "@/components/ui/button"
 import { SocialIcon, type SocialPlatform } from "@/components/shared/social-icon";
+import { cn } from "@/lib/utils"
 
 export interface Job {
   company: string
@@ -219,8 +220,8 @@ export default function JobListingComponent({
           </>
         ) : null}
       </AnimatePresence>
-      <div className={`relative w-full items-start ${className || ""}`}>
-        <div className="relative grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-4 px-2">
+      <div className={cn("relative w-full items-start")}>
+        <div className={cn("relative grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-4 px-2", className)}>
           {jobs.map((role) => (
             <motion.div
               layoutId={`workItem-${role.company}`}

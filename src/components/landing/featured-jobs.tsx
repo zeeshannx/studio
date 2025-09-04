@@ -63,7 +63,7 @@ const jobs: Job[] = [
                 <AvatarFallback>PD</AvatarFallback>
             </Avatar>
         ),
-        platform: 'Discord',
+        platform: 'Twitch',
         job_description: 'We\'re hiring a Community Manager to engage with our audience and build a vibrant online community. Experience with Discord and Twitch is a plus.',
         salary: '$40k-$50k',
         location: 'Remote',
@@ -87,116 +87,20 @@ const jobs: Job[] = [
         job_time: 'Full-time'
     },
     {
-        company: 'Snapchat Spotlight',
-        title: 'Content Creator',
+        company: 'Ninja',
+        title: 'Graphic Designer',
         logo: (
             <Avatar className="h-10 w-10">
-                <AvatarImage data-ai-hint="logo" src="https://picsum.photos/seed/snapchat/40/40" alt="Snapchat" />
-                <AvatarFallback>S</AvatarFallback>
-            </Avatar>
-        ),
-        platform: 'Snapchat',
-        job_description: 'Seeking a creative content creator to produce engaging short-form video content for Snapchat Spotlight. Must be familiar with current trends.',
-        salary: 'Performance-based',
-        location: 'Remote',
-        remote: 'Yes',
-        job_time: 'Contract'
-    },
-    {
-        company: 'Pokimane',
-        title: 'Content Strategist',
-        logo: (
-            <Avatar className="h-10 w-10">
-                <AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/pokimane/40/40" alt="Pokimane" />
-                <AvatarFallback>P</AvatarFallback>
-            </Avatar>
-        ),
-        platform: 'Twitch',
-        job_description: 'Join a leading Twitch stream as a Content Strategist. Help plan and execute content that grows our audience and engages our community.',
-        salary: '$60k-$75k',
-        location: 'Los Angeles, CA',
-        remote: 'Hybrid',
-        job_time: 'Full-time'
-    },
-    {
-        company: 'Dude Perfect',
-        title: 'Production Assistant',
-        logo: (
-            <Avatar className="h-10 w-10">
-                <AvatarImage data-ai-hint="group people" src="https://picsum.photos/seed/dudeperfect/40/40" alt="Dude Perfect" />
-                <AvatarFallback>DP</AvatarFallback>
+                <AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/ninja2/40/40" alt="Ninja" />
+                <AvatarFallback>N</AvatarFallback>
             </Avatar>
         ),
         platform: 'YouTube',
-        job_description: 'High-energy Production Assistant needed for a top YouTube channel. Assist with shoots, manage equipment, and help bring creative ideas to life.',
-        salary: '$20-$25/hr',
-        location: 'Frisco, TX',
-        remote: 'No',
-        job_time: 'Contract'
-    },
-    {
-        company: 'Smosh',
-        title: 'Writer/Producer',
-        logo: (
-            <Avatar className="h-10 w-10">
-                <AvatarImage data-ai-hint="logo" src="https://picsum.photos/seed/smosh/40/40" alt="Smosh" />
-                <AvatarFallback>S</AvatarFallback>
-            </Avatar>
-        ),
-        platform: 'YouTube',
-        job_description: 'Iconic comedy brand looking for a talented Writer/Producer to develop and create hilarious sketches and series for our YouTube audience.',
-        salary: '$70k-$85k',
-        location: 'Burbank, CA',
-        remote: 'No',
-        job_time: 'Full-time'
-    },
-    {
-        company: 'Top Creator',
-        title: 'OnlyFans Manager',
-        logo: (
-            <Avatar className="h-10 w-10">
-                <AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/of/40/40" alt="OnlyFans Creator" />
-                <AvatarFallback>OF</AvatarFallback>
-            </Avatar>
-        ),
-        platform: 'OnlyFans',
-        job_description: 'Seeking a discreet and professional manager for a top OnlyFans account. Responsibilities include content scheduling, fan interaction, and promotion.',
-        salary: 'Commission-based',
-        location: 'Remote',
-        remote: 'Yes',
-        job_time: 'Part-time'
-    },
-    {
-        company: 'Charli D\'Amelio',
-        title: 'Brand Partnership Manager',
-        logo: (
-            <Avatar className="h-10 w-10">
-                <AvatarImage data-ai-hint="person dancing" src="https://picsum.photos/seed/damelio/40/40" alt="Charli D'Amelio" />
-                <AvatarFallback>CD</AvatarFallback>
-            </Avatar>
-        ),
-        platform: 'TikTok',
-        job_description: 'Manage and grow brand partnerships for a leading TikTok creator. Must have experience with influencer marketing and brand negotiations.',
-        salary: '$80k-$100k',
+        job_description: 'We are looking for a talented Graphic Designer to create compelling visuals for our YouTube channel. Experience with Photoshop and After Effects is a must.',
+        salary: '$50k-$60k',
         location: 'Remote',
         remote: 'Yes',
         job_time: 'Full-time'
-    },
-    {
-        company: 'Addison Rae',
-        title: 'Merch Designer',
-        logo: (
-            <Avatar className="h-10 w-10">
-                <AvatarImage data-ai-hint="person fashion" src="https://picsum.photos/seed/addison/40/40" alt="Addison Rae" />
-                <AvatarFallback>AR</AvatarFallback>
-            </Avatar>
-        ),
-        platform: 'Instagram',
-        job_description: 'Creative and trend-savvy Merch Designer wanted to develop and design a new line of apparel and accessories for a major social media influencer.',
-        salary: 'Per project',
-        location: 'Remote',
-        remote: 'Yes',
-        job_time: 'Contract'
     },
 ];
 
@@ -206,7 +110,7 @@ export function FeaturedJobs() {
         <section id="jobs" className="py-16 md:py-24">
             <div className="flex justify-between items-center mb-8">
                 <h2 className="text-3xl font-bold font-headline">Featured Job Postings</h2>
-                <Link href="#" className="text-primary hover:underline flex items-center gap-1">
+                <Link href="/jobs" className="text-primary hover:underline flex items-center gap-1">
                     VIEW ALL <ArrowRight className="h-4 w-4" />
                 </Link>
             </div>
