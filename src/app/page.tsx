@@ -18,7 +18,7 @@ export default function Home() {
         y={-1}
         className={cn(
           '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
-          'absolute inset-0 z-0 h-full w-full skew-y-12'
+          'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
         )}
       />
       <div className="relative z-10">
