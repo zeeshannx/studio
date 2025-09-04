@@ -57,21 +57,21 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                 <Link href="/jobs" legacyBehavior passHref>
+                <Link href="/jobs" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Jobs
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
                <NavigationMenuItem>
-                 <Link href="#talent" legacyBehavior passHref>
+                <Link href="#talent" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Talent
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
                <NavigationMenuItem>
-                 <Link href="#leaderboards" legacyBehavior passHref>
+                <Link href="#leaderboards" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Leaderboards
                   </NavigationMenuLink>
