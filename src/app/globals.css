@@ -11,6 +11,8 @@
     --popover: 210 40% 98%;
     --popover-foreground: 210 40% 9.8%;
     --primary: 262.1 83.3% 57.8%;
+    --primary-gradient-start: 262.1 83.3% 57.8%;
+    --primary-gradient-end: 240 5.9% 10%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 210 40% 9.8%;
@@ -54,6 +56,8 @@
     --popover: 20 14.3% 4.1%;
     --popover-foreground: 210 40% 98%;
     --primary: 262.1 83.3% 57.8%;
+    --primary-gradient-start: 262.1 83.3% 57.8%;
+    --primary-gradient-end: 240 5.9% 10%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 12.1%;
     --secondary-foreground: 210 40% 98%;
