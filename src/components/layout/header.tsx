@@ -141,7 +141,7 @@ export function Header() {
                     <Button asChild variant="outline">
                       <Link href="#">Sign In</Link>
                     </Button>
-                    <Button asChild>
+                    <Button asChild className="bg-primary-gradient">
                       <Link href="#">Post a Job</Link>
                     </Button>
                 </div>
@@ -152,7 +152,7 @@ export function Header() {
 
         <div className="hidden flex-1 items-center justify-end space-x-4 md:flex">
           <Button variant="ghost">Sign In</Button>
-          <Button>Post a Job</Button>
+          <Button className="bg-primary-gradient">Post a Job</Button>
         </div>
       </div>
     </header>
