@@ -57,6 +57,7 @@ export function HeroSection() {
         y={-1}
         className={cn(
           "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
+          "animate-[float_6s_ease-in-out_infinite]"
         )}
       />
       <div className="container mx-auto px-4 text-center relative z-10">
