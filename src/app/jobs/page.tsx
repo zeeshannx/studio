@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, isValidElement } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,10 +8,19 @@ import JobListingComponent, { Job } from '@/components/ui/joblisting-component';
 import { Search } from 'lucide-react';
 import { allJobs as fetchAllJobs } from '@/lib/jobs';
 
-const allJobs = fetchAllJobs.map(job => ({
-    ...job,
-    logo: <Avatar className="h-12 w-12"><AvatarImage data-ai-hint={job.logo.props['data-ai-hint']} src={job.logo.props.src} alt={job.logo.props.alt} /><AvatarFallback>{job.logo.props.children}</AvatarFallback></Avatar>
-}));
+const allJobs = fetchAllJobs.map(job => {
+    if (isValidElement(job.logo)) {
+        return {
+        ...job,
+        logo: job.logo,
+        };
+    }
+    const logoData = job.logo as unknown as { 'data-ai-hint': string; src: string; alt: string; children: string; };
+    return {
+        ...job,
+        logo: <Avatar className="h-12 w-12"><AvatarImage data-ai-hint={logoData['data-ai-hint']} src={logoData.src} alt={logoData.alt} /><AvatarFallback>{logoData.children}</AvatarFallback></Avatar>
+    }
+});
 
 const JOBS_PER_PAGE = 8;
 
