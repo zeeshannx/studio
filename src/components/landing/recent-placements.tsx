@@ -1,9 +1,9 @@
 'use client';
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { SocialIcon, SocialPlatform } from "../shared/social-icon";
 
 type Placement = {
   candidateName: string;
@@ -12,12 +12,13 @@ type Placement = {
   companyName: string;
   companyLogoUrl: string;
   companySubs: string;
+  platform: SocialPlatform;
 };
 
 const placements: Placement[] = [
-  { candidateName: 'Jared Klein', candidateAvatarUrl: 'https://picsum.photos/seed/p1/100/100', position: 'Thumbnail Designer', companyName: 'MegaBuilds', companyLogoUrl: 'https://picsum.photos/seed/cl1/40/40', companySubs: '1.52M' },
-  { candidateName: 'Greenguy Studio', candidateAvatarUrl: 'https://picsum.photos/seed/p2/100/100', position: 'Video Editor', companyName: 'The Wingrove Family', companyLogoUrl: 'https://picsum.photos/seed/cl2/40/40', companySubs: '2.31M' },
-  { candidateName: 'Misha Karpenko', candidateAvatarUrl: 'https://picsum.photos/seed/p3/100/100', position: 'Video Editor', companyName: 'Wilco Wanders', companyLogoUrl: 'https://picsum.photos/seed/cl3/40/40', companySubs: '14.9K' },
+  { candidateName: 'Jared Klein', candidateAvatarUrl: 'https://picsum.photos/seed/p1/100/100', position: 'Thumbnail Designer', companyName: 'MegaBuilds', companyLogoUrl: 'https://picsum.photos/seed/cl1/40/40', companySubs: '1.52M', platform: 'YouTube' },
+  { candidateName: 'Greenguy Studio', candidateAvatarUrl: 'https://picsum.photos/seed/p2/100/100', position: 'Video Editor', companyName: 'The Wingrove Family', companyLogoUrl: 'https://picsum.photos/seed/cl2/40/40', companySubs: '2.31M', platform: 'TikTok' },
+  { candidateName: 'Misha Karpenko', candidateAvatarUrl: 'https://picsum.photos/seed/p3/100/100', position: 'Video Editor', companyName: 'Wilco Wanders', companyLogoUrl: 'https://picsum.photos/seed/cl3/40/40', companySubs: '14.9K', platform: 'Instagram' },
 ];
 
 export function RecentPlacements() {
@@ -45,7 +46,10 @@ export function RecentPlacements() {
                     </Avatar>
                 </div>
                 <div className="flex-grow">
-                  <p className="font-semibold">{placement.companyName}, {placement.companySubs}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold">{placement.companyName}, {placement.companySubs}</p>
+                    <SocialIcon platform={placement.platform} className="h-4 w-4" />
+                  </div>
                   <p className="text-sm text-muted-foreground">{placement.candidateName}, {placement.position}</p>
                 </div>
               </div>
