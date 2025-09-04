@@ -19,6 +19,12 @@ const placements: Placement[] = [
   { candidateName: 'Jared Klein', candidateAvatarUrl: 'https://picsum.photos/seed/p1/100/100', position: 'Thumbnail Designer', companyName: 'MegaBuilds', companyLogoUrl: 'https://picsum.photos/seed/cl1/40/40', companySubs: '1.52M', platform: 'YouTube' },
   { candidateName: 'Greenguy Studio', candidateAvatarUrl: 'https://picsum.photos/seed/p2/100/100', position: 'Video Editor', companyName: 'The Wingrove Family', companyLogoUrl: 'https://picsum.photos/seed/cl2/40/40', companySubs: '2.31M', platform: 'TikTok' },
   { candidateName: 'Misha Karpenko', candidateAvatarUrl: 'https://picsum.photos/seed/p3/100/100', position: 'Video Editor', companyName: 'Wilco Wanders', companyLogoUrl: 'https://picsum.photos/seed/cl3/40/40', companySubs: '14.9K', platform: 'Instagram' },
+  { candidateName: 'Sophie Chen', candidateAvatarUrl: 'https://picsum.photos/seed/p4/100/100', position: 'Community Manager', companyName: 'Gamer\'s Nexus', companyLogoUrl: 'https://picsum.photos/seed/cl4/40/40', companySubs: '5M', platform: 'Discord' },
+  { candidateName: 'Alex Rodriguez', candidateAvatarUrl: 'https://picsum.photos/seed/p5/100/100', position: 'Content Strategist', companyName: 'Stream Queen', companyLogoUrl: 'https://picsum.photos/seed/cl5/40/40', companySubs: '8.2M', platform: 'Twitch' },
+  { candidateName: 'Ben Carter', candidateAvatarUrl: 'https://picsum.photos/seed/p6/100/100', position: 'Social Media Manager', companyName: 'Fashion Forward', companyLogoUrl: 'https://picsum.photos/seed/cl6/40/40', companySubs: '3.1M', platform: 'X' },
+  { candidateName: 'Chloe Davis', candidateAvatarUrl: 'https://picsum.photos/seed/p7/100/100', position: 'Brand Manager', companyName: 'BizBoost', companyLogoUrl: 'https://picsum.photos/seed/cl7/40/40', companySubs: '500K', platform: 'LinkedIn' },
+  { candidateName: 'Daniel Evans', candidateAvatarUrl: 'https://picsum.photos/seed/p8/100/100', position: 'Shorts Editor', companyName: 'Quick Vids', companyLogoUrl: 'https://picsum.photos/seed/cl8/40/40', companySubs: '12M', platform: 'YouTube' },
+  { candidateName: 'Emily White', candidateAvatarUrl: 'https://picsum.photos/seed/p9/100/100', position: 'Account Manager', companyName: 'Secret Garden', companyLogoUrl: 'https://picsum.photos/seed/cl9/40/40', companySubs: '250K', platform: 'OnlyFans' },
 ];
 
 export function RecentPlacements() {
