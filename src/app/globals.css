@@ -100,9 +100,6 @@
     from {
       width: 0;
     }
-    to {
-      /* The width is set dynamically via inline styles */
-    }
   }
 
   @keyframes blink-caret {

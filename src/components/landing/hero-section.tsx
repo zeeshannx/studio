@@ -46,7 +46,6 @@ export function HeroSection() {
   const currentPhrase = phrases[currentIndex];
   // Dynamically generate the steps and width based on phrase length
   const animationSteps = currentPhrase.length;
-  const animationWidthClass = `w-[${animationSteps}ch]`;
   const animationDuration = `${animationSteps * 0.15}s`; // Adjust speed of typing
 
   return (
@@ -74,7 +73,7 @@ export function HeroSection() {
                 width: `${animationSteps}ch`,
                 animationName: 'typing, blink-caret',
                 animationDuration: `${animationDuration}, 0.75s`,
-                animationTimingFunction: `steps(${animationSteps}), step-end`,
+                animationTimingFunction: `steps(${animationSteps}, end), step-end`,
                 animationIterationCount: '1, infinite',
                 animationFillMode: 'forwards',
               } as React.CSSProperties}
