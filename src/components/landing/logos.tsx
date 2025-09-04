@@ -9,12 +9,14 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
+import { SocialIcon, SocialPlatform } from '../shared/social-icon';
 
 interface Logo {
   id: string;
   description: string;
   image: string;
   followers: string;
+  platform: SocialPlatform;
   className?: string;
 }
 
@@ -27,16 +29,16 @@ interface LogosProps {
 const Logos = ({
   heading = 'Trusted by 3000+ YouTube Creators',
   logos = [
-    { id: 'logo-1', description: 'Marques Brownlee', image: 'https://picsum.photos/seed/mkbhd/64/64', followers: '18.5M', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-2', description: 'MrBeast', image: 'https://picsum.photos/seed/mrbeast/64/64', followers: '250M', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-3', description: 'Emma Chamberlain', image: 'https://picsum.photos/seed/emma/64/64', followers: '12M', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-4', description: 'PewDiePie', image: 'https://picsum.photos/seed/pewdiepie/64/64', followers: '111M', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-5', description: 'Casey Neistat', image: 'https://picsum.photos/seed/casey/64/64', followers: '12.5M', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-6', description: 'Lilly Singh', image: 'https://picsum.photos/seed/lilly/64/64', followers: '14.5M', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-7', description: 'Ninja', image: 'https://picsum.photos/seed/ninja/64/64', followers: '24M', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-8', description: 'Pokimane', image: 'https://picsum.photos/seed/pokimane/64/64', followers: '9.3M', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-9', description: 'Dude Perfect', image: 'https://picsum.photos/seed/dudeperfect/64/64', followers: '60M', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-10', description: 'Smosh', image: 'https://picsum.photos/seed/smosh/64/64', followers: '25M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-1', description: 'Marques Brownlee', image: 'https://picsum.photos/seed/mkbhd/64/64', followers: '18.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-2', description: 'MrBeast', image: 'https://picsum.photos/seed/mrbeast/64/64', followers: '250M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-3', description: 'Emma Chamberlain', image: 'https://picsum.photos/seed/emma/64/64', followers: '12M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-4', description: 'PewDiePie', image: 'https://picsum.photos/seed/pewdiepie/64/64', followers: '111M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-5', description: 'Casey Neistat', image: 'https://picsum.photos/seed/casey/64/64', followers: '12.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-6', description: 'Lilly Singh', image: 'https://picsum.photos/seed/lilly/64/64', followers: '14.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-7', description: 'Ninja', image: 'https://picsum.photos/seed/ninja/64/64', followers: '24M', platform: 'Twitch', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-8', description: 'Pokimane', image: 'https://picsum.photos/seed/pokimane/64/64', followers: '9.3M', platform: 'Twitch', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-9', description: 'Dude Perfect', image: 'https://picsum.photos/seed/dudeperfect/64/64', followers: '60M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-10', description: 'Smosh', image: 'https://picsum.photos/seed/smosh/64/64', followers: '25M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
   ],
   className,
 }: LogosProps) => {
@@ -70,7 +72,10 @@ const Logos = ({
                     />
                     <div className="text-center mt-2">
                         <p className="font-semibold text-sm">{logo.description}</p>
-                        <p className="text-xs text-muted-foreground">{logo.followers}</p>
+                        <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
+                            <SocialIcon platform={logo.platform} className="h-3 w-3" />
+                            <p>{logo.followers}</p>
+                        </div>
                     </div>
                   </div>
                 </CarouselItem>
