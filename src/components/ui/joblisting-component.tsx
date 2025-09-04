@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type JSX } from "react"
 import type { SVGProps } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useOnClickOutside } from "usehooks-ts"
+import { Button } from "@/components/ui/button"
 
 export interface Job {
   company: string
@@ -197,6 +198,14 @@ export default function JobListingComponent({
                 >
                   {activeItem.job_description}
                 </motion.p>
+                <motion.div 
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, transition: { duration: 0.05 } }}
+                  className="w-full pt-2">
+                  <Button className="w-full">Apply Now</Button>
+                </motion.div>
               </motion.div>
             </div>
           </>
