@@ -8,11 +8,11 @@ import { useEffect, useState } from 'react';
 import { getHeroPhrases } from '@/ai/flows/hero-text-flow';
 
 const PHRASES = [
-  'Economy Jobs',
-  'Editing Gigs',
-  'Design Talent',
-  'Video Roles',
-  'Creator Work',
+  'Instagram',
+  'YouTube',
+  'Twitch',
+  'TikTok',
+  'Snapchat',
 ];
 
 export function HeroSection() {
@@ -63,7 +63,7 @@ export function HeroSection() {
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="animate-in fade-in slide-in-from-top-8 duration-1000 ease-out">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 font-headline h-24 md:h-32">
-            The Premier Marketplace for Creator{' '}
+            Find Your Next Social Media Job — Across{` `}
             <span
               key={key}
               className={cn(
