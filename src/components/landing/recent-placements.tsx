@@ -1,62 +1,58 @@
 'use client';
 import { Card, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { SocialIcon } from "@/components/shared/social-icon";
-import type { SocialPlatform } from "@/components/shared/social-icon";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 type Placement = {
   candidateName: string;
   candidateAvatarUrl: string;
   position: string;
-  company: string;
+  companyName: string;
   companyLogoUrl: string;
-  platform: SocialPlatform;
+  companySubs: string;
 };
 
 const placements: Placement[] = [
-  { candidateName: 'Alex Doe', candidateAvatarUrl: 'https://picsum.photos/seed/p1/100/100', position: 'Community Manager', company: 'GamerzUnited', companyLogoUrl: 'https://picsum.photos/seed/cl1/40/40', platform: 'Twitch' },
-  { candidateName: 'Brenda Smith', candidateAvatarUrl: 'https://picsum.photos/seed/p2/100/100', position: 'Content Strategist', company: 'StyleVibe', companyLogoUrl: 'https://picsum.photos/seed/cl2/40/40', platform: 'Instagram' },
-  { candidateName: 'Charlie Brown', candidateAvatarUrl: 'https://picsum.photos/seed/p3/100/100', position: 'Video Editor', company: 'VidMakers', companyLogoUrl: 'https://picsum.photos/seed/cl3/40/40', platform: 'YouTube' },
-  { candidateName: 'Diana Prince', candidateAvatarUrl: 'https://picsum.photos/seed/p4/100/100', position: 'Growth Hacker', company: 'ViralNow', companyLogoUrl: 'https://picsum.photos/seed/cl4/40/40', platform: 'TikTok' },
-  { candidateName: 'Ethan Hunt', candidateAvatarUrl: 'https://picsum.photos/seed/p5/100/100', position: 'Corporate Branding Lead', company: 'LeadGen', companyLogoUrl: 'https://picsum.photos/seed/cl5/40/40', platform: 'LinkedIn' },
+  { candidateName: 'Jared Klein', candidateAvatarUrl: 'https://picsum.photos/seed/p1/100/100', position: 'Thumbnail Designer', companyName: 'MegaBuilds', companyLogoUrl: 'https://picsum.photos/seed/cl1/40/40', companySubs: '1.52M' },
+  { candidateName: 'Greenguy Studio', candidateAvatarUrl: 'https://picsum.photos/seed/p2/100/100', position: 'Video Editor', companyName: 'The Wingrove Family', companyLogoUrl: 'https://picsum.photos/seed/cl2/40/40', companySubs: '2.31M' },
+  { candidateName: 'Misha Karpenko', candidateAvatarUrl: 'https://picsum.photos/seed/p3/100/100', position: 'Video Editor', companyName: 'Wilco Wanders', companyLogoUrl: 'https://picsum.photos/seed/cl3/40/40', companySubs: '14.9K' },
 ];
 
 export function RecentPlacements() {
   return (
-    <section className="py-16 md:py-24 bg-secondary/50 rounded-lg my-16 md:my-24">
-      <h2 className="text-3xl font-bold text-center mb-4 font-headline">See Our Success Stories</h2>
-      <p className="text-muted-foreground text-center mb-12">Creators and professionals who found their dream job through SocialVerse.</p>
-      
-      <Carousel opts={{ align: "start", loop: true }} className="w-full max-w-4xl mx-auto">
-        <CarouselContent>
-          {placements.map((placement, index) => (
-            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-              <div className="p-1">
-                <Card className="h-full">
-                  <CardContent className="flex flex-col items-center text-center p-6">
-                    <Avatar className="w-24 h-24 mb-4">
+    <section className="py-16 md:py-24">
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="text-3xl font-bold font-headline">Recent Placements</h2>
+        <Link href="#" className="text-primary hover:underline flex items-center gap-1">
+          VIEW ALL <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {placements.map((placement, index) => (
+          <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-4">
+                <div className="flex -space-x-4">
+                    <Avatar className="w-12 h-12 border-2 border-background">
+                      <AvatarImage data-ai-hint="logo" src={placement.companyLogoUrl} alt={placement.companyName} />
+                      <AvatarFallback>{placement.companyName.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <Avatar className="w-12 h-12 border-2 border-background">
                       <AvatarImage data-ai-hint="person" src={placement.candidateAvatarUrl} alt={placement.candidateName} />
                       <AvatarFallback>{placement.candidateName.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    <h3 className="font-semibold text-lg">{placement.candidateName}</h3>
-                    <p className="text-primary font-medium">{placement.position}</p>
-                    <div className="flex items-center gap-2 text-muted-foreground text-sm mt-2">
-                       <Image data-ai-hint="logo" src={placement.companyLogoUrl} alt={`${placement.company} logo`} width={20} height={20} className="rounded-full" />
-                       <span>{placement.company}</span>
-                       <span className="text-xs">&bull;</span>
-                       <SocialIcon platform={placement.platform} className="h-4 w-4" />
-                    </div>
-                  </CardContent>
-                </Card>
+                </div>
+                <div className="flex-grow">
+                  <p className="font-semibold">{placement.companyName}, {placement.companySubs}</p>
+                  <p className="text-sm text-muted-foreground">{placement.candidateName}, {placement.position}</p>
+                </div>
               </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </section>
   );
 }

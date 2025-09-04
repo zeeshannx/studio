@@ -1,79 +1,68 @@
 'use client';
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { SocialIcon } from '@/components/shared/social-icon';
-import type { SocialPlatform } from '@/components/shared/social-icon';
 import Image from 'next/image';
+import { Briefcase, Clock, MapPin, ArrowRight, Video, FileText, PenSquare, Instagram, Youtube, Linkedin, Twitter, Facebook, Twitch } from 'lucide-react';
+import Link from 'next/link';
 
-type Job = {
-  id: number;
-  platform: SocialPlatform;
-  title: string;
-  company: string;
-  logoUrl: string;
-  compensation: string;
-  type: string;
-  featured: boolean;
-};
-
-const allJobs: Job[] = [
-  { id: 1, platform: 'Instagram', title: 'Influencer Marketing Manager', company: 'Creative Co.', logoUrl: 'https://picsum.photos/seed/c1/40/40', compensation: '$80k - $100k', type: 'Full-time', featured: true },
-  { id: 2, platform: 'TikTok', title: 'Viral Video Creator', company: 'Trendsetters Inc.', logoUrl: 'https://picsum.photos/seed/c2/40/40', compensation: '$500/video', type: 'Contract', featured: true },
-  { id: 3, platform: 'YouTube', title: 'Channel Manager & Strategist', company: 'VidSuccess', logoUrl: 'https://picsum.photos/seed/c3/40/40', compensation: '$75k+', type: 'Full-time', featured: true },
-  { id: 4, platform: 'LinkedIn', title: 'B2B Content Specialist', company: 'ProConnect', logoUrl: 'https://picsum.photos/seed/c4/40/40', compensation: '$90k - $110k', type: 'Full-time', featured: true },
-  { id: 5, platform: 'Twitch', title: 'Live Stream Producer', company: 'GameOn', logoUrl: 'https://picsum.photos/seed/c5/40/40', compensation: '$60k', type: 'Part-time', featured: false },
-  { id: 6, platform: 'X', title: 'Social Media Engagement Lead', company: 'BuzzHub', logoUrl: 'https://picsum.photos/seed/c6/40/40', compensation: 'Competitive', type: 'Full-time', featured: true },
+const jobs = [
+    { icon: Video, title: 'Video Editor', type: 'Per project', location: 'Remote', salary: null, companyLogo: 'https://picsum.photos/seed/j1/40/40' },
+    { icon: PenSquare, title: 'Scriptwriter', type: 'Per project', location: 'Remote', salary: '$300-$600', companyLogo: 'https://picsum.photos/seed/j2/40/40' },
+    { icon: Video, title: 'Lead Video Editor & Content...', type: 'Part-time', location: 'Remote', salary: '$850-$1,200', companyLogo: 'https://picsum.photos/seed/j3/40/40' },
+    { icon: Youtube, title: 'Full-Time YouTube Vlog Vi...', type: 'Full-time', location: 'Remote', salary: '$24,000-$48,000', companyLogo: 'https://picsum.photos/seed/j4/40/40' },
+    { icon: PenSquare, title: 'Hiring Thumbnail Designer', type: 'Per project', location: 'Remote', salary: '$50-$150', companyLogo: 'https://picsum.photos/seed/j5/40/40' },
+    { icon: Twitch, title: 'TikTok & Short Form Speci...', type: 'Full-time', location: 'Remote', salary: '$3,000-$7,500', companyLogo: 'https://picsum.photos/seed/j6/40/40' },
+    { icon: Briefcase, title: 'Channel Manager for NEW ...', type: 'Full-time', location: 'Remote', salary: null, companyLogo: 'https://picsum.photos/seed/j7/40/40' },
+    { icon: Video, title: 'Video Editor', type: 'Full-time', location: 'Hybrid', salary: '$45,000-$60,000', companyLogo: 'https://picsum.photos/seed/j8/40/40' },
+    { icon: Video, title: 'Post-Production YouTube ...', type: 'Full-time', location: 'Remote', salary: '$48,000-$60,000', companyLogo: 'https://picsum.photos/seed/j9/40/40' },
 ];
 
-const platforms: SocialPlatform[] = ['Instagram', 'TikTok', 'YouTube', 'LinkedIn', 'X', 'Twitch'];
-
 export function FeaturedJobs() {
-  const [selectedPlatform, setSelectedPlatform] = useState<SocialPlatform | 'All'>('All');
-
-  const featuredJobs = allJobs.filter(job => job.featured && (selectedPlatform === 'All' || job.platform === selectedPlatform));
-
-  return (
-    <section id="jobs" className="py-16 md:py-24">
-      <h2 className="text-3xl font-bold text-center mb-4 font-headline">Featured Job Postings</h2>
-      <p className="text-muted-foreground text-center mb-8">Hand-picked opportunities from top companies.</p>
-
-      <div className="flex justify-center flex-wrap gap-2 mb-12">
-        <Button variant={selectedPlatform === 'All' ? 'default' : 'outline'} onClick={() => setSelectedPlatform('All')}>All</Button>
-        {platforms.map(platform => (
-          <Button key={platform} variant={selectedPlatform === platform ? 'default' : 'outline'} onClick={() => setSelectedPlatform(platform)}>
-            <SocialIcon platform={platform} className="mr-2 h-4 w-4" />
-            {platform}
-          </Button>
-        ))}
-      </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {featuredJobs.map(job => (
-          <Card key={job.id} className="hover:shadow-lg transition-shadow duration-300">
-            <CardHeader>
-              <div className="flex justify-between items-start">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <SocialIcon platform={job.platform} className="h-5 w-5" />
-                    <CardTitle className="text-xl">{job.title}</CardTitle>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Image data-ai-hint="logo" src={job.logoUrl} alt={`${job.company} logo`} width={24} height={24} className="rounded-full" />
-                    <span>{job.company}</span>
-                  </div>
-                </div>
-                <Badge variant="outline">{job.type}</Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-lg font-semibold text-primary mb-4">{job.compensation}</p>
-              <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90">Apply Now</Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </section>
-  );
+    return (
+        <section id="jobs" className="py-16 md:py-24">
+            <div className="flex justify-between items-center mb-8">
+                <h2 className="text-3xl font-bold font-headline">Featured Job Postings</h2>
+                <Link href="#" className="text-primary hover:underline flex items-center gap-1">
+                    VIEW ALL <ArrowRight className="h-4 w-4" />
+                </Link>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {jobs.map((job, index) => (
+                    <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
+                        <CardContent className="p-4">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="bg-primary/10 p-2 rounded-md">
+                                        <job.icon className="h-6 w-6 text-primary" />
+                                    </div>
+                                    <h3 className="font-semibold">{job.title}</h3>
+                                </div>
+                                <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                            </div>
+                            <div className="text-sm text-muted-foreground space-y-2 mb-4">
+                                <div className="flex items-center gap-2">
+                                    <Briefcase className="h-4 w-4" />
+                                    <span>{job.type}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <MapPin className="h-4 w-4" />
+                                    <span>{job.location}</span>
+                                </div>
+                                {job.salary && (
+                                    <div className="flex items-center gap-2">
+                                        <Clock className="h-4 w-4" />
+                                        <span>{job.salary}</span>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-xs text-muted-foreground">Posted by</span>
+                                <Image data-ai-hint="logo" src={job.companyLogo} alt="Company Logo" width={32} height={32} className="rounded-full" />
+                            </div>
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+        </section>
+    );
 }
