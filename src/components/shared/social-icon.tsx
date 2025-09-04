@@ -73,22 +73,16 @@ export function SocialIcon({ platform, className }: SocialIconProps) {
         </svg>
       );
     case 'Snapchat':
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          {...props}
-          className={cn(props.className, 'text-yellow-400')}
-        >
-            <path d="M12 8.5c-2.3 0-3.6.4-5.2 2.2-1.9 2-1.5 4.3-.4 5.8.9.9 2 1.4 3.1 1.5 1.4.2 2.7-.2 3.7-1.2.9-1.2 1.2-2.9.2-4.5-.4-.9-1.3-1.8-2.5-1.8z" />
-            <path d="M14.5 20.4c-1.3.6-2.7.9-4.1.9-4.8 0-8.6-4.3-8.4-9.4.2-4.1 3.5-7.5 7.6-7.9 4.3-.4 8.2 2.7 8.8 6.9.5 3.3-1.1 6.3-3.8 7.9l3.5 3z" />
-        </svg>
-      );
+        return (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                {...props}
+            >
+                <path fill="#FFFC00" d="M21.5,2H2.5A2.5,2.5,0,0,0,0,4.5v15A2.5,2.5,0,0,0,2.5,22h19A2.5,2.5,0,0,0,24,19.5V4.5A2.5,2.5,0,0,0,21.5,2Z"/>
+                <path fill="#FFFFFF" stroke="#000000" stroke-width="1.5" d="M12,5.5c-3.18,0-5,2.44-5,5.13a6,6,0,0,0,1.67,4.2,4.87,4.87,0,0,0,3.33,1.67c1.33.2,2.67-.13,3.67-1.14.9-1.2.9-3.2,0-4.67-.9-1.33-2.4-2.19-4.67-2.19Z"/>
+            </svg>
+        );
     case 'Tumblr':
         return (
             <svg
