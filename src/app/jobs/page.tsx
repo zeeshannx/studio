@@ -1,15 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import JobListingComponent, { Job } from '@/components/ui/joblisting-component';
-import { ListFilter } from 'lucide-react';
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Search } from 'lucide-react';
 
 const allJobs: Job[] = [
     {
@@ -172,6 +168,22 @@ const allJobs: Job[] = [
 
 export default function JobsPage() {
     const [jobs, setJobs] = useState(allJobs);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [platformFilter, setPlatformFilter] = useState('All Platforms');
+    const [typeFilter, setTypeFilter] = useState('All Types');
+
+    const platforms = ['All Platforms', ...Array.from(new Set(allJobs.map(job => job.platform).filter(Boolean))) as string[]];
+    const jobTypes = ['All Types', ...Array.from(new Set(allJobs.map(job => job.job_time)))];
+
+    useEffect(() => {
+        const filtered = allJobs.filter(job => {
+            const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.company.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesPlatform = platformFilter === 'All Platforms' || job.platform === platformFilter;
+            const matchesType = typeFilter === 'All Types' || job.job_time === typeFilter;
+            return matchesSearch && matchesPlatform && matchesType;
+        });
+        setJobs(filtered);
+    }, [searchQuery, platformFilter, typeFilter]);
 
     return (
         <div className="bg-background min-h-screen">
@@ -180,6 +192,41 @@ export default function JobsPage() {
                     <h1 className="text-4xl md:text-5xl font-bold font-headline mb-2">Find Your Dream Job</h1>
                     <p className="text-lg text-muted-foreground">Browse through thousands of opportunities in the creator economy.</p>
                 </header>
+
+                <div className="mb-8 p-4 rounded-lg bg-card border shadow-md">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="relative md:col-span-1">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                            <Input
+                                type="text"
+                                placeholder="Search jobs or companies..."
+                                className="pl-10 w-full"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
+                        <Select value={platformFilter} onValueChange={setPlatformFilter}>
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="All Platforms" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {platforms.map(platform => (
+                                    <SelectItem key={platform} value={platform}>{platform}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        <Select value={typeFilter} onValueChange={setTypeFilter}>
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="All Types" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {jobTypes.map(type => (
+                                    <SelectItem key={type} value={type}>{type}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
 
                 <main className="w-full">
                     <div className="flex justify-between items-center mb-6">
