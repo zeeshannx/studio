@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { SocialIcon } from '@/components/shared/social-icon'
 import { MapPin, Clock, DollarSign, Briefcase, Building, Calendar, Tv, MessageSquare, Link as LinkIcon, Twitter, Facebook, Copy } from 'lucide-react'
 import JobListingComponent from '@/components/ui/joblisting-component'
@@ -111,7 +111,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
                 </CardContent>
             </Card>
 
-             {job.idealCandidate && (
+             {job.idealCandidate && job.idealCandidate.length > 0 && (
                 <Card>
                     <CardHeader><CardTitle>Ideal Candidate</CardTitle></CardHeader>
                     <CardContent className="prose dark:prose-invert max-w-none text-foreground">
@@ -122,7 +122,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
                 </Card>
             )}
 
-            {job.jobRequirements && (
+            {job.jobRequirements && job.jobRequirements.length > 0 && (
                 <Card>
                     <CardHeader><CardTitle>Job Requirements</CardTitle></CardHeader>
                     <CardContent className="prose dark:prose-invert max-w-none text-foreground">
@@ -133,7 +133,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
                 </Card>
             )}
 
-             {job.bonusSkills && (
+             {job.bonusSkills && job.bonusSkills.length > 0 && (
                 <Card>
                     <CardHeader><CardTitle>Bonus Skills</CardTitle></CardHeader>
                     <CardContent className="prose dark:prose-invert max-w-none text-foreground">
@@ -144,7 +144,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
                 </Card>
             )}
 
-            {job.details && (
+            {job.details && job.details.length > 0 && (
                 <Card>
                     <CardHeader><CardTitle>Details</CardTitle></CardHeader>
                     <CardContent className="prose dark:prose-invert max-w-none text-foreground">
@@ -155,7 +155,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
                 </Card>
             )}
 
-            {job.skills && (
+            {job.skills && Object.keys(job.skills).length > 0 &&(
                 <Card>
                     <CardHeader><CardTitle>Skills and Expertise</CardTitle></CardHeader>
                     <CardContent className="space-y-4">
@@ -187,7 +187,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
                 </Card>
             )}
 
-            <Card>
+             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-xl">
                         <Briefcase className="h-5 w-5" />
