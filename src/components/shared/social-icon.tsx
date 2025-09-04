@@ -28,7 +28,16 @@ export function SocialIcon({ platform, className }: SocialIconProps) {
     case 'LinkedIn':
       return <Linkedin {...props} className={cn(props.className, 'text-blue-600')} />;
     case 'YouTube':
-      return <Youtube {...props} className={cn(props.className, 'text-red-600')} />;
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          {...props}
+        >
+          <path d="M21.582,6.186 C21.325,5.253 20.628,4.557 19.694,4.299 C18.006,3.875 12,3.875 12,3.875 C12,3.875 5.994,3.875 4.306,4.299 C3.372,4.557 2.675,5.253 2.418,6.186 C2,7.875 2,12 2,12 C2,12 2,16.125 2.418,17.814 C2.675,18.747 3.372,19.443 4.306,19.701 C5.994,20.125 12,20.125 12,20.125 C12,20.125 18.006,20.125 19.694,19.701 C20.628,19.443 21.325,18.747 21.582,17.814 C22,16.125 22,12 22,12 C22,12 22,7.875 21.582,6.186 Z" fill="#FF0000"/>
+          <path d="M10,15.5 L15.5,12 L10,8.5 L10,15.5 Z" fill="#FFFFFF"/>
+        </svg>
+      );
     case 'X':
       return <Twitter {...props} className={cn(props.className, 'text-foreground')} />;
     case 'Facebook':
