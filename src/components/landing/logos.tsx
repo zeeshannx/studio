@@ -14,6 +14,7 @@ interface Logo {
   id: string;
   description: string;
   image: string;
+  followers: string;
   className?: string;
 }
 
@@ -26,16 +27,16 @@ interface LogosProps {
 const Logos = ({
   heading = 'Trusted by 3000+ YouTube Creators',
   logos = [
-    { id: 'logo-1', description: 'Marques Brownlee', image: 'https://picsum.photos/seed/mkbhd/64/64', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-2', description: 'MrBeast', image: 'https://picsum.photos/seed/mrbeast/64/64', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-3', description: 'Emma Chamberlain', image: 'https://picsum.photos/seed/emma/64/64', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-4', description: 'PewDiePie', image: 'https://picsum.photos/seed/pewdiepie/64/64', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-5', description: 'Casey Neistat', image: 'https://picsum.photos/seed/casey/64/64', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-6', description: 'Lilly Singh', image: 'https://picsum.photos/seed/lilly/64/64', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-7', description: 'Ninja', image: 'https://picsum.photos/seed/ninja/64/64', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-8', description: 'Pokimane', image: 'https://picsum.photos/seed/pokimane/64/64', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-9', description: 'Dude Perfect', image: 'https://picsum.photos/seed/dudeperfect/64/64', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-10', description: 'Smosh', image: 'https://picsum.photos/seed/smosh/64/64', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-1', description: 'Marques Brownlee', image: 'https://picsum.photos/seed/mkbhd/64/64', followers: '18.5M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-2', description: 'MrBeast', image: 'https://picsum.photos/seed/mrbeast/64/64', followers: '250M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-3', description: 'Emma Chamberlain', image: 'https://picsum.photos/seed/emma/64/64', followers: '12M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-4', description: 'PewDiePie', image: 'https://picsum.photos/seed/pewdiepie/64/64', followers: '111M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-5', description: 'Casey Neistat', image: 'https://picsum.photos/seed/casey/64/64', followers: '12.5M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-6', description: 'Lilly Singh', image: 'https://picsum.photos/seed/lilly/64/64', followers: '14.5M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-7', description: 'Ninja', image: 'https://picsum.photos/seed/ninja/64/64', followers: '24M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-8', description: 'Pokimane', image: 'https://picsum.photos/seed/pokimane/64/64', followers: '9.3M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-9', description: 'Dude Perfect', image: 'https://picsum.photos/seed/dudeperfect/64/64', followers: '60M', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-10', description: 'Smosh', image: 'https://picsum.photos/seed/smosh/64/64', followers: '25M', className: "h-16 w-16 rounded-full" },
   ],
   className,
 }: LogosProps) => {
@@ -58,16 +59,18 @@ const Logos = ({
                   key={logo.id}
                   className="flex basis-1/4 justify-center pl-0 sm:basis-1/5 md:basis-1/6 lg:basis-1/8"
                 >
-                  <div className="mx-10 flex shrink-0 items-center justify-center">
-                    <div>
-                      <Image
-                        src={logo.image}
-                        alt={logo.description}
-                        width={64}
-                        height={64}
-                        className={logo.className}
-                        data-ai-hint="person"
-                      />
+                  <div className="mx-10 flex flex-col shrink-0 items-center justify-center">
+                    <Image
+                      src={logo.image}
+                      alt={logo.description}
+                      width={64}
+                      height={64}
+                      className={logo.className}
+                      data-ai-hint="person"
+                    />
+                    <div className="text-center mt-2">
+                        <p className="font-semibold text-sm">{logo.description}</p>
+                        <p className="text-xs text-muted-foreground">{logo.followers}</p>
                     </div>
                   </div>
                 </CarouselItem>
