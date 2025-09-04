@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { allTalents as fetchAllTalents } from '@/lib/talent';
 import { ChevronRight, ListFilter, ArrowUpDown } from 'lucide-react';
 import Link from 'next/link';
+import { SocialIcon } from '@/components/shared/social-icon';
 
 const allTalents = fetchAllTalents;
 
@@ -111,7 +112,12 @@ export default function TalentPage() {
                                             <p className="font-semibold truncate">{talent.name}</p>
                                             <div className="size-2 bg-pink-500 rounded-full shrink-0"></div>
                                         </div>
-                                        <p className="text-muted-foreground text-sm truncate">{talent.role}</p>
+                                        <div className="text-muted-foreground flex items-center gap-2 text-sm">
+                                            {talent.platform && <SocialIcon platform={talent.platform} className="h-4 w-4" />}
+                                            <span className="block truncate">
+                                                {talent.role}
+                                            </span>
+                                        </div>
                                     </div>
                                     <ChevronRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
                                 </div>

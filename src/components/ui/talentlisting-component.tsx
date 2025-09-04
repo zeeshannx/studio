@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useRef, useState } from "react"
@@ -144,7 +145,7 @@ export default function TalentListingComponent({
                                     {talent.name}
                                 </motion.span>
                                 <motion.div layoutId={`talentItemRole-${talent.name}`} className="text-muted-foreground flex items-center gap-2 text-sm">
-                                    <SocialIcon platform={talent.platform} className="h-4 w-4" />
+                                    {talent.platform && <SocialIcon platform={talent.platform} className="h-4 w-4" />}
                                     <span className="block truncate">
                                         {talent.role}
                                     </span>
