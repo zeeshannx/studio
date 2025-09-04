@@ -109,7 +109,7 @@ const jobsData: JobData[] = [
     {
         company: 'MrBeast',
         title: 'Lead Video Editor',
-        logo: { 'data-ai-hint': "person", src: "https://picsum.photos/seed/mrbeast/48/48", alt: "MrBeast", children: 'MB' },
+        logo: { 'data-ai-hint': "logo", src: "https://yt3.googleusercontent.com/ytc/AIdro_k-3G22Z2y_Gz-j3tA0ntO5sAMp4i8hpbI92vYcpg=s900-c-k-c0x00ffffff-no-rj", alt: "MrBeast", children: 'MB' },
         platform: 'Instagram',
         job_description: 'We are in search of a talented Lead Video Editor with UI experience to help create stunning visuals for our clients. This role involves collaboration with the design team and clients to deliver high-quality work.',
         salary: '$850-$1,200',
