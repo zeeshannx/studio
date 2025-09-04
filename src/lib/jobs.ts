@@ -36,7 +36,7 @@ const jobsData: JobData[] = [
     {
         company: 'Marques Brownlee',
         title: 'Video Editor',
-        logo: { 'data-ai-hint': "person", src: "https://picsum.photos/seed/mkbhd/48/48", alt: "Marques Brownlee", children: 'MB' },
+        logo: { 'data-ai-hint': "person", src: "https://yt3.ggpht.com/-lNGwllze1Xk/AAAAAAAAAAI/AAAAAAAAAAA/N6QnsHGN7Fk/s900-c-k-no/photo.jpg", alt: "Marques Brownlee", children: 'MB' },
         platform: 'YouTube',
         job_description: 'We are looking for a creative and driven Video Editor to join our team. You will be responsible for editing and implementing user interfaces for our web and mobile applications.',
         salary: '$30-$100 Per Project',
