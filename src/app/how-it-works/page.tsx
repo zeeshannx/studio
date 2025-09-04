@@ -46,7 +46,7 @@ export default function HowItWorksPage() {
     <div className="bg-background">
       <div className="container mx-auto px-4 py-16 md:py-24">
         <header className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">How SocialVerse Jobs Works</h1>
+          <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">How CredAble Works</h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Connecting creators with opportunities is simple. Follow our straightforward process to find your next job or hire top talent.</p>
         </header>
 

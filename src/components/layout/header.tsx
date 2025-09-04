@@ -35,7 +35,7 @@ export function Header() {
         <div className="hidden md:flex justify-start flex-1">
            <Link href="/" className="flex items-center space-x-2">
             <Users className="h-6 w-6 text-primary" />
-            <span className="font-bold">SocialVerse Jobs</span>
+            <span className="font-bold">CredAble</span>
           </Link>
         </div>
         <div className="flex-1 flex justify-center">
@@ -86,7 +86,7 @@ export function Header() {
         <div className="flex w-full items-center justify-between md:hidden">
           <Link href="/" className="flex items-center space-x-2">
             <Users className="h-6 w-6 text-primary" />
-            <span className="font-bold">SocialVerse Jobs</span>
+            <span className="font-bold">CredAble</span>
           </Link>
           <Sheet>
             <SheetTrigger asChild>
@@ -100,7 +100,7 @@ export function Header() {
                 <SheetTitle>
                   <Link href="/" className="flex items-center gap-2">
                     <Users className="h-6 w-6 text-primary" />
-                    <span className="text-lg font-semibold">SocialVerse Jobs</span>
+                    <span className="text-lg font-semibold">CredAble</span>
                   </Link>
                 </SheetTitle>
               </SheetHeader>

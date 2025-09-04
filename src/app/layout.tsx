@@ -5,7 +5,7 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 
 export const metadata: Metadata = {
-  title: 'SocialVerse Jobs',
+  title: 'CredAble',
   description: 'The #1 job board for creators, influencers, and social media professionals.',
 };
 

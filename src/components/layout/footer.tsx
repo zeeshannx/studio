@@ -9,7 +9,7 @@ export function Footer() {
           <div className="flex flex-col space-y-4">
             <Link href="/" className="flex items-center space-x-2">
               <Users className="h-6 w-6 text-primary" />
-              <span className="font-bold">SocialVerse Jobs</span>
+              <span className="font-bold">CredAble</span>
             </Link>
             <p className="text-muted-foreground text-sm">
               The #1 job board for creators and social media professionals.
@@ -41,7 +41,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} SocialVerse Jobs. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} CredAble. All rights reserved.</p>
         </div>
       </div>
     </footer>
