@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { SocialIcon } from '@/components/shared/social-icon';
 import TalentListingComponent from '@/components/ui/talentlisting-component';
 import { cn } from '@/lib/utils';
+import { GridPattern } from '@/components/ui/grid-pattern';
+import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 
 const allTalents = fetchAllTalents;
 
@@ -66,8 +68,19 @@ export default function TalentPage() {
 
 
     return (
-        <div className="bg-background min-h-screen">
-            <div className="container mx-auto px-4 py-12">
+        <div className="bg-background min-h-screen relative overflow-hidden">
+             <GridPattern
+                width={40}
+                height={40}
+                x={-1}
+                y={-1}
+                className={cn(
+                '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
+                'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
+                )}
+            />
+            <SocialIconsAnimation />
+            <div className="container mx-auto px-4 py-12 relative z-10">
                 <header className="mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">Talent</h1>
                     <div className="flex flex-wrap items-center gap-4">
