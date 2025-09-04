@@ -21,7 +21,9 @@ const allJobs: Job[] = [
         salary: 'Per project',
         location: 'New York, NY',
         remote: 'Yes',
-        job_time: 'Per project'
+        job_time: 'Per project',
+        posted_at: '1 day ago',
+        applicants: 18,
     },
     {
         company: 'Emma Chamberlain',
@@ -32,18 +34,22 @@ const allJobs: Job[] = [
         salary: '$300-$600',
         location: 'Los Angeles, CA',
         remote: 'Yes',
-        job_time: 'Per project'
+        job_time: 'Per project',
+        posted_at: '2 days ago',
+        applicants: 12,
     },
     {
         company: 'MrBeast',
-        title: 'Lead Video Editor & Content...',
+        title: 'Lead Video Editor',
         logo: <Avatar className="h-12 w-12"><AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/mrbeast/48/48" alt="MrBeast" /><AvatarFallback>MB</AvatarFallback></Avatar>,
         platform: 'Instagram',
         job_description: 'We are in search of a talented Lead Video Editor with UI experience to help create stunning visuals for our clients. This role involves collaboration with the design team and clients to deliver high-quality work.',
         salary: '$850-$1,200',
         location: 'Greenville, NC',
         remote: 'No',
-        job_time: 'Part-time'
+        job_time: 'Part-time',
+        posted_at: '3 days ago',
+        applicants: 35,
     },
     {
         company: 'PewDiePie',
@@ -54,7 +60,9 @@ const allJobs: Job[] = [
         salary: '$40k-$50k',
         location: 'Tokyo, Japan',
         remote: 'Hybrid',
-        job_time: 'Full-time'
+        job_time: 'Full-time',
+        posted_at: '4 days ago',
+        applicants: 25,
     },
     {
         company: 'Lilly Singh',
@@ -65,7 +73,9 @@ const allJobs: Job[] = [
         salary: '$55k-$65k',
         location: 'New York, NY',
         remote: 'No',
-        job_time: 'Full-time'
+        job_time: 'Full-time',
+        posted_at: '5 days ago',
+        applicants: 22,
     },
     {
         company: 'Snapchat Spotlight',
@@ -76,7 +86,9 @@ const allJobs: Job[] = [
         salary: 'Performance-based',
         location: 'Remote',
         remote: 'Yes',
-        job_time: 'Contract'
+        job_time: 'Contract',
+        posted_at: '6 days ago',
+        applicants: 40,
     },
     {
         company: 'Pokimane',
@@ -87,7 +99,9 @@ const allJobs: Job[] = [
         salary: '$60k-$75k',
         location: 'Los Angeles, CA',
         remote: 'Hybrid',
-        job_time: 'Full-time'
+        job_time: 'Full-time',
+        posted_at: '1 week ago',
+        applicants: 15,
     },
     {
         company: 'Dude Perfect',
@@ -98,7 +112,9 @@ const allJobs: Job[] = [
         salary: '$20-$25/hr',
         location: 'Frisco, TX',
         remote: 'No',
-        job_time: 'Contract'
+        job_time: 'Contract',
+        posted_at: '1 week ago',
+        applicants: 30,
     },
     {
         company: 'Smosh',
@@ -109,7 +125,9 @@ const allJobs: Job[] = [
         salary: '$70k-$85k',
         location: 'Burbank, CA',
         remote: 'No',
-        job_time: 'Full-time'
+        job_time: 'Full-time',
+        posted_at: '2 weeks ago',
+        applicants: 19,
     },
     {
         company: 'Top Creator',
@@ -120,7 +138,9 @@ const allJobs: Job[] = [
         salary: 'Commission-based',
         location: 'Remote',
         remote: 'Yes',
-        job_time: 'Part-time'
+        job_time: 'Part-time',
+        posted_at: '2 weeks ago',
+        applicants: 5,
     },
     {
         company: 'Charli D\'Amelio',
@@ -131,7 +151,9 @@ const allJobs: Job[] = [
         salary: '$80k-$100k',
         location: 'Remote',
         remote: 'Yes',
-        job_time: 'Full-time'
+        job_time: 'Full-time',
+        posted_at: '3 weeks ago',
+        applicants: 28,
     },
     {
         company: 'Addison Rae',
@@ -142,7 +164,9 @@ const allJobs: Job[] = [
         salary: 'Per project',
         location: 'Remote',
         remote: 'Yes',
-        job_time: 'Contract'
+        job_time: 'Contract',
+        posted_at: '1 month ago',
+        applicants: 9,
     },
 ];
 
@@ -232,12 +256,7 @@ export default function JobsPage() {
                                 </Sheet>
                             </div>
                         </div>
-
-                        <ScrollArea className="h-[calc(100vh-20rem)]">
-                           <div className="pr-4">
-                             <JobListingComponent jobs={jobs} className="grid-cols-1 lg:grid-cols-2" />
-                           </div>
-                        </ScrollArea>
+                        <JobListingComponent jobs={jobs} className="grid-cols-1 lg:grid-cols-2 xl:grid-cols-3" />
                     </main>
                 </div>
             </div>
