@@ -1,3 +1,4 @@
+
 import type { Job as JobType } from '@/components/ui/joblisting-component';
 
 interface JobData {
@@ -11,12 +12,24 @@ interface JobData {
   };
   platform: JobType['platform'];
   job_description: string;
+  aboutJobDetails?: string;
+  idealCandidate?: string[];
+  jobRequirements?: string[];
+  bonusSkills?: string[];
+  details?: string[];
+  skills?: { [key: string]: string[] };
+  sampleVideos?: { title: string, thumbnailUrl: string }[];
   salary: string;
   location: string;
   remote: string;
   job_time: string;
   posted_at: string;
   applicants: number;
+  startDate: string;
+  contentFormat: string;
+  language: string;
+  followers: string;
+  referralBonus?: string;
 }
 
 const jobsData: JobData[] = [
@@ -26,12 +39,55 @@ const jobsData: JobData[] = [
         logo: { 'data-ai-hint': "person", src: "https://picsum.photos/seed/mkbhd/48/48", alt: "Marques Brownlee", children: 'MB' },
         platform: 'YouTube',
         job_description: 'We are looking for a creative and driven Video Editor to join our team. You will be responsible for editing and implementing user interfaces for our web and mobile applications.',
-        salary: 'Per project',
+        salary: '$30-$100 Per Project',
         location: 'New York, NY',
         remote: 'Yes',
         job_time: 'Per project',
         posted_at: '1 day ago',
         applicants: 18,
+        startDate: 'Starts ASAP',
+        contentFormat: 'Short-form',
+        language: 'English',
+        followers: '18.5M',
+        referralBonus: '$10',
+        aboutJobDetails: "Involves combining commentary, effects, transitions, and engaging captions to a specific dance, music, or trend.",
+        idealCandidate: [
+            "Experience editing short-form video content (portfolio or samples required)",
+            "Proficiency with editing software (Final Cut Pro/Apple Motion Preferred)",
+            "Strong sense of pacing, rhythm, and timing, especially for dance/music-based edits",
+            "Creativity and adaptability to different styles and trends",
+            "Ability to provide high quality and meet daily deadlines",
+            "Able to use Topaz Video AI",
+        ],
+        jobRequirements: [
+            "Able to create captions exactly like @dancemediaco's",
+            "Edit short-form videos (10-60 seconds) optimized for YouTube Shorts",
+            "Add music, sound effects, visual effects, and transitions that match current dance and TikTok/YouTube Shorts trends",
+            "Cut, sync, and enhance dance clips to maximize engagement and flow",
+            "Stay updated on trending formats, sounds, and editing styles across TikTok and YouTube",
+            "Deliver consistent, polished edits that fit the @dancemediaco brand style",
+            "Well versed with Keyframe Graphs",
+            "Able to use voiceovers for commentary (Speechify Preferred)",
+        ],
+        bonusSkills: [
+            "Motion graphics or animation (text effects, overlays, transitions)",
+            "Knowledge of trending sounds, dance challenges, and TikTok/YouTube culture",
+        ],
+        details: [
+            "Freelance/part-time with potential for ongoing work",
+            "Flexible schedule but must deliver on agreed timelines",
+            "Pay negotiable depending on experience and performance",
+        ],
+        skills: {
+            "Categories": ["Commentary", "Dances", "Entertainment", "Music", "Shorts", "Trends"],
+            "Styles": ["Shorts/Reels"],
+            "Skills": ["Alight Motion", "Apple Motion", "Capcut", "ChatGPT", "DaVinci Resolve", "Final Cut Pro"],
+        },
+        sampleVideos: [
+            { title: "ACE OF ADA", thumbnailUrl: "https://picsum.photos/seed/vid1/400/225" },
+            { title: "Dance Edit", thumbnailUrl: "https://picsum.photos/seed/vid2/400/225" },
+            { title: "Trending Moves", thumbnailUrl: "https://picsum.photos/seed/vid3/400/225" },
+        ]
     },
     {
         company: 'Emma Chamberlain',
@@ -45,6 +101,10 @@ const jobsData: JobData[] = [
         job_time: 'Per project',
         posted_at: '2 days ago',
         applicants: 12,
+        startDate: 'Starts ASAP',
+        contentFormat: 'Short-form',
+        language: 'English',
+        followers: '12M'
     },
     {
         company: 'MrBeast',
@@ -58,6 +118,10 @@ const jobsData: JobData[] = [
         job_time: 'Part-time',
         posted_at: '3 days ago',
         applicants: 35,
+        startDate: 'Starts ASAP',
+        contentFormat: 'Long-form',
+        language: 'English',
+        followers: '250M'
     },
     {
         company: 'PewDiePie',
@@ -71,6 +135,10 @@ const jobsData: JobData[] = [
         job_time: 'Full-time',
         posted_at: '4 days ago',
         applicants: 25,
+        startDate: 'Next Month',
+        contentFormat: 'Community Engagement',
+        language: 'English',
+        followers: '111M'
     },
     {
         company: 'Lilly Singh',
@@ -84,6 +152,10 @@ const jobsData: JobData[] = [
         job_time: 'Full-time',
         posted_at: '5 days ago',
         applicants: 22,
+        startDate: 'Starts ASAP',
+        contentFormat: 'All',
+        language: 'English',
+        followers: '14.5M'
     },
     {
         company: 'Snapchat Spotlight',
@@ -97,6 +169,10 @@ const jobsData: JobData[] = [
         job_time: 'Contract',
         posted_at: '6 days ago',
         applicants: 40,
+        startDate: 'Immediately',
+        contentFormat: 'Short-form',
+        language: 'English',
+        followers: 'N/A'
     },
     {
         company: 'Pokimane',
@@ -110,6 +186,10 @@ const jobsData: JobData[] = [
         job_time: 'Full-time',
         posted_at: '1 week ago',
         applicants: 15,
+        startDate: 'Starts ASAP',
+        contentFormat: 'Livestream',
+        language: 'English',
+        followers: '9.3M'
     },
     {
         company: 'Dude Perfect',
@@ -123,6 +203,10 @@ const jobsData: JobData[] = [
         job_time: 'Contract',
         posted_at: '1 week ago',
         applicants: 30,
+        startDate: 'This Month',
+        contentFormat: 'Long-form',
+        language: 'English',
+        followers: '60M'
     },
     {
         company: 'Smosh',
@@ -136,6 +220,10 @@ const jobsData: JobData[] = [
         job_time: 'Full-time',
         posted_at: '2 weeks ago',
         applicants: 19,
+        startDate: 'Next Month',
+        contentFormat: 'Scripted',
+        language: 'English',
+        followers: '25M'
     },
     {
         company: 'Top Creator',
@@ -149,6 +237,10 @@ const jobsData: JobData[] = [
         job_time: 'Part-time',
         posted_at: '2 weeks ago',
         applicants: 5,
+        startDate: 'Immediately',
+        contentFormat: 'Photo/Video',
+        language: 'English',
+        followers: '1.2M'
     },
     {
         company: 'Charli D\'Amelio',
@@ -162,6 +254,10 @@ const jobsData: JobData[] = [
         job_time: 'Full-time',
         posted_at: '3 weeks ago',
         applicants: 28,
+        startDate: 'Starts ASAP',
+        contentFormat: 'Short-form',
+        language: 'English',
+        followers: '150M'
     },
     {
         company: 'Addison Rae',
@@ -175,11 +271,15 @@ const jobsData: JobData[] = [
         job_time: 'Contract',
         posted_at: '1 month ago',
         applicants: 9,
+        startDate: 'This Month',
+        contentFormat: 'Merchandise',
+        language: 'English',
+        followers: '88M'
     },
 ];
 
-export const allJobs = jobsData.map(job => {
-  const slug = `${job.company.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${job.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+export const allJobs = jobsData.map((job, index) => {
+  const slug = `${job.company.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${job.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${index}`;
   return {
     ...job,
     id: slug,
@@ -190,3 +290,5 @@ export const allJobs = jobsData.map(job => {
 export const getJobById = (id: string) => {
   return allJobs.find(job => job.id === id);
 }
+
+    
