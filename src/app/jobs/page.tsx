@@ -8,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import JobListingComponent, { Job } from '@/components/ui/joblisting-component';
 import { Search } from 'lucide-react';
 import { allJobs as fetchAllJobs } from '@/lib/jobs';
+import { GridPattern } from '@/components/ui/grid-pattern';
+import { cn } from '@/lib/utils';
+import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 
 const allJobs = fetchAllJobs.map(job => {
     if (isValidElement(job.logo)) {
@@ -54,8 +57,19 @@ export default function JobsPage() {
 
 
     return (
-        <div className="bg-background min-h-screen">
-            <div className="container mx-auto px-4 py-12">
+        <div className="bg-background min-h-screen relative overflow-hidden">
+            <GridPattern
+                width={40}
+                height={40}
+                x={-1}
+                y={-1}
+                className={cn(
+                '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
+                'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
+                )}
+            />
+            <SocialIconsAnimation />
+            <div className="container mx-auto px-4 py-12 relative z-10">
                 <header className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold font-headline mb-2">Find Your Dream Job</h1>
                     <p className="text-lg text-muted-foreground">Browse through thousands of opportunities in the creator economy.</p>
@@ -111,5 +125,3 @@ export default function JobsPage() {
         </div>
     );
 }
-
-    
