@@ -11,7 +11,8 @@ export type SocialPlatform =
   | 'TikTok'
   | 'Facebook'
   | 'Twitch'
-  | 'OnlyFans';
+  | 'OnlyFans'
+  | 'Discord';
 
 type SocialIconProps = {
   platform: SocialPlatform;
@@ -34,6 +35,20 @@ export function SocialIcon({ platform, className }: SocialIconProps) {
       return <Facebook {...props} className={cn(props.className, 'text-blue-700')} />;
     case 'Twitch':
       return <Twitch {...props} className={cn(props.className, 'text-purple-600')} />;
+    case 'Discord':
+      return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            {...props}
+            className={cn(props.className, 'text-indigo-500')}
+        >
+            <path d="M14.22,10.07A2.12,2.12,0,0,1,12.1,12.18,2.12,2.12,0,0,1,10,10.07a2.12,2.12,0,0,1,2.11-2.11A2.12,2.12,0,0,1,14.22,10.07Z"/>
+            <path d="M8.28,10.07A2.12,2.12,0,0,1,6.17,12.18,2.12,2.12,0,0,1,4.06,10.07,2.12,2.12,0,0,1,6.17,8,2.12,2.12,0,0,1,8.28,10.07Z"/>
+            <path d="M19.84,2H4.16A2.16,2.16,0,0,0,2,4.16V17.51A2.16,2.16,0,0,0,4.16,19.67H16.42l-1.63-1.55.82-.79,1.55,1.48,1.34,1.26,2.3,2.19V4.16A2.16,2.16,0,0,0,19.84,2ZM8.8,14.25c-1.33,0-2.85-.63-2.85-2.18,0-.24,0-1.5,2.85-1.5s2.85,1.26,2.85,1.5C11.65,13.62,10.13,14.25,8.8,14.25Zm6.49,0c-1.33,0-2.85-.63-2.85-2.18,0-.24,0-1.5,2.85-1.5s2.85,1.26,2.85,1.5C18.14,13.62,16.62,14.25,15.29,14.25Z"/>
+        </svg>
+      );
     case 'TikTok':
       return (
         <svg
@@ -87,7 +102,7 @@ export function SocialIcon({ platform, className }: SocialIconProps) {
         );
     case 'OnlyFans':
         return (
-            <svg 
+            <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="none"
