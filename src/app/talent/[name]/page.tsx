@@ -54,7 +54,7 @@ export default function TalentProfilePage({ params }: { params: { name: string }
                     {talent.status === 'available' && <div className="size-3 bg-red-500 rounded-full" title="Available"></div>}
                 </h1>
                 <p className="text-muted-foreground">{talent.role}</p>
-                <Button className="mt-4 w-full">Hire Me</Button>
+                <Button className="mt-4 w-full bg-primary-gradient">Hire Me</Button>
               </div>
             </Card>
 
@@ -351,3 +351,5 @@ export default function TalentProfilePage({ params }: { params: { name: string }
     </div>
   )
 }
+
+    

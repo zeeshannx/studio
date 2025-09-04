@@ -217,7 +217,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
             <aside className="space-y-6 lg:sticky lg:top-24">
                 <Card className="p-6">
                     <div className="flex flex-col gap-4">
-                        <Button size="lg" className="w-full">Apply Now</Button>
+                        <Button size="lg" className="w-full bg-primary-gradient">Apply Now</Button>
                         <Separator />
                         <p className="text-center text-sm text-muted-foreground">Share with others</p>
                         <div className="flex justify-center gap-2">
@@ -265,3 +265,5 @@ export default function JobPage({ params }: { params: { id: string } }) {
     </div>
   )
 }
+
+    

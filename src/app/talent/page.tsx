@@ -9,6 +9,7 @@ import { ChevronRight, ListFilter, ArrowUpDown } from 'lucide-react';
 import Link from 'next/link';
 import { SocialIcon } from '@/components/shared/social-icon';
 import TalentListingComponent from '@/components/ui/talentlisting-component';
+import { cn } from '@/lib/utils';
 
 const allTalents = fetchAllTalents;
 
@@ -87,8 +88,8 @@ export default function TalentPage() {
                             </SelectContent>
                         </Select>
                         <div className="flex items-center gap-2 rounded-md bg-muted p-1">
-                            <Button variant={hireMe ? 'default' : 'ghost'} onClick={() => { setHireMe(true); setBookMe(false); }} className="px-4 py-1 h-auto text-sm">Hire Me</Button>
-                            <Button variant={bookMe ? 'default' : 'ghost'} onClick={() => { setBookMe(true); setHireMe(false); }} className="px-4 py-1 h-auto text-sm">Book Me</Button>
+                            <Button variant={hireMe ? 'default' : 'ghost'} onClick={() => { setHireMe(true); setBookMe(false); }} className={cn("px-4 py-1 h-auto text-sm", hireMe && "bg-primary-gradient")}>Hire Me</Button>
+                            <Button variant={bookMe ? 'default' : 'ghost'} onClick={() => { setBookMe(true); setHireMe(false); }} className={cn("px-4 py-1 h-auto text-sm", bookMe && "bg-primary-gradient")}>Book Me</Button>
                         </div>
                     </div>
                 </header>
@@ -110,7 +111,7 @@ export default function TalentPage() {
                             <Button 
                                 key={index} 
                                 variant={page === currentPage ? 'default' : 'outline'}
-                                className="w-10"
+                                className={cn("w-10", page === currentPage && "bg-primary-gradient")}
                                 onClick={() => typeof page === 'number' && handlePageChange(page)}
                                 disabled={typeof page !== 'number'}
                             >
@@ -126,3 +127,5 @@ export default function TalentPage() {
         </div>
     );
 }
+
+    

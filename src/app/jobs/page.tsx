@@ -1,3 +1,4 @@
+
 'use client';
 import { useState, useEffect, isValidElement } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -102,7 +103,7 @@ export default function JobsPage() {
                     <JobListingComponent jobs={jobs} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" />
                     {visibleJobsCount < filteredJobs.length && (
                         <div className="text-center mt-12">
-                            <Button onClick={handleLoadMore}>Load More</Button>
+                            <Button onClick={handleLoadMore} className="bg-primary-gradient">Load More</Button>
                         </div>
                     )}
                 </main>
@@ -110,3 +111,5 @@ export default function JobsPage() {
         </div>
     );
 }
+
+    
