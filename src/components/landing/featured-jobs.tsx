@@ -35,23 +35,13 @@ const jobs: Job[] = [
         remote: 'Yes', 
         job_time: 'Part-time' 
     },
-    { 
-        company: 'Creator D', 
-        title: 'Full-Time YouTube Vlog Vi...', 
-        logo: <Youtube className="h-8 w-8 text-primary" />,
-        job_description: 'Looking for a full-time vlog video editor for a top YouTube channel. Must have experience with fast-paced editing and a passion for storytelling.',
-        salary: '$24,000-$48,000', 
-        location: 'Remote', 
-        remote: 'Yes', 
-        job_time: 'Full-time' 
-    },
 ];
 
 
 export function FeaturedJobs() {
     return (
         <section id="jobs" className="py-16 md:py-24">
-            <div className="flex justify-between items-center mb-8 px-6">
+            <div className="flex justify-between items-center mb-8">
                 <h2 className="text-3xl font-bold font-headline">Featured Job Postings</h2>
                 <Link href="#" className="text-primary hover:underline flex items-center gap-1">
                     VIEW ALL <ArrowRight className="h-4 w-4" />
