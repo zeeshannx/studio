@@ -170,52 +170,6 @@ const allJobs: Job[] = [
     },
 ];
 
-const FilterSidebar = () => (
-    <div className="space-y-6">
-        <div>
-            <h3 className="text-lg font-semibold mb-3">Search by keyword</h3>
-            <Input placeholder="e.g. Video Editor" />
-        </div>
-        <div>
-            <h3 className="text-lg font-semibold mb-3">Location</h3>
-            <Select>
-                <SelectTrigger>
-                    <SelectValue placeholder="Select location" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="remote">Remote</SelectItem>
-                    <SelectItem value="new-york">New York, NY</SelectItem>
-                    <SelectItem value="los-angeles">Los Angeles, CA</SelectItem>
-                    <SelectItem value="greenville">Greenville, NC</SelectItem>
-                     <SelectItem value="frisco">Frisco, TX</SelectItem>
-                </SelectContent>
-            </Select>
-        </div>
-        <div>
-            <h3 className="text-lg font-semibold mb-3">Job Type</h3>
-            <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="full-time" />
-                    <Label htmlFor="full-time">Full-time</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="part-time" />
-                    <Label htmlFor="part-time">Part-time</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="contract" />
-                    <Label htmlFor="contract">Contract</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="per-project" />
-                    <Label htmlFor="per-project">Per project</Label>
-                </div>
-            </div>
-        </div>
-        <Button className="w-full">Apply Filters</Button>
-    </div>
-);
-
 export default function JobsPage() {
     const [jobs, setJobs] = useState(allJobs);
 
@@ -227,38 +181,12 @@ export default function JobsPage() {
                     <p className="text-lg text-muted-foreground">Browse through thousands of opportunities in the creator economy.</p>
                 </header>
 
-                <div className="flex flex-col md:flex-row gap-8">
-                    <aside className="w-full md:w-1/4 lg:w-1/5 hidden md:block">
-                        <div className="sticky top-24">
-                           <FilterSidebar />
-                        </div>
-                    </aside>
-
-                    <main className="w-full md:w-3/4 lg:w-4/5">
-                        <div className="flex justify-between items-center mb-6">
-                            <p className="text-muted-foreground">Showing {jobs.length} results</p>
-                             <div className="md:hidden">
-                                <Sheet>
-                                    <SheetTrigger asChild>
-                                        <Button variant="outline" size="sm">
-                                            <ListFilter className="h-4 w-4 mr-2" />
-                                            Filters
-                                        </Button>
-                                    </SheetTrigger>
-                                    <SheetContent>
-                                        <SheetHeader>
-                                            <SheetTitle>Filters</SheetTitle>
-                                        </SheetHeader>
-                                        <div className="p-4">
-                                            <FilterSidebar />
-                                        </div>
-                                    </SheetContent>
-                                </Sheet>
-                            </div>
-                        </div>
-                        <JobListingComponent jobs={jobs} className="grid-cols-1 lg:grid-cols-2 xl:grid-cols-3" />
-                    </main>
-                </div>
+                <main className="w-full">
+                    <div className="flex justify-between items-center mb-6">
+                        <p className="text-muted-foreground">Showing {jobs.length} results</p>
+                    </div>
+                    <JobListingComponent jobs={jobs} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" />
+                </main>
             </div>
         </div>
     );
