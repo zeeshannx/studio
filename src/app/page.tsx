@@ -1,7 +1,6 @@
 import { HeroSection } from '@/components/landing/hero-section';
 import { FeaturedJobs } from '@/components/landing/featured-jobs';
 import { RecentPlacements } from '@/components/landing/recent-placements';
-import { TopTalent } from '@/components/landing/top-talent';
 import { Leaderboards } from '@/components/landing/leaderboards';
 
 export default function Home() {
@@ -11,7 +10,6 @@ export default function Home() {
       <div className="container mx-auto px-4">
         <FeaturedJobs />
         <RecentPlacements />
-        <TopTalent />
         <Leaderboards />
       </div>
     </div>
