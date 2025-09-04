@@ -27,8 +27,8 @@
     --chart-1: 250 60% 55%;
     --chart-2: 250 50% 65%;
     --chart-3: 250 40% 75%;
-    --chart-4: 250, 30%, 85%;
-    --chart-5: 250, 20%, 95%;
+    --chart-4: 250 30% 85%;
+    --chart-5: 250 20% 95%;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -39,7 +39,7 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
-    --background: 250 10% 10%;
+    --background: 0 0% 0%;
     --foreground: 250 10% 85%;
     --card: 250 10% 12%;
     --card-foreground: 250 10% 85%;
@@ -61,8 +61,8 @@
     --chart-1: 250 60% 55%;
     --chart-2: 250 50% 45%;
     --chart-3: 250 40% 35%;
-    --chart-4: 250, 30%, 25%;
-    --chart-5: 250, 20%, 15%;
+    --chart-4: 250 30% 25%;
+    --chart-5: 250 20% 15%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
