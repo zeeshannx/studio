@@ -31,7 +31,7 @@ const Logos = ({
   heading = 'Trusted by 3000+ YouTube Creators',
   logos = [
     { id: 'logo-1', description: 'Marques Brownlee', image: 'https://yt3.ggpht.com/-lNGwllze1Xk/AAAAAAAAAAI/AAAAAAAAAAA/N6QnsHGN7Fk/s900-c-k-no/photo.jpg', followers: '18.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-2', description: 'MrBeast', image: 'https://yt3.googleusercontent.com/ytc/AIdro_k-3G22Z2y_Gz-j3tA0ntO5sAMp4i8hpbI92vYcpg=s900-c-k-c0x00ffffff-no-rj', followers: '250M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-2', description: 'MrBeast', image: 'https://yt3.ggpht.com/-egl0BJumF1A/AAAAAAAAAAI/AAAAAAAAAAA/zk1ch1-WaY8/s900-c-k-no-mo-rj-c0xffffff/photo.jpg', followers: '250M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
     { id: 'logo-3', description: 'Emma Chamberlain', image: 'https://media1.popsugar-assets.com/files/thumbor/ivPwCzKnGH1rfzP-ZwxU7mBZjKo/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2021/05/07/790/n/1922153/tmp_aN0w1Q_1c08c95c2518faaa_GettyImages-1152470007.jpg', followers: '12M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
     { id: 'logo-4', description: 'PewDiePie', image: 'https://picsum.photos/seed/pewdiepie/64/64', followers: '111M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
     { id: 'logo-5', description: 'Casey Neistat', image: 'https://picsum.photos/seed/casey/64/64', followers: '12.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
@@ -90,3 +90,5 @@ const Logos = ({
 };
 
 export { Logos };
+
+    
