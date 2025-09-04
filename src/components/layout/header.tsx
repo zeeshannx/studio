@@ -31,13 +31,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <div className="flex-1 hidden md:flex justify-start">
-            <Link href="/" className="flex items-center space-x-2">
-              <Users className="h-6 w-6 text-primary" />
-              <span className="font-bold">SocialVerse Jobs</span>
-            </Link>
+        <div className="hidden md:flex justify-start">
         </div>
-        <div className="hidden md:flex justify-center">
+        <div className="flex-1 flex justify-center">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -57,21 +53,21 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                 <Link href="#jobs" legacyBehavior passHref>
+                 <Link href="#jobs" legacyBehavior={false} passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Jobs
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
                <NavigationMenuItem>
-                 <Link href="#talent" legacyBehavior passHref>
+                 <Link href="#talent" legacyBehavior={false} passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Talent
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
                <NavigationMenuItem>
-                 <Link href="#leaderboards" legacyBehavior passHref>
+                 <Link href="#leaderboards" legacyBehavior={false} passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     Leaderboards
                   </NavigationMenuLink>

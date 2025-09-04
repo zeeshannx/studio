@@ -8,6 +8,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
+import { cn } from '@/lib/utils';
 
 interface Logo {
   id: string;
