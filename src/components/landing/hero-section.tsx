@@ -4,8 +4,19 @@ import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 export function HeroSection() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    // Use a timeout to trigger the animation after the initial render
+    const timer = setTimeout(() => {
+      setShow(true);
+    }, 100); // Small delay to ensure CSS is loaded
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className="relative py-20 md:py-32 bg-background overflow-hidden">
        <GridPattern
@@ -20,7 +31,15 @@ export function HeroSection() {
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="animate-in fade-in slide-in-from-top-8 duration-1000 ease-out">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 font-headline">
-            The Premier Marketplace for Creator Economy Jobs
+            The Premier Marketplace for Creator{' '}
+            <span
+              className={cn(
+                'inline-block text-primary overflow-hidden whitespace-nowrap border-r-4 border-r-primary',
+                show ? 'animate-[typing_2s_steps(12),blink-caret_.5s_step-end_infinite] w-[7ch]' : 'w-0'
+              )}
+            >
+              Economy Jobs
+            </span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             The #1 job board for creators, influencers, and social media professionals. Your next opportunity is just a search away.
