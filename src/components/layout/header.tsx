@@ -32,10 +32,6 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <div className="mr-6 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Users className="h-6 w-6 text-primary" />
-            <span className="font-bold sm:inline-block">SocialVerse Jobs</span>
-          </Link>
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -81,10 +77,6 @@ export function Header() {
 
         {/* Mobile */}
         <div className="flex w-full items-center justify-between md:hidden">
-           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Users className="h-6 w-6 text-primary" />
-            <span className="font-bold sm:inline-block">SocialVerse Jobs</span>
-          </Link>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
