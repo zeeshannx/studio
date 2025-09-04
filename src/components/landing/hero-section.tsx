@@ -2,7 +2,6 @@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
-import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { getHeroPhrases } from '@/ai/flows/hero-text-flow';

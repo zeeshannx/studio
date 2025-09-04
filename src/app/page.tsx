@@ -5,26 +5,12 @@ import { Leaderboards } from '@/components/landing/leaderboards';
 import { Logos } from '@/components/landing/logos';
 import { TopTalent } from '@/components/landing/top-talent';
 import { AnimatedSection } from '@/components/shared/animated-section';
-import { GridPattern } from '@/components/ui/grid-pattern';
-import { cn } from '@/lib/utils';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 
 export default function Home() {
   return (
     <div className="relative flex flex-col gap-16 md:gap-24 overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <GridPattern
-          width={30}
-          height={30}
-          x={-1}
-          y={-1}
-          className={cn(
-            '[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]',
-            'animate-[float_6s_ease-in-out_infinite]'
-          )}
-        />
-        <SocialIconsAnimation />
-      </div>
+      <SocialIconsAnimation />
       <div className="relative z-10">
         <HeroSection />
         <div className="container mx-auto px-4">
