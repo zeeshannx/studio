@@ -92,7 +92,7 @@ const jobsData: JobData[] = [
     {
         company: 'Emma Chamberlain',
         title: 'Scriptwriter',
-        logo: { 'data-ai-hint': "person", src: "https://picsum.photos/seed/emma/48/48", alt: "Emma Chamberlain", children: 'EC' },
+        logo: { 'data-ai-hint': "person", src: "https://media1.popsugar-assets.com/files/thumbor/ivPwCzKnGH1rfzP-ZwxU7mBZjKo/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2021/05/07/790/n/1922153/tmp_aN0w1Q_1c08c95c2518faaa_GettyImages-1152470007.jpg", alt: "Emma Chamberlain", children: 'EC' },
         platform: 'TikTok',
         job_description: 'Seeking an experienced Scriptwriter to work on our latest project. The ideal candidate will have strong skills in storytelling and a keen eye for detail.',
         salary: '$300-$600',

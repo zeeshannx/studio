@@ -27,6 +27,12 @@ const nextConfig: NextConfig = {
         hostname: 'yt3.ggpht.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media1.popsugar-assets.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
