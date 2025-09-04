@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Users, Twitter, Instagram, Linkedin } from 'lucide-react';
-import { SocialIcon } from '@/components/shared/social-icon';
 
 export function Footer() {
   return (
@@ -20,6 +19,7 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li><Link href="#jobs" className="text-muted-foreground hover:text-primary">Jobs</Link></li>
+              <li><Link href="#talent" className="text-muted-foreground hover:text-primary">Talent</Link></li>
               <li><Link href="/blog" className="text-muted-foreground hover:text-primary">Blog</Link></li>
               <li><Link href="/contact" className="text-muted-foreground hover:text-primary">Contact</Link></li>
             </ul>
