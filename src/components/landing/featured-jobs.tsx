@@ -54,6 +54,54 @@ const jobs: Job[] = [
         remote: 'Yes', 
         job_time: 'Part-time' 
     },
+    { 
+        company: 'PewDiePie', 
+        title: 'Community Manager', 
+        logo: (
+            <Avatar className="h-10 w-10">
+                <AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/pewdiepie/40/40" alt="PewDiePie" />
+                <AvatarFallback>PD</AvatarFallback>
+            </Avatar>
+        ),
+        platform: 'Twitch',
+        job_description: 'We\'re hiring a Community Manager to engage with our audience and build a vibrant online community. Experience with Discord and Twitch is a plus.',
+        salary: '$40k-$50k', 
+        location: 'Remote', 
+        remote: 'Yes', 
+        job_time: 'Full-time' 
+    },
+    { 
+        company: 'Lilly Singh', 
+        title: 'Social Media Manager', 
+        logo: (
+            <Avatar className="h-10 w-10">
+                <AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/lilly/40/40" alt="Lilly Singh" />
+                <AvatarFallback>LS</AvatarFallback>
+            </Avatar>
+        ),
+        platform: 'X',
+        job_description: 'Looking for a Social Media Manager to handle content creation, scheduling, and analytics across multiple platforms. Strong writing skills required.',
+        salary: '$55k-$65k', 
+        location: 'New York, NY', 
+        remote: 'No', 
+        job_time: 'Full-time' 
+    },
+    { 
+        company: 'Ninja', 
+        title: 'Graphic Designer', 
+        logo: (
+            <Avatar className="h-10 w-10">
+                <AvatarImage data-ai-hint="person" src="https://picsum.photos/seed/ninja/40/40" alt="Ninja" />
+                <AvatarFallback>N</AvatarFallback>
+            </Avatar>
+        ),
+        platform: 'YouTube',
+        job_description: 'Seeking a skilled Graphic Designer to create compelling visuals for our brand, including thumbnails, banners, and merchandise designs.',
+        salary: 'Per project', 
+        location: 'Remote', 
+        remote: 'Hybrid', 
+        job_time: 'Contract' 
+    },
 ];
 
 
