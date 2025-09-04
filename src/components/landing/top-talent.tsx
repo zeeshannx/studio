@@ -7,10 +7,9 @@ import type { SocialPlatform } from '@/components/shared/social-icon';
 import TalentListingComponent, { Talent } from '@/components/ui/talentlisting-component';
 import { allTalents } from '@/lib/talent';
 
-const talents: Talent[] = allTalents.slice(0, 15);
-
-
 export function TopTalent() {
+  const talents: Talent[] = allTalents.slice(0, 15);
+
   return (
     <section id="talent" className="py-16 md:py-24 bg-muted/50">
       <div className="mx-auto w-full max-w-5xl px-4">
