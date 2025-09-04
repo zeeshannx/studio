@@ -8,7 +8,7 @@ import { AnimatedSection } from '@/components/shared/animated-section';
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-16 md:gap-24 overflow-x-hidden">
+    <div className="flex flex-col gap-16 md:gap-24">
       <HeroSection />
       <div className="container mx-auto px-4">
         <AnimatedSection>
