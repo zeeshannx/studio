@@ -3,17 +3,18 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import { SocialIcon, type SocialPlatform } from '@/components/shared/social-icon';
 
 const talents = [
-    { src: 'https://picsum.photos/seed/tt1/64/64', name: 'Sergey Dolgov', role: 'Creative Director' },
-    { src: 'https://picsum.photos/seed/tt2/64/64', name: 'Thomas Beer', role: 'Channel Manager' },
-    { src: 'https://picsum.photos/seed/tt3/64/64', name: 'Walker', role: 'Thumbnail Designer' },
-    { src: 'https://picsum.photos/seed/tt4/64/64', name: 'Neox', role: 'Thumbnail Designer' },
-    { src: 'https://picsum.photos/seed/tt5/64/64', name: 'VANISZ WORKS', role: 'Video Editor' },
-    { src: 'https://picsum.photos/seed/tt6/64/64', name: 'Hald', role: 'Thumbnail Designer' },
-    { src: 'https://picsum.photos/seed/tt7/64/64', name: 'TKG', role: 'Thumbnail Designer' },
-    { src: 'https://picsum.photos/seed/tt8/64/64', name: 'OscarVLTR', role: 'Creative Director' },
-    { src: 'https://picsum.photos/seed/tt9/64/64', name: 'Dimcha', role: 'Thumbnail Designer' },
+    { src: 'https://picsum.photos/seed/tt1/64/64', name: 'Sergey Dolgov', role: 'Creative Director', platform: 'YouTube' as SocialPlatform },
+    { src: 'https://picsum.photos/seed/tt2/64/64', name: 'Thomas Beer', role: 'Channel Manager', platform: 'Twitch' as SocialPlatform },
+    { src: 'https://picsum.photos/seed/tt3/64/64', name: 'Walker', role: 'Thumbnail Designer', platform: 'Instagram' as SocialPlatform },
+    { src: 'https://picsum.photos/seed/tt4/64/64', name: 'Neox', role: 'Thumbnail Designer', platform: 'TikTok' as SocialPlatform },
+    { src: 'https://picsum.photos/seed/tt5/64/64', name: 'VANISZ WORKS', role: 'Video Editor', platform: 'YouTube' as SocialPlatform },
+    { src: 'https://picsum.photos/seed/tt6/64/64', name: 'Hald', role: 'Thumbnail Designer', platform: 'Facebook' as SocialPlatform },
+    { src: 'https://picsum.photos/seed/tt7/64/64', name: 'TKG', role: 'Thumbnail Designer', platform: 'YouTube' as SocialPlatform },
+    { src: 'https://picsum.photos/seed/tt8/64/64', name: 'OscarVLTR', role: 'Creative Director', platform: 'LinkedIn' as SocialPlatform },
+    { src: 'https://picsum.photos/seed/tt9/64/64', name: 'Dimcha', role: 'Thumbnail Designer', platform: 'X' as SocialPlatform },
 ]
 
 export function TopTalent() {
@@ -61,9 +62,12 @@ export function TopTalent() {
                 <span className="text-foreground block truncate text-[15px] font-semibold">
                   {talent.name}
                 </span>
-                <span className="text-muted-foreground block truncate text-sm">
-                  {talent.role}
-                </span>
+                <div className="text-muted-foreground flex items-center gap-2 text-sm">
+                  <SocialIcon platform={talent.platform} className="h-4 w-4" />
+                  <span className="block truncate">
+                    {talent.role}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
