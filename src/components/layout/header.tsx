@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Menu, Users, Briefcase, Star, TrendingUp } from 'lucide-react';
+import { Menu, Users, Briefcase, Star, HelpCircle } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -25,7 +25,7 @@ import React from 'react';
 const menuItems = [
   { href: '/jobs', label: 'Jobs', icon: <Briefcase className="size-5 shrink-0" />, description: "Find your next role in the creator economy." },
   { href: '/talent', label: 'Talent', icon: <Star className="size-5 shrink-0" />, description: "Discover top-tier creators and professionals." },
-  { href: '#leaderboards', label: 'Leaderboards', icon: <TrendingUp className="size-5 shrink-0" />, description: "See who's making waves in the industry." },
+  { href: '#how-it-works', label: 'How it works', icon: <HelpCircle className="size-5 shrink-0" />, description: "Learn how our platform connects creators and employers." },
 ];
 
 export function Header() {
@@ -72,9 +72,9 @@ export function Header() {
                 </Link>
               </NavigationMenuItem>
                <NavigationMenuItem>
-                <Link href="#leaderboards" legacyBehavior passHref>
+                <Link href="#how-it-works" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Leaderboards
+                    How it works
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
@@ -134,7 +134,7 @@ export function Header() {
                 <div className='flex flex-col gap-4'>
                   <Link href="/jobs" className="text-base font-semibold">Jobs</Link>
                   <Link href="/talent" className="text-base font-semibold">Talent</Link>
-                  <Link href="#leaderboards" className="text-base font-semibold">Leaderboards</Link>
+                  <Link href="#how-it-works" className="text-base font-semibold">How it works</Link>
                 </div>
 
                 <div className="border-t pt-6 flex flex-col gap-3">
