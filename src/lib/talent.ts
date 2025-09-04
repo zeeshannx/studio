@@ -1,15 +1,70 @@
 
 import type { Talent as TalentType } from '@/components/ui/talentlisting-component';
 
-export const allTalents: TalentType[] = [
+export interface Experience {
+    title: string;
+    company: string;
+    description: string[];
+    period: string;
+}
+
+export interface Client {
+    name: string;
+    logoUrl: string;
+    subscribers: string;
+}
+
+export interface Review {
+    clientName: string;
+    clientLogoUrl: string;
+    clientSubscribers: string;
+    review: string;
+}
+
+export interface Timeline {
+    [year: number]: {
+        [month: string]: number;
+    }
+}
+
+// Extend the TalentType interface to include all the new fields
+export interface DetailedTalent extends TalentType {
+    hourlyRate?: string;
+    roles?: string[];
+    experience?: Experience[];
+    languageSkills?: string[];
+    categories?: string[];
+    clients?: Client[];
+    reviews?: Review[];
+    vouches?: number;
+    timeline?: Timeline;
+}
+
+
+export const allTalents: DetailedTalent[] = [
     { 
         src: 'https://picsum.photos/seed/tt1/64/64', 
         name: 'Sergey Dolgov', 
         role: 'Creative Director', 
         platform: 'YouTube', 
-        bio: 'Award-winning Creative Director with a passion for storytelling and building brands on YouTube. Expertise in content strategy and viral marketing.',
+        bio: 'Helping creators understand YouTube and achieve significant results.',
         status: 'available',
         hireable: true,
+        hourlyRate: '150$',
+        roles: ['Creative Director'],
+        experience: [
+            {
+                title: 'CEO Levincast / CDO Like Nastya',
+                company: 'Like Nastya',
+                description: [
+                    'Created a company specializing in video editing services for YouTube.',
+                    'Personally hired and trained more than 10 video editors, 4 designers, and 20 voice actors.'
+                ],
+                period: 'Present'
+            }
+        ],
+        languageSkills: ['English', 'Russian'],
+        categories: ['Entertainment', 'Gaming', 'Kids', 'Music', 'People & Blogs', 'Shorts'],
         stats: {
             videos: 15,
             views: '3.89B',
@@ -19,10 +74,28 @@ export const allTalents: TalentType[] = [
             { src: 'https://picsum.photos/seed/port1/400/400', alt: 'Portfolio Image 1', verified: true, 'data-ai-hint': 'children fashion' },
             { src: 'https://picsum.photos/seed/port2/400/400', alt: 'Portfolio Image 2', 'data-ai-hint': 'child scooter' },
             { src: 'https://picsum.photos/seed/port3/400/400', alt: 'Portfolio Image 3', 'data-ai-hint': 'superhero toys' },
-            { src: 'https://picsum.photos/seed/port4/400/400', alt: 'Portfolio Image 4', 'data-ai-hint': 'child portrait' },
-            { src: 'https://picsum.photos/seed/port5/400/400', alt: 'Portfolio Image 5', 'data-ai-hint': 'child gamer' },
+            { src: 'https://picsum.photos/seed/port4/400/400', alt: 'Portfolio Image 4', 'data-ai-hint': 'child gamer' },
+            { src: 'https://picsum.photos/seed/port5/400/400', alt: 'Portfolio Image 5', 'data-ai-hint': 'child playing' },
             { src: 'https://picsum.photos/seed/port6/400/400', alt: 'Portfolio Image 6', 'data-ai-hint': 'children costume' },
-        ]
+        ],
+        clients: [
+            { name: 'Like Nastya', logoUrl: 'https://picsum.photos/seed/client1/64/64', subscribers: '130M' },
+            { name: 'SIS vs BRO', logoUrl: 'https://picsum.photos/seed/client2/64/64', subscribers: '14.6M' }
+        ],
+        reviews: [
+            {
+                clientName: 'Like Nastya',
+                clientLogoUrl: 'https://picsum.photos/seed/client1/64/64',
+                clientSubscribers: '130M',
+                review: "Talented and dedicated specialist, it's always a pleasure to work together!"
+            }
+        ],
+        vouches: 6,
+        timeline: {
+            2025: {},
+            2024: { 'Apr': 1, 'Sep': 2 },
+            2023: { 'Feb': 2, 'Mar': 1, 'Aug': 3, 'Dec': 1 }
+        }
     },
     { src: 'https://picsum.photos/seed/tt2/64/64', name: 'Thomas Beer', role: 'Channel Manager', platform: 'Twitch', bio: 'Experienced Twitch Channel Manager, skilled in community engagement, stream production, and creator collaborations. Ready to grow your channel.' },
     { src: 'https://picsum.photos/seed/tt3/64/64', name: 'Walker', role: 'Thumbnail Designer', platform: 'Instagram', bio: 'Specializing in click-worthy thumbnail designs that boost CTR. Proficient in Photoshop and current with all Instagram trends.' },
@@ -66,3 +139,16 @@ export const allTalents: TalentType[] = [
     { src: 'https://picsum.photos/seed/tt20/64/64', name: 'Vuk Sretenovic', role: 'Video Editor', platform: 'YouTube', bio: 'Video editor with a knack for viral, meme-worthy content.' },
     { src: 'https://picsum.photos/seed/tt21/64/64', name: 'Pat Gostek', role: 'YouTube Strategist', platform: 'YouTube', bio: 'Helping creators build sustainable careers on YouTube through smart strategy.' }
 ];
+
+// Add this to your talentlisting-component.ts as well to handle the detailed data
+export interface Talent extends TalentType {
+    hourlyRate?: string;
+    roles?: string[];
+    experience?: Experience[];
+    languageSkills?: string[];
+    categories?: string[];
+    clients?: Client[];
+    reviews?: Review[];
+    vouches?: number;
+    timeline?: Timeline;
+}

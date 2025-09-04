@@ -12,6 +12,8 @@ import Image from "next/image";
 import { ExternalLink, Verified, X } from "lucide-react";
 import { Badge } from "./badge";
 import { Separator } from "./separator";
+import type { DetailedTalent } from "@/lib/talent";
+import Link from 'next/link';
 
 export interface Talent {
     name: string
@@ -36,9 +38,9 @@ export interface Talent {
 
 
 export interface TalentListingComponentProps {
-    talents: Talent[]
+    talents: DetailedTalent[]
     className?: string
-    onTalentClick?: (talent: Talent) => void
+    onTalentClick?: (talent: DetailedTalent) => void
 }
 
 export default function TalentListingComponent({
@@ -46,7 +48,7 @@ export default function TalentListingComponent({
     className,
     onTalentClick,
 }: TalentListingComponentProps) {
-    const [activeItem, setActiveItem] = useState<Talent | null>(null)
+    const [activeItem, setActiveItem] = useState<DetailedTalent | null>(null)
     const ref = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>
     useOnClickOutside(ref, () => setActiveItem(null))
 
@@ -60,6 +62,8 @@ export default function TalentListingComponent({
         window.addEventListener("keydown", onKeyDown)
         return () => window.removeEventListener("keydown", onKeyDown)
     }, [])
+    
+    const talentProfileLink = (talentName: string) => `/talent/${talentName.toLowerCase().replace(/ /g, '-')}`;
 
     return (
         <>
@@ -124,7 +128,7 @@ export default function TalentListingComponent({
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <Button variant="outline" className="gap-2 hidden sm:flex">View full profile <ExternalLink className="h-4 w-4" /></Button>
+                                    <Button asChild variant="outline" className="gap-2 hidden sm:flex"><Link href={talentProfileLink(activeItem.name)}>View full profile <ExternalLink className="h-4 w-4" /></Link></Button>
                                     <Button variant="ghost" size="icon" onClick={() => setActiveItem(null)}><X className="h-5 w-5" /></Button>
                                 </div>
                             </div>
@@ -177,7 +181,7 @@ export default function TalentListingComponent({
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0, transition: { duration: 0.05 } }}
                                 className="w-full flex sm:hidden">
-                                <Button variant="outline" className="w-full gap-2">View full profile <ExternalLink className="h-4 w-4" /></Button>
+                                <Button asChild variant="outline" className="w-full gap-2"><Link href={talentProfileLink(activeItem.name)}>View full profile <ExternalLink className="h-4 w-4" /></Link></Button>
                             </motion.div>
                         </motion.div>
                     </div>
