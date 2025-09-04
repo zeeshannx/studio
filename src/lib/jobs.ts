@@ -126,7 +126,7 @@ const jobsData: JobData[] = [
     {
         company: 'PewDiePie',
         title: 'Community Manager',
-        logo: { 'data-ai-hint': "person", src: "https://picsum.photos/seed/pewdiepie/48/48", alt: "PewDiePie", children: 'PD' },
+        logo: { 'data-ai-hint': "person", src: "https://i.pinimg.com/originals/7e/f7/77/7ef7776d02efd1c241bf547b0a8cb719.png", alt: "PewDiePie", children: 'PD' },
         platform: 'Discord',
         job_description: "We're hiring a Community Manager to engage with our audience and build a vibrant online community. Experience with Discord and Twitch is a plus.",
         salary: '$40k-$50k',
