@@ -1,12 +1,12 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import JobListingComponent, { Job, Resend, Supabase, Turso } from "@/components/ui/joblisting-component";
-import { ArrowRight, Briefcase, Clock, FileText, Instagram, Linkedin, PenSquare, Twitch, Twitter, Video, Youtube, Facebook } from 'lucide-react';
+import JobListingComponent, { Job } from "@/components/ui/joblisting-component";
+import { ArrowRight, PenSquare, Video } from 'lucide-react';
 import Link from 'next/link';
 
 const jobs: Job[] = [
     { 
-        company: 'Creator A', 
+        company: 'Marques Brownlee', 
         title: 'Video Editor', 
         logo: <Video className="h-8 w-8 text-primary" />,
         platform: 'YouTube',
@@ -17,7 +17,7 @@ const jobs: Job[] = [
         job_time: 'Per project' 
     },
     { 
-        company: 'Creator B', 
+        company: 'Emma Chamberlain', 
         title: 'Scriptwriter', 
         logo: <PenSquare className="h-8 w-8 text-primary" />,
         platform: 'TikTok',
@@ -28,7 +28,7 @@ const jobs: Job[] = [
         job_time: 'Per project' 
     },
     { 
-        company: 'Creator C', 
+        company: 'MrBeast', 
         title: 'Lead Video Editor & Content...', 
         logo: <Video className="h-8 w-8 text-primary" />,
         platform: 'Instagram',
