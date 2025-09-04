@@ -82,7 +82,7 @@ export function HeroSection() {
             className="flex-grow text-base"
             aria-label="Search for jobs"
           />
-          <Button type="submit" size="lg">
+          <Button type="submit" size="lg" className="bg-primary-gradient">
             <Search className="h-5 w-5 mr-2" />
             Search
           </Button>
