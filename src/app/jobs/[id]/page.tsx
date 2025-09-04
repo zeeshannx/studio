@@ -7,9 +7,10 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { SocialIcon } from '@/components/shared/social-icon'
-import { MapPin, Clock, DollarSign, Users, Briefcase, Building } from 'lucide-react'
+import { MapPin, Clock, DollarSign, Briefcase, Building } from 'lucide-react'
 import JobListingComponent from '@/components/ui/joblisting-component'
 import { allJobs as fetchAllJobs } from '@/lib/jobs';
+import React from 'react';
 
 export default function JobPage({ params }: { params: { id: string } }) {
   const job = getJobById(params.id)
@@ -18,12 +19,26 @@ export default function JobPage({ params }: { params: { id: string } }) {
     notFound()
   }
 
-  const jobLogo = <Avatar className="h-20 w-20"><AvatarImage data-ai-hint={job.logo.props['data-ai-hint']} src={job.logo.props.src} alt={job.logo.props.alt} /><AvatarFallback className="text-3xl">{job.logo.props.children}</AvatarFallback></Avatar>
+  const jobLogo = <Avatar className="h-20 w-20"><AvatarImage data-ai-hint={job.logo['data-ai-hint']} src={job.logo.src} alt={job.logo.alt} /><AvatarFallback className="text-3xl">{job.logo.children}</AvatarFallback></Avatar>
   
-  const relatedJobs = fetchAllJobs.filter(j => j.id !== job.id && (j.platform === job.platform || j.title === job.title)).slice(0,3).map(job => ({
-    ...job,
-    logo: <Avatar className="h-12 w-12"><AvatarImage data-ai-hint={job.logo.props['data-ai-hint']} src={job.logo.props.src} alt={job.logo.props.alt} /><AvatarFallback>{job.logo.props.children}</AvatarFallback></Avatar>
-  }));
+  const relatedJobs = fetchAllJobs
+    .filter(j => j.id !== job.id && (j.platform === job.platform || j.title === job.title))
+    .slice(0,3)
+    .map(relatedJob => {
+        if (React.isValidElement(relatedJob.logo)) {
+            return { ...relatedJob, logo: relatedJob.logo };
+        }
+        const logoData = relatedJob.logo as unknown as { 'data-ai-hint': string, src: string, alt: string, children: string };
+        return {
+            ...relatedJob,
+            logo: (
+                <Avatar className="h-12 w-12">
+                    <AvatarImage data-ai-hint={logoData['data-ai-hint']} src={logoData.src} alt={logoData.alt} />
+                    <AvatarFallback>{logoData.children}</AvatarFallback>
+                </Avatar>
+            )
+        };
+    });
 
   return (
     <div className="bg-muted/40">
