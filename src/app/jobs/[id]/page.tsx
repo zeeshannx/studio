@@ -15,6 +15,8 @@ import { allJobs as fetchAllJobs } from '@/lib/jobs';
 import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
+import { GridPattern } from '@/components/ui/grid-pattern';
+import { cn } from '@/lib/utils';
 
 export default function JobPage({ params }: { params: { id: string } }) {
   const job = getJobById(params.id)
@@ -54,8 +56,18 @@ export default function JobPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="bg-muted/40 relative overflow-hidden">
+        <GridPattern
+            width={40}
+            height={40}
+            x={-1}
+            y={-1}
+            className={cn(
+            '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
+            'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
+            )}
+        />
         <SocialIconsAnimation />
-        <div className="container mx-auto px-4 py-12 md:py-20">
+        <div className="container mx-auto px-4 py-12 md:py-20 relative z-10">
             <header className="mb-8">
             <div className="flex flex-col md:flex-row items-start gap-6">
                 {jobLogo}
