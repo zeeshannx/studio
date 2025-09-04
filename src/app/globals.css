@@ -101,7 +101,7 @@
       width: 0;
     }
     to {
-      width: 100%;
+      /* The width is set dynamically via inline styles */
     }
   }
 

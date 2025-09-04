@@ -5,17 +5,49 @@ import { Search } from 'lucide-react';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
+import { getHeroPhrases } from '@/ai/flows/hero-text-flow';
+
+const PHRASES = [
+  'Economy Jobs',
+  'Editing Gigs',
+  'Design Talent',
+  'Video Roles',
+  'Creator Work',
+];
 
 export function HeroSection() {
-  const [show, setShow] = useState(false);
+  const [phrases, setPhrases] = useState<string[]>(PHRASES);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [key, setKey] = useState(0);
 
   useEffect(() => {
-    // Use a timeout to trigger the animation after the initial render
-    const timer = setTimeout(() => {
-      setShow(true);
-    }, 100); // Small delay to ensure CSS is loaded
-    return () => clearTimeout(timer);
+    async function fetchPhrases() {
+      try {
+        const result = await getHeroPhrases();
+        if (result.phrases && result.phrases.length > 0) {
+          setPhrases(result.phrases);
+        }
+      } catch (error) {
+        console.error('Failed to fetch hero phrases, using default.', error);
+      }
+    }
+    fetchPhrases();
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % phrases.length);
+      setKey((prevKey) => prevKey + 1); // Reset animation
+    }, 4000); // Change phrase every 4 seconds (2s typing + 2s pause)
+
+    return () => clearInterval(interval);
+  }, [phrases]);
+
+  const currentPhrase = phrases[currentIndex];
+  // Dynamically generate the steps and width based on phrase length
+  const animationSteps = currentPhrase.length;
+  const animationWidthClass = `w-[${animationSteps}ch]`;
+  const animationDuration = `${animationSteps * 0.15}s`; // Adjust speed of typing
 
   return (
     <section className="relative py-20 md:py-32 bg-background overflow-hidden">
@@ -30,15 +62,24 @@ export function HeroSection() {
       />
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="animate-in fade-in slide-in-from-top-8 duration-1000 ease-out">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 font-headline">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 font-headline h-24 md:h-32">
             The Premier Marketplace for Creator{' '}
             <span
+              key={key}
               className={cn(
-                'inline-block text-primary overflow-hidden whitespace-nowrap border-r-4 border-r-primary',
-                show ? 'animate-[typing_2s_steps(12),blink-caret_.5s_step-end_infinite] w-[7ch]' : 'w-0'
+                'inline-block text-primary overflow-hidden whitespace-nowrap border-r-4 border-r-primary align-bottom',
+                 'animate-[typing,blink-caret_.5s_step-end_infinite] w-0'
               )}
+              style={{
+                width: `${animationSteps}ch`,
+                animationName: 'typing, blink-caret',
+                animationDuration: `${animationDuration}, 0.75s`,
+                animationTimingFunction: `steps(${animationSteps}), step-end`,
+                animationIterationCount: '1, infinite',
+                animationFillMode: 'forwards',
+              } as React.CSSProperties}
             >
-              Economy Jobs
+              {currentPhrase}
             </span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
