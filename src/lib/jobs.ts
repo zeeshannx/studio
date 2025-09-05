@@ -143,7 +143,7 @@ const jobsData: JobData[] = [
     {
         company: 'Lilly Singh',
         title: 'Social Media Manager',
-        logo: { 'data-ai-hint': "person", src: "https://yt3.googleusercontent.com/ytc/AIdro_k2Gz-713v_4s-6tG-aJzL-jYJz9-sXQ_A8s-0Z=s900-c-k-c0x00ffffff-no-rj", alt: "Lilly Singh", children: 'LS' },
+        logo: { 'data-ai-hint': "person", src: "https://tse1.mm.bing.net/th/id/OIP.nFhJnw15bRYG2wNhB5ToQQAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3", alt: "Lilly Singh", children: 'LS' },
         platform: 'X',
         job_description: 'Looking for a Social Media Manager to handle content creation, scheduling, and analytics across multiple platforms. Strong writing skills required.',
         salary: '$55k-$65k',
@@ -290,7 +290,3 @@ export const allJobs = jobsData.map((job, index) => {
 export const getJobById = (id: string) => {
   return allJobs.find(job => job.id === id);
 }
-
-    
-    
-    

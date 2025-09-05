@@ -35,7 +35,7 @@ const Logos = ({
     { id: 'logo-3', description: 'Emma Chamberlain', image: 'https://media1.popsugar-assets.com/files/thumbor/ivPwCzKnGH1rfzP-ZwxU7mBZjKo/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2021/05/07/790/n/1922153/tmp_aN0w1Q_1c08c95c2518faaa_GettyImages-1152470007.jpg', followers: '12M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
     { id: 'logo-4', description: 'PewDiePie', image: 'https://i.pinimg.com/originals/7e/f7/77/7ef7776d02efd1c241bf547b0a8cb719.png', followers: '111M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
     { id: 'logo-5', description: 'Casey Neistat', image: 'https://picsum.photos/seed/casey/64/64', followers: '12.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-6', description: 'Lilly Singh', image: 'https://yt3.googleusercontent.com/ytc/AIdro_k2Gz-713v_4s-6tG-aJzL-jYJz9-sXQ_A8s-0Z=s900-c-k-c0x00ffffff-no-rj', followers: '14.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-6', description: 'Lilly Singh', image: 'https://tse1.mm.bing.net/th/id/OIP.nFhJnw15bRYG2wNhB5ToQQAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3', followers: '14.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
     { id: 'logo-7', description: 'Ninja', image: 'https://picsum.photos/seed/ninja/64/64', followers: '24M', platform: 'Twitch', className: "h-16 w-16 rounded-full" },
     { id: 'logo-8', description: 'Pokimane', image: 'https://picsum.photos/seed/pokimane/64/64', followers: '9.3M', platform: 'Twitch', className: "h-16 w-16 rounded-full" },
     { id: 'logo-9', description: 'Dude Perfect', image: 'https://picsum.photos/seed/dudeperfect/64/64', followers: '60M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
@@ -90,6 +90,3 @@ const Logos = ({
 };
 
 export { Logos };
-
-    
-    
