@@ -211,7 +211,7 @@ const jobsData: JobData[] = [
     {
         company: 'Smosh',
         title: 'Writer/Producer',
-        logo: { 'data-ai-hint': "logo", src: "https://picsum.photos/seed/smosh/48/48", alt: "Smosh", children: 'S' },
+        logo: { 'data-ai-hint': "logo", src: "https://yt3.ggpht.com/-AufHIQ3sLmM/AAAAAAAAAAI/AAAAAAAAAAA/hPFE6k06-Ls/s900-c-k-no-rj-c0xffffff/photo.jpg", alt: "Smosh", children: 'S' },
         platform: 'YouTube',
         job_description: 'Iconic comedy brand looking for a talented Writer/Producer to develop and create hilarious sketches and series for our YouTube audience.',
         salary: '$70k-$85k',
@@ -290,3 +290,5 @@ export const allJobs = jobsData.map((job, index) => {
 export const getJobById = (id: string) => {
   return allJobs.find(job => job.id === id);
 }
+
+    
