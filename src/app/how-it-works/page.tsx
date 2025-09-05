@@ -3,6 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Briefcase, UserPlus, FileText, Search, UserCheck, Handshake, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { GridPattern } from '@/components/ui/grid-pattern';
+import { cn } from '@/lib/utils';
+import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
+
 
 const talentSteps = [
   {
@@ -43,8 +47,19 @@ const employerSteps = [
 
 export default function HowItWorksPage() {
   return (
-    <div className="bg-background">
-      <div className="container mx-auto px-4 py-16 md:py-24">
+    <div className="bg-background relative overflow-hidden">
+        <GridPattern
+            width={40}
+            height={40}
+            x={-1}
+            y={-1}
+            className={cn(
+            '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
+            'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
+            )}
+        />
+        <SocialIconsAnimation />
+      <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
         <header className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">How CredAble Works</h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Connecting creators with opportunities is simple. Follow our straightforward process to find your next job or hire top talent.</p>
