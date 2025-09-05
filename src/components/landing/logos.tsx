@@ -37,7 +37,7 @@ const Logos = ({
     { id: 'logo-5', description: 'Casey Neistat', image: 'https://picsum.photos/seed/casey/64/64', followers: '12.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
     { id: 'logo-6', description: 'Lilly Singh', image: 'https://tse1.mm.bing.net/th/id/OIP.nFhJnw15bRYG2wNhB5ToQQAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3', followers: '14.5M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
     { id: 'logo-7', description: 'Ninja', image: 'https://picsum.photos/seed/ninja/64/64', followers: '24M', platform: 'Twitch', className: "h-16 w-16 rounded-full" },
-    { id: 'logo-8', description: 'Pokimane', image: 'https://picsum.photos/seed/pokimane/64/64', followers: '9.3M', platform: 'Twitch', className: "h-16 w-16 rounded-full" },
+    { id: 'logo-8', description: 'Pokimane', image: 'https://dotesports.com/wp-content/uploads/2022/08/22211037/Feature-Image-58.jpg?w=1200', followers: '9.3M', platform: 'Twitch', className: "h-16 w-16 rounded-full" },
     { id: 'logo-9', description: 'Dude Perfect', image: 'https://picsum.photos/seed/dudeperfect/64/64', followers: '60M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
     { id: 'logo-10', description: 'Smosh', image: 'https://picsum.photos/seed/smosh/64/64', followers: '25M', platform: 'YouTube', className: "h-16 w-16 rounded-full" },
   ],

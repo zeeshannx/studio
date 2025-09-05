@@ -52,6 +52,12 @@ const nextConfig: NextConfig = {
         hostname: 'tse1.mm.bing.net',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'dotesports.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

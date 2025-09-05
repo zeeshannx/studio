@@ -177,7 +177,7 @@ const jobsData: JobData[] = [
     {
         company: 'Pokimane',
         title: 'Content Strategist',
-        logo: { 'data-ai-hint': "person", src: "https://picsum.photos/seed/pokimane/48/48", alt: "Pokimane", children: 'P' },
+        logo: { 'data-ai-hint': "person", src: "https://dotesports.com/wp-content/uploads/2022/08/22211037/Feature-Image-58.jpg?w=1200", alt: "Pokimane", children: 'P' },
         platform: 'Twitch',
         job_description: 'Join a leading Twitch stream as a Content Strategist. Help plan and execute content that grows our audience and engages our community.',
         salary: '$60k-$75k',
