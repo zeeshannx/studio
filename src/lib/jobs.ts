@@ -245,7 +245,7 @@ const jobsData: JobData[] = [
     {
         company: 'Charli D\'Amelio',
         title: 'Brand Partnership Manager',
-        logo: { 'data-ai-hint': "person dancing", src: "https://picsum.photos/seed/damelio/48/48", alt: "Charli D'Amelio", children: 'CD' },
+        logo: { 'data-ai-hint': "person dancing", src: "https://www.tuttivip.it/wp-content/uploads/2020/11/charli-d-amelio.jpg", alt: "Charli D'Amelio", children: 'CD' },
         platform: 'TikTok',
         job_description: 'Manage and grow brand partnerships for a leading TikTok creator. Must have experience with influencer marketing and brand negotiations.',
         salary: '$80k-$100k',

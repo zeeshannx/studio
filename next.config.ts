@@ -70,6 +70,12 @@ const nextConfig: NextConfig = {
         hostname: 'i.redd.it',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.tuttivip.it',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
