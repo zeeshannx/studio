@@ -1,5 +1,7 @@
+
 import Link from 'next/link';
 import { Users, Twitter, Instagram, Linkedin } from 'lucide-react';
+import Image from 'next/image';
 
 export function Footer() {
   return (
@@ -8,8 +10,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="flex flex-col space-y-4">
             <Link href="/" className="flex items-center space-x-2">
-              <Users className="h-6 w-6 text-primary" />
-              <span className="font-bold">CredAble</span>
+               <Image src="https://storage.googleapis.com/studiostack-public-files/logo-dark-2.png" alt="CredAble Logo" width={120} height={40} />
             </Link>
             <p className="text-muted-foreground text-sm">
               The #1 job board for creators and social media professionals.

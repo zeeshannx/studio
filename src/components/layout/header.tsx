@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from '@/lib/utils';
 import React from 'react';
+import Image from 'next/image';
 
 const menuItems = [
   { href: '/jobs', label: 'Jobs', icon: <Briefcase className="size-5 shrink-0" />, description: "Find your next role in the creator economy." },
@@ -34,8 +35,7 @@ export function Header() {
       <div className="container flex h-16 items-center">
         <div className="hidden md:flex justify-start flex-1">
            <Link href="/" className="flex items-center space-x-2">
-            <Users className="h-6 w-6 text-primary" />
-            <span className="font-bold">CredAble</span>
+            <Image src="https://storage.googleapis.com/studiostack-public-files/logo-dark-2.png" alt="CredAble Logo" width={120} height={40} />
           </Link>
         </div>
         <div className="flex-1 flex justify-center">
@@ -85,8 +85,7 @@ export function Header() {
         {/* Mobile */}
         <div className="flex w-full items-center justify-between md:hidden">
           <Link href="/" className="flex items-center space-x-2">
-            <Users className="h-6 w-6 text-primary" />
-            <span className="font-bold">CredAble</span>
+             <Image src="https://storage.googleapis.com/studiostack-public-files/logo-dark-2.png" alt="CredAble Logo" width={120} height={40} />
           </Link>
           <Sheet>
             <SheetTrigger asChild>
@@ -99,8 +98,7 @@ export function Header() {
               <SheetHeader>
                 <SheetTitle>
                   <Link href="/" className="flex items-center gap-2">
-                    <Users className="h-6 w-6 text-primary" />
-                    <span className="text-lg font-semibold">CredAble</span>
+                     <Image src="https://storage.googleapis.com/studiostack-public-files/logo-dark-2.png" alt="CredAble Logo" width={120} height={40} />
                   </Link>
                 </SheetTitle>
               </SheetHeader>

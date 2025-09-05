@@ -76,6 +76,12 @@ const nextConfig: NextConfig = {
         hostname: 'www.tuttivip.it',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
