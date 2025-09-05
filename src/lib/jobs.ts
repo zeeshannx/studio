@@ -262,7 +262,7 @@ const jobsData: JobData[] = [
     {
         company: 'Addison Rae',
         title: 'Merch Designer',
-        logo: { 'data-ai-hint': "person fashion", src: "https://picsum.photos/seed/addison/48/48", alt: "Addison Rae", children: 'AR' },
+        logo: { 'data-ai-hint': "person fashion", src: "https://picsum.photos/seed/addisonrae/48/48", alt: "Addison Rae", children: 'AR' },
         platform: 'Instagram',
         job_description: 'Creative and trend-savvy Merch Designer wanted to develop and design a new line of apparel and accessories for a major social media influencer.',
         salary: 'Per project',
