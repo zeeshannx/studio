@@ -64,6 +64,12 @@ const nextConfig: NextConfig = {
         hostname: 'tse2.mm.bing.net',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.redd.it',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

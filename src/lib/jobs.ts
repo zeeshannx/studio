@@ -228,7 +228,7 @@ const jobsData: JobData[] = [
     {
         company: 'Top Creator',
         title: 'OnlyFans Manager',
-        logo: { 'data-ai-hint': "person", src: "https://picsum.photos/seed/of/48/48", alt: "OnlyFans Creator", children: 'OF' },
+        logo: { 'data-ai-hint': "person", src: "https://i.redd.it/sophie-rain-v0-fi0vyczncgdc1.jpeg?s=524098ac5276fba5277f7e7acb4b7122a882e270", alt: "OnlyFans Creator", children: 'OF' },
         platform: 'OnlyFans',
         job_description: 'Seeking a discreet and professional manager for a top OnlyFans account. Responsibilities include content scheduling, fan interaction, and promotion.',
         salary: 'Commission-based',
@@ -290,5 +290,3 @@ export const allJobs = jobsData.map((job, index) => {
 export const getJobById = (id: string) => {
   return allJobs.find(job => job.id === id);
 }
-
-    
