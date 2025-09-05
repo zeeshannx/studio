@@ -194,7 +194,7 @@ const jobsData: JobData[] = [
     {
         company: 'Dude Perfect',
         title: 'Production Assistant',
-        logo: { 'data-ai-hint': "group people", src: "https://picsum.photos/seed/dudeperfect/48/48", alt: "Dude Perfect", children: 'DP' },
+        logo: { 'data-ai-hint': "group people", src: "https://tse2.mm.bing.net/th/id/OIP.f42QszETJqaT7Jq9rdsubQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3", alt: "Dude Perfect", children: 'DP' },
         platform: 'YouTube',
         job_description: 'High-energy Production Assistant needed for a top YouTube channel. Assist with shoots, manage equipment, and help bring creative ideas to life.',
         salary: '$20-$25/hr',
