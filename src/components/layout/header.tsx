@@ -36,7 +36,7 @@ export function Header() {
         <div className="hidden md:flex justify-start flex-1">
            <Link href="/" className="flex items-center space-x-2">
             <Image src="https://media.discordapp.net/attachments/1386576152503652472/1413874366982258829/Cred_Able_1.png?ex=68c6bf1d&is=68c56d9d&hm=d9a52cd4b2a5ec705c69431feccb397810761b0c250875b23fa1558c6108a92a&=&format=webp&quality=lossless&width=625&height=625" alt="CredAble Logo" width={40} height={40} />
-            <span className="font-bold text-lg">CredAble</span>
+            
           </Link>
         </div>
         <div className="flex-1 flex justify-center">
@@ -87,7 +87,7 @@ export function Header() {
         <div className="flex w-full items-center justify-between md:hidden">
           <Link href="/" className="flex items-center space-x-2">
              <Image src="https://media.discordapp.net/attachments/1386576152503652472/1413874366982258829/Cred_Able_1.png?ex=68c6bf1d&is=68c56d9d&hm=d9a52cd4b2a5ec705c69431feccb397810761b0c250875b23fa1558c6108a92a&=&format=webp&quality=lossless&width=625&height=625" alt="CredAble Logo" width={40} height={40} />
-             <span className="font-bold text-lg">CredAble</span>
+             
           </Link>
           <Sheet>
             <SheetTrigger asChild>
@@ -101,7 +101,7 @@ export function Header() {
                 <SheetTitle>
                   <Link href="/" className="flex items-center gap-2">
                      <Image src="https://media.discordapp.net/attachments/1386576152503652472/1413874366982258829/Cred_Able_1.png?ex=68c6bf1d&is=68c56d9d&hm=d9a52cd4b2a5ec705c69431feccb397810761b0c250875b23fa1558c6108a92a&=&format=webp&quality=lossless&width=625&height=625" alt="CredAble Logo" width={40} height={40} />
-                     <span className="font-bold text-lg">CredAble</span>
+                     
                   </Link>
                 </SheetTitle>
               </SheetHeader>
