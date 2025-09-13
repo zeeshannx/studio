@@ -57,38 +57,38 @@ export function HeroSection() {
     <section className="py-20 md:py-32 bg-transparent">
       <div className="container mx-auto px-4 text-center">
         <div className="animate-in fade-in slide-in-from-top-8 duration-1000 ease-out">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 font-headline h-24 md:h-32 flex items-center justify-center gap-4">
-            <span>Find Your Next Social Media Job — Across </span>
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter mb-4 font-headline h-24 md:h-32 flex flex-wrap items-center justify-center gap-x-4">
+            <span>Find Your Next Social Media Job — Across</span>
             <div className="flex items-center gap-3">
-              <motion.div
-                key={`${key}-icon`}
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: parseFloat(animationDuration) + 0.2, duration: 0.5 }}
-                className="hidden md:block"
-              >
-                <SocialIcon platform={currentPhrase.name as any} className="h-12 w-12" />
-              </motion.div>
-              <span
-                key={key}
-                className={cn(
-                  'inline-block overflow-hidden whitespace-nowrap border-r-4 align-bottom text-transparent bg-clip-text text-gradient',
-                  'animate-[typing,blink-caret_.5s_step-end_infinite] w-0'
-                )}
-                style={{
-                  width: `${animationSteps}ch`,
-                  borderColor: currentPhrase.color,
-                  '--primary-gradient-start': currentPhrase.color,
-                  '--primary-gradient-end': `color-mix(in srgb, ${currentPhrase.color} 70%, black)`,
-                  animationName: 'typing, blink-caret',
-                  animationDuration: `${animationDuration}, 0.75s`,
-                  animationTimingFunction: `steps(${animationSteps}, end), step-end`,
-                  animationIterationCount: '1, infinite',
-                  animationFillMode: 'forwards',
-                } as React.CSSProperties}
-              >
-                {currentPhrase.name}
-              </span>
+                <motion.div
+                    key={`${key}-icon`}
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: parseFloat(animationDuration) + 0.2, duration: 0.5 }}
+                    className="hidden md:block"
+                >
+                    <SocialIcon platform={currentPhrase.name as any} className="h-12 w-12" />
+                </motion.div>
+                <span
+                    key={key}
+                    className={cn(
+                    'inline-block overflow-hidden whitespace-nowrap border-r-4 align-bottom text-transparent bg-clip-text text-gradient',
+                    'animate-[typing,blink-caret_.5s_step-end_infinite] w-0'
+                    )}
+                    style={{
+                    width: `${animationSteps}ch`,
+                    borderColor: currentPhrase.color,
+                    '--primary-gradient-start': currentPhrase.color,
+                    '--primary-gradient-end': `color-mix(in srgb, ${currentPhrase.color} 70%, black)`,
+                    animationName: 'typing, blink-caret',
+                    animationDuration: `${animationDuration}, 0.75s`,
+                    animationTimingFunction: `steps(${animationSteps}, end), step-end`,
+                    animationIterationCount: '1, infinite',
+                    animationFillMode: 'forwards',
+                    } as React.CSSProperties}
+                >
+                    {currentPhrase.name}
+                </span>
             </div>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
