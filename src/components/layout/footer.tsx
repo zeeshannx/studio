@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import { Users, Twitter, Instagram, Linkedin } from 'lucide-react';
 import Image from 'next/image';
@@ -10,7 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="flex flex-col space-y-4">
             <Link href="/" className="flex items-center space-x-2">
-               <Image src="https://media.discordapp.net/attachments/1386576152503652472/1413874366982258829/Cred_Able_1.png?ex=68c6bf1d&is=68c56d9d&hm=d9a52cd4b2a5ec705c69431feccb397810761b0c250875b23fa1558c6108a92a&=&format=webp&quality=lossless&width=625&height=625" alt="CredAble Logo" width={100} height={100} />
+               <Image src="https://media.discordapp.net/attachments/1386576152503652472/1413874366982258829/Cred_Able_1.png?ex=68c6bf1d&is=68c56d9d&hm=d9a52cd4b2a5ec705c69431feccb397810761b0c250875b23fa1558c6108a92a&=&format=webp&quality=lossless&width=625&height=625" alt="CredAble Logo" width={200} height={200} />
                
             </Link>
             <p className="text-muted-foreground text-sm">
@@ -49,5 +48,3 @@ export function Footer() {
     </footer>
   );
 }
-
-    
