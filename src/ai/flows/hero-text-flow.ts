@@ -29,7 +29,7 @@ export type HeroPhrasesOutput = z.infer<typeof HeroPhrasesOutputSchema>;
 const prompt = ai.definePrompt({
   name: 'heroPhrasesPrompt',
   output: {schema: HeroPhrasesOutputSchema},
-  prompt: `You are a creative copywriter. Generate a list of 9 popular social media platforms (e.g., Instagram, YouTube, Twitch, TikTok, etc.) along with their primary brand hex color. These will be used in a typing animation.`,
+  prompt: `You are a creative copywriter. Generate a list of 9 popular social media platforms (e.g., Instagram, YouTube, Twitch, TikTok, OnlyFans, Discord, etc.) along with their primary brand hex color. These will be used in a typing animation.`,
 });
 
 const getHeroPhrasesFlow = ai.defineFlow(

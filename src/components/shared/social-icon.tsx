@@ -134,6 +134,3 @@ export function SocialIcon({ platform, className }: SocialIconProps) {
       return null;
   }
 }
-
-
-
