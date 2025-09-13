@@ -12,14 +12,14 @@ import {z} from 'zod';
 const HeroPhrasesOutputSchema = z.object({
   phrases: z
     .array(z.string())
-    .describe('A list of 5-7 popular social media platform names.'),
+    .describe('A list of the top 25 popular social media platform names.'),
 });
 export type HeroPhrasesOutput = z.infer<typeof HeroPhrasesOutputSchema>;
 
 const prompt = ai.definePrompt({
   name: 'heroPhrasesPrompt',
   output: {schema: HeroPhrasesOutputSchema},
-  prompt: `You are a creative copywriter. Generate a list of 5-7 popular social media platform names (e.g., Instagram, YouTube, Twitch, TikTok, etc.). These will be used in a typing animation.`,
+  prompt: `You are a creative copywriter. Generate a list of the top 25 popular social media platform names (e.g., Instagram, YouTube, Twitch, TikTok, etc.). These will be used in a typing animation.`,
 });
 
 const getHeroPhrasesFlow = ai.defineFlow(
