@@ -22,6 +22,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { initiateEmailSignIn, initiateEmailSignUp } from '@/firebase/non-blocking-login';
+import { addDoc, collection } from 'firebase/firestore';
+import { useFirestore } from '@/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 function GoogleIcon() {
   return (
@@ -108,19 +111,28 @@ const formSchema = z.object({
   password: z.string().min(6, { message: "Password must be at least 6 characters." }),
 });
 
+const companySignUpSchema = z.object({
+  companyName: z.string().min(2, { message: "Company name is required." }),
+  email: z.string().email({ message: "Invalid business email address." }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
+});
 
 export default function LoginPage() {
   const auth = useAuth();
+  const firestore = useFirestore();
   const { user } = useUser();
   const router = useRouter();
   const [role, setRole] = useState<'employer' | 'talent' | null>(null);
+  const [isCompanySignUp, setIsCompanySignUp] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const signInForm = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { email: "", password: "" },
+  });
+
+  const companySignUpForm = useForm<z.infer<typeof companySignUpSchema>>({
+    resolver: zodResolver(companySignUpSchema),
+    defaultValues: { companyName: "", email: "", password: "" },
   });
 
   useEffect(() => {
@@ -146,13 +158,34 @@ export default function LoginPage() {
       initiateEmailSignIn(auth, values.email, values.password);
     }
   };
-
-  const handleEmailSignUp = (values: z.infer<typeof formSchema>) => {
+  
+  const handleCompanySignUp = async (values: z.infer<typeof companySignUpSchema>) => {
+    if (!auth || !firestore) return;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      const user = userCredential.user;
+      if (user) {
+        await addDoc(collection(firestore, 'companies'), {
+          ownerUid: user.uid,
+          name: values.companyName,
+          email: values.email,
+        });
+      }
+    } catch (error) {
+      console.error("Company sign-up failed:", error);
+    }
+  };
+  
+  const handleTalentSignUp = (values: z.infer<typeof formSchema>) => {
     if (auth) {
       initiateEmailSignUp(auth, values.email, values.password);
     }
   };
 
+  const resetForms = () => {
+    setRole(null);
+    setIsCompanySignUp(false);
+  }
 
   const roleSelection = (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -167,7 +200,7 @@ export default function LoginPage() {
         >
           <GradientUsersIcon />
           <h3 className="font-semibold text-lg">I want to hire</h3>
-          <p className="text-sm text-muted-foreground">I want to log in to my creator account or Company account, where I can post jobs, find professionals, etc.</p>
+          <p className="text-sm text-muted-foreground">Post jobs, find professionals, and manage your company account.</p>
         </Card>
         <Card
           className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1 group"
@@ -175,28 +208,161 @@ export default function LoginPage() {
         >
           <GradientBriefcaseIcon />
           <h3 className="font-semibold text-lg">I want to apply</h3>
-          <p className="text-sm text-muted-foreground">I want to log in to my Talent account, where I can showcase my portfolio, find job positions, and apply for them.</p>
+          <p className="text-sm text-muted-foreground">Showcase your portfolio, find jobs, and apply for positions.</p>
         </Card>
       </CardContent>
     </motion.div>
   );
 
-  const authButtons = (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Welcome to CredAble</CardTitle>
+  const signInView = (
+     <>
+        <div className="grid gap-4">
+            {role === 'employer' && (
+            <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(true)}>
+                <YouTubeIcon />
+                <span className="ml-2">Sign in with YouTube</span>
+            </Button>
+            )}
+            <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(false)}>
+            <GoogleIcon />
+            <span className="ml-2">Sign in with Google</span>
+            </Button>
+            <Button variant="outline" className="w-full bg-[#1877F2] text-white hover:bg-[#1877F2]/90 hover:text-white" onClick={handleFacebookSignIn}>
+            <Facebook className="mr-2 h-5 w-5" />
+            Sign in with Facebook
+            </Button>
+        </div>
+        <div className="relative my-6">
+            <Separator />
+            <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-card px-2 text-muted-foreground">
+                    Or continue with
+                </span>
+            </div>
+        </div>
+        <Form {...signInForm}>
+            <form onSubmit={signInForm.handleSubmit(handleEmailSignIn)} className="space-y-4">
+            <FormField
+                control={signInForm.control}
+                name="email"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                    <Input placeholder="name@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+            <FormField
+                control={signInForm.control}
+                name="password"
+                render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                    <Input type="password" placeholder="••••••••" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                </FormItem>
+                )}
+            />
+            <Button type="submit" className="w-full bg-primary-gradient">Sign In</Button>
+            </form>
+        </Form>
+        {role === 'employer' ? (
+          <p className="text-center text-sm text-muted-foreground mt-4">
+            No account?{' '}
+            <a href="#" onClick={(e) => { e.preventDefault(); setIsCompanySignUp(true); }} className="underline hover:text-primary">
+              Sign up as a company
+            </a>
+          </p>
+        ) : (
+          <p className="text-center text-sm text-muted-foreground mt-4">
+            No account?{' '}
+            <a href="#" onClick={(e) => { e.preventDefault(); handleTalentSignUp(signInForm.getValues()); }} className="underline hover:text-primary">
+              Sign up
+            </a>
+          </p>
+        )}
+    </>
+  );
+
+  const companySignUpView = (
+    <>
+      <CardHeader className="text-center">
+          <CardTitle className="text-2xl">Create Company Account</CardTitle>
           <CardDescription>
-            Sign in to {role === 'employer' ? 'hire amazing talent' : 'find your next opportunity'}.
+            Sign up to post jobs and hire amazing talent.
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <Form {...companySignUpForm}>
+            <form onSubmit={companySignUpForm.handleSubmit(handleCompanySignUp)} className="space-y-4">
+              <FormField
+                control={companySignUpForm.control}
+                name="companyName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Your Company Inc." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={companySignUpForm.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Business Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="you@company.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={companySignUpForm.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="••••••••" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full bg-primary-gradient">Create Account</Button>
+            </form>
+          </Form>
+           <p className="text-center text-sm text-muted-foreground mt-4">
+            Already have an account?{' '}
+            <a href="#" onClick={(e) => { e.preventDefault(); setIsCompanySignUp(false); }} className="underline hover:text-primary">
+              Sign in
+            </a>
+          </p>
+        </CardContent>
+    </>
+  );
+
+  const authContent = () => {
+    if (role === 'employer') {
+      return isCompanySignUp ? companySignUpView : signInView;
+    }
+    if (role === 'talent') {
+      return (
+        <>
           <div className="grid gap-4">
-             {role === 'employer' && (
-              <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(true)}>
-                <YouTubeIcon />
-                <span className="ml-2">Sign in with YouTube</span>
-              </Button>
-            )}
             <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(false)}>
               <GoogleIcon />
               <span className="ml-2">Sign in with Google</span>
@@ -212,15 +378,15 @@ export default function LoginPage() {
                     <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
+                    <span className="bg-card px-2 text-muted-foreground">
                         Or continue with
                     </span>
                 </div>
             </div>
-            <Form {...form}>
+            <Form {...signInForm}>
               <form className="space-y-4">
                  <FormField
-                  control={form.control}
+                  control={signInForm.control}
                   name="email"
                   render={({ field }) => (
                     <FormItem>
@@ -233,7 +399,7 @@ export default function LoginPage() {
                   )}
                 />
                  <FormField
-                  control={form.control}
+                  control={signInForm.control}
                   name="password"
                   render={({ field }) => (
                     <FormItem>
@@ -246,20 +412,35 @@ export default function LoginPage() {
                   )}
                 />
                 <div className="flex gap-4">
-                    <Button onClick={form.handleSubmit(handleEmailSignIn)} className="w-full bg-primary-gradient">Sign In</Button>
-                    <Button onClick={form.handleSubmit(handleEmailSignUp)} variant="secondary" className="w-full">Sign Up</Button>
+                    <Button onClick={signInForm.handleSubmit(handleEmailSignIn)} className="w-full bg-primary-gradient">Sign In</Button>
+                    <Button onClick={signInForm.handleSubmit(handleTalentSignUp)} variant="secondary" className="w-full">Sign Up</Button>
                 </div>
               </form>
             </Form>
-           <p className="text-center text-xs text-muted-foreground mt-4">
-            <a href="#" onClick={(e) => { e.preventDefault(); setRole(null); }} className="underline hover:text-primary">
-              Back to role selection
-            </a>
-          </p>
+        </>
+      )
+    }
+    return null;
+  }
+
+  const authFlow = (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+       { (!isCompanySignUp) && <CardHeader className="text-center">
+          <CardTitle className="text-2xl">Welcome to CredAble</CardTitle>
+          <CardDescription>
+            Sign in to {role === 'employer' ? 'hire amazing talent' : 'find your next opportunity'}.
+          </CardDescription>
+        </CardHeader> }
+        <CardContent>
+            {authContent()}
+            <p className="text-center text-xs text-muted-foreground mt-4">
+                <a href="#" onClick={(e) => { e.preventDefault(); resetForms(); }} className="underline hover:text-primary">
+                Back to role selection
+                </a>
+            </p>
         </CardContent>
     </motion.div>
   );
-
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -287,13 +468,13 @@ export default function LoginPage() {
         <Card className="w-full max-w-2xl z-10 bg-transparent border-none shadow-none">
             <AnimatePresence mode="wait">
                 <motion.div
-                    key={role || 'selection'}
+                    key={role ? (isCompanySignUp ? 'company-signup' : 'auth') : 'selection'}
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 50 }}
                     transition={{ duration: 0.3 }}
                 >
-                    {!role ? roleSelection : authButtons}
+                    {!role ? roleSelection : authFlow}
                 </motion.div>
             </AnimatePresence>
         </Card>
@@ -306,3 +487,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+    
