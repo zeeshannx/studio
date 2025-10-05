@@ -76,7 +76,7 @@ export default function LoginPage() {
         >
           <Users className="h-12 w-12 mx-auto mb-4 text-primary" />
           <h3 className="font-semibold text-lg">I want to hire</h3>
-          <p className="text-sm text-muted-foreground">Post jobs and find the best talent.</p>
+          <p className="text-sm text-muted-foreground">I want to log in to my Channel or Company account, where I can post jobs, find professionals, etc.</p>
         </Card>
         <Card
           className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all"
