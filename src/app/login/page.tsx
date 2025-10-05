@@ -246,7 +246,7 @@ export default function LoginPage() {
                   )}
                 />
                 <div className="flex gap-4">
-                    <Button onClick={form.handleSubmit(handleEmailSignIn)} className="w-full">Sign In</Button>
+                    <Button onClick={form.handleSubmit(handleEmailSignIn)} className="w-full bg-primary-gradient">Sign In</Button>
                     <Button onClick={form.handleSubmit(handleEmailSignUp)} variant="secondary" className="w-full">Sign Up</Button>
                 </div>
               </form>
@@ -306,4 +306,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
