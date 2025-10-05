@@ -6,6 +6,8 @@ import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { GridPattern } from '@/components/ui/grid-pattern';
+import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 
 export default function DashboardLayout({
     children,
@@ -31,7 +33,18 @@ export default function DashboardLayout({
                 <DashboardSidebar />
             </Sidebar>
             <SidebarInset className="bg-transparent">
-                <div className="p-4 md:p-8">
+                 <GridPattern
+                    width={40}
+                    height={40}
+                    x={-1}
+                    y={-1}
+                    className={cn(
+                    '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
+                    'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
+                    )}
+                />
+                <SocialIconsAnimation />
+                <div className="relative z-10 p-4 md:p-8">
                     <div className="md:hidden mb-4">
                         <SidebarTrigger />
                     </div>
