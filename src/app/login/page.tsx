@@ -120,40 +120,47 @@ export default function LoginPage() {
 
 
   return (
-    <div className="relative flex min-h-screen items-start justify-center bg-background overflow-hidden p-4 pt-24 md:pt-32">
-        <Link href="/" className="absolute top-4 left-4 z-20">
-            <Image
-                src="https://i.ibb.co/4gdcKdk/Cred-Able-1.png"
-                alt="CredAble Logo"
-                width={150}
-                height={150}
-                className="w-32"
-            />
-        </Link>
-       <GridPattern
-        width={40}
-        height={40}
-        x={-1}
-        y={-1}
-        className={cn(
-          '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
-          'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
-        )}
-      />
-      <SocialIconsAnimation />
-      <Card className="w-full max-w-2xl z-10 bg-transparent border-none shadow-none">
-        <AnimatePresence mode="wait">
-            <motion.div
-                key={role || 'selection'}
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 50 }}
-                transition={{ duration: 0.3 }}
-            >
-                {!role ? roleSelection : authButtons}
-            </motion.div>
-        </AnimatePresence>
-      </Card>
+    <div className="flex flex-col min-h-screen bg-background">
+        <div className="relative flex-grow flex items-start justify-center overflow-hidden p-4 pt-24 md:pt-32">
+            <Link href="/" className="absolute top-4 left-4 z-20">
+                <Image
+                    src="https://i.ibb.co/4gdcKdk/Cred-Able-1.png"
+                    alt="CredAble Logo"
+                    width={150}
+                    height={150}
+                    className="w-32"
+                />
+            </Link>
+        <GridPattern
+            width={40}
+            height={40}
+            x={-1}
+            y={-1}
+            className={cn(
+            '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
+            'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
+            )}
+        />
+        <SocialIconsAnimation />
+        <Card className="w-full max-w-2xl z-10 bg-transparent border-none shadow-none">
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={role || 'selection'}
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 50 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {!role ? roleSelection : authButtons}
+                </motion.div>
+            </AnimatePresence>
+        </Card>
+        </div>
+         <footer className="w-full bg-gray-900 text-gray-400 py-4">
+            <div className="container mx-auto text-center text-xs">
+                <p>&copy; {new Date().getFullYear()} CredAble Inc. &bull; <Link href="/privacy" className="hover:text-white">Privacy Policy</Link> &bull; <Link href="/terms" className="hover:text-white">Terms of Service</Link></p>
+            </div>
+        </footer>
     </div>
   );
 }
