@@ -15,6 +15,7 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const isLoginPage = pathname === '/login';
+  const isDashboard = pathname.startsWith('/dashboard');
 
   return (
     <html lang="en" className="dark">
@@ -27,9 +28,9 @@ export default function RootLayout({
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
         <FirebaseClientProvider>
-          {!isLoginPage && <Header />}
+          {!isLoginPage && !isDashboard && <Header />}
           <main className="flex-grow">{children}</main>
-          {!isLoginPage && <Footer />}
+          {!isLoginPage && !isDashboard && <Footer />}
           <Toaster />
         </FirebaseClientProvider>
       </body>
