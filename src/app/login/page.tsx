@@ -188,7 +188,7 @@ export default function LoginPage() {
         <div className="relative flex-grow flex items-start justify-center overflow-hidden p-4 pt-24 md:pt-32">
             <Link href="/" className="absolute top-4 left-4 z-20">
                 <Image
-                    src="https://i.ibb.co/4gdcKdk/Cred-Able-1.png"
+                    src="https://i.ibb.co/C553W4D/Cred-Able-2.png"
                     alt="CredAble Logo"
                     width={150}
                     height={150}
