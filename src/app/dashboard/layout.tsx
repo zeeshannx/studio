@@ -5,6 +5,7 @@ import { DashboardSidebar } from './_components/dashboard-sidebar';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { cn } from '@/lib/utils';
 
 export default function DashboardLayout({
     children,
@@ -29,7 +30,7 @@ export default function DashboardLayout({
             <Sidebar>
                 <DashboardSidebar />
             </Sidebar>
-            <SidebarInset>
+            <SidebarInset className="bg-transparent">
                 <div className="p-4 md:p-8">
                     <div className="md:hidden mb-4">
                         <SidebarTrigger />
