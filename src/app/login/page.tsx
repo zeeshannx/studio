@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -9,6 +8,9 @@ import { useAuth, useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Facebook } from 'lucide-react';
+import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
+import { GridPattern } from '@/components/ui/grid-pattern';
+import { cn } from '@/lib/utils';
 
 function GoogleIcon() {
   return (
@@ -57,8 +59,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <Card className="w-full max-w-md">
+    <div className="relative flex min-h-screen items-center justify-center bg-background overflow-hidden">
+       <GridPattern
+        width={40}
+        height={40}
+        x={-1}
+        y={-1}
+        className={cn(
+          '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
+          'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
+        )}
+      />
+      <SocialIconsAnimation />
+      <Card className="w-full max-w-md z-10">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Welcome to CredAble</CardTitle>
           <CardDescription>Sign in to find your next opportunity in the creator economy.</CardDescription>
