@@ -16,6 +16,7 @@ import {
   HelpCircle,
   LogOut,
   User as UserIcon,
+  LayoutDashboard,
 } from 'lucide-react';
 import {
   NavigationMenu,
@@ -103,6 +104,13 @@ export function Header() {
                 <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
               </div>
             </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link href="/dashboard">
+                <LayoutDashboard className="mr-2 h-4 w-4" />
+                <span>Dashboard</span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignOut}>
               <LogOut className="mr-2 h-4 w-4" />
