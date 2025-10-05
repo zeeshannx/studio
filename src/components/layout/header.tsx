@@ -45,7 +45,6 @@ import { cn } from '@/lib/utils';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useUser, useAuth } from '@/firebase';
-import { AuthDialog } from '@/components/auth/auth-dialog';
 import { signOut } from 'firebase/auth';
 
 const menuItems = [
@@ -72,7 +71,6 @@ const menuItems = [
 export function Header() {
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
-  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
 
   const handleSignOut = async () => {
     if (auth) {
@@ -117,8 +115,8 @@ export function Header() {
 
     return (
       <>
-        <Button variant="ghost" onClick={() => setIsAuthDialogOpen(true)}>
-          Sign In
+        <Button variant="ghost" asChild>
+          <Link href="/login">Sign In</Link>
         </Button>
         <Button className="bg-primary-gradient">Post a Job</Button>
       </>
@@ -261,7 +259,6 @@ export function Header() {
           </div>
         </div>
       </header>
-      <AuthDialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen} />
     </>
   );
 }

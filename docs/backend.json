@@ -201,7 +201,8 @@
     "providers": [
       "password",
       "anonymous",
-      "google.com"
+      "google.com",
+      "facebook.com"
     ]
   },
   "firestore": {
