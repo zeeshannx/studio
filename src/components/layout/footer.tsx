@@ -9,7 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="flex flex-col space-y-4">
             <Link href="/" className="flex items-center space-x-2">
-               <Image src="https://media.discordapp.net/attachments/1386576152503652472/1413874366982258829/Cred_Able_1.png?ex=68c6bf1d&is=68c56d9d&hm=d9a52cd4b2a5ec705c69431feccb397810761b0c250875b23fa1558c6108a92a&=&format=webp&quality=lossless" alt="CredAble Logo" width={150} height={150} className="w-32" />
+               <Image src="https://i.ibb.co/4gdcKdk/Cred-Able-1.png" alt="CredAble Logo" width={150} height={150} className="w-32" />
                
             </Link>
             <p className="text-muted-foreground text-sm">
@@ -48,5 +48,3 @@ export function Footer() {
     </footer>
   );
 }
-
-    
