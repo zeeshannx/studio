@@ -9,10 +9,12 @@ import {
 import { doc, setDoc } from 'firebase/firestore';
 import { getSdks } from '@/firebase'; // Using getSdks to get firestore instance
 
-const provider = new GoogleAuthProvider();
-
-export async function signInWithGoogle(auth: Auth): Promise<void> {
+export async function signInWithGoogle(auth: Auth, isTalent: boolean = false): Promise<void> {
   try {
+    const provider = new GoogleAuthProvider();
+    if (isTalent) {
+      provider.addScope('https://www.googleapis.com/auth/youtube.readonly');
+    }
     const userCredential: UserCredential = await signInWithPopup(auth, provider);
     const user = userCredential.user;
 

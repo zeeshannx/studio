@@ -39,6 +39,15 @@ function GoogleIcon() {
   );
 }
 
+function YouTubeIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="mr-2">
+      <path fill="#FF0000" d="M21.582,6.186 C21.325,5.253 20.628,4.557 19.694,4.299 C18.006,3.875 12,3.875 12,3.875 C12,3.875 5.994,3.875 4.306,4.299 C3.372,4.557 2.675,5.253 2.418,6.186 C2,7.875 2,12 2,12 C2,12 2,16.125 2.418,17.814 C2.675,18.747 3.372,19.443 4.306,19.701 C5.994,20.125 12,20.125 12,20.125 C12,20.125 18.006,20.125 19.694,19.701 C20.628,19.443 21.325,18.747 21.582,17.814 C22,16.125 22,12 22,12 C22,12 22,7.875 21.582,6.186 Z"/>
+      <path d="M10,15.5 L15.5,12 L10,8.5 L10,15.5 Z" fill="#FFFFFF"/>
+    </svg>
+  )
+}
+
 const GradientUsersIcon = () => (
     <svg
       width="40"
@@ -100,9 +109,9 @@ export default function LoginPage() {
     }
   }, [user, router]);
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (isTalent: boolean = false) => {
     if (auth) {
-      await signInWithGoogle(auth);
+      await signInWithGoogle(auth, isTalent);
     }
   };
 
@@ -149,7 +158,13 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn}>
+             {role === 'talent' && (
+              <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(true)}>
+                <YouTubeIcon />
+                <span className="ml-2">Sign in with YouTube</span>
+              </Button>
+            )}
+            <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(false)}>
               <GoogleIcon />
               <span className="ml-2">Sign in with Google</span>
             </Button>
