@@ -74,7 +74,7 @@ export default function LoginPage() {
           className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1"
           onClick={() => setRole('employer')}
         >
-          <Users className="h-12 w-12 mx-auto mb-4 text-primary" />
+          <Users className="h-10 w-10 mx-auto mb-4 text-primary" />
           <h3 className="font-semibold text-lg">I want to hire</h3>
           <p className="text-sm text-muted-foreground">I want to log in to my creator account or Company account, where I can post jobs, find professionals, etc.</p>
         </Card>
@@ -82,7 +82,7 @@ export default function LoginPage() {
           className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1"
           onClick={() => setRole('talent')}
         >
-          <Briefcase className="h-12 w-12 mx-auto mb-4 text-primary" />
+          <Briefcase className="h-10 w-10 mx-auto mb-4 text-primary" />
           <h3 className="font-semibold text-lg">I want to apply</h3>
           <p className="text-sm text-muted-foreground">I want to log in to my Talent account, where I can showcase my portfolio, find job positions, and apply for them.</p>
         </Card>
