@@ -140,7 +140,7 @@ export default function LoginPage() {
     }
   }, [user, router]);
 
-  const handleGoogleSignIn = async (isTalent: boolean = false) => {
+  const handleGoogleSignIn = (isTalent: boolean = false) => async () => {
     if (auth) {
       await signInWithGoogle(auth, isTalent);
     }
@@ -244,12 +244,12 @@ export default function LoginPage() {
      <>
         <div className="grid gap-4">
             {role === 'employer' && (
-            <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(true)}>
+            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn(true)}>
                 <YouTubeIcon />
                 <span className="ml-2">Sign in with YouTube</span>
             </Button>
             )}
-            <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(false)}>
+            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn(false)}>
             <GoogleIcon />
             <span className="ml-2">Sign in with Google</span>
             </Button>
@@ -389,7 +389,7 @@ export default function LoginPage() {
       return (
         <>
           <div className="grid gap-4">
-            <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(false)}>
+            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn(false)}>
               <GoogleIcon />
               <span className="ml-2">Sign in with Google</span>
             </Button>
@@ -513,3 +513,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+    
