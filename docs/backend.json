@@ -183,12 +183,25 @@
         "id",
         "name"
       ]
+    },
+    "User": {
+      "title": "User",
+      "description": "Represents a user of the application.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The user's unique ID from Firebase Auth." },
+        "displayName": { "type": "string", "description": "The user's display name." },
+        "email": { "type": "string", "format": "email", "description": "The user's email address." },
+        "photoURL": { "type": "string", "format": "uri", "description": "URL of the user's profile picture." }
+      },
+      "required": ["uid", "email"]
     }
   },
   "auth": {
     "providers": [
       "password",
-      "anonymous"
+      "anonymous",
+      "google.com"
     ]
   },
   "firestore": {
@@ -272,8 +285,24 @@
             }
           ]
         }
+      },
+       {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The user's unique identifier (matches Firebase Auth UID)."
+            }
+          ]
+        }
       }
     ],
-    "reasoning": "The Firestore structure is designed to support SocialVerse Jobs, a job board for social media platforms. It emphasizes authorization independence and QAPs. The structure includes collections for Companies, Talents, JobPostings, Placements, and Tags. To ensure authorization independence, any relevant authorization data (like company membership or ownership) would be denormalized into the JobPostings documents. This avoids the need for complex `get()` calls in security rules and allows for atomic operations. The structure supports QAPs by segregating data based on access requirements (e.g., no mixing public and private data in the same collection) and using path-based ownership for user-related data."
+    "reasoning": "The Firestore structure is designed to support SocialVerse Jobs, a job board for social media platforms. It emphasizes authorization independence and QAPs. The structure includes collections for Companies, Talents, JobPostings, Placements, and Tags. To ensure authorization independence, any relevant authorization data (like company membership or ownership) would be denormalized into the JobPostings documents. This avoids the need for complex `get()` calls in security rules and allows for atomic operations. The structure supports QAPs by segregating data based on access requirements (e.g., no mixing public and private data in the same collection) and using path-based ownership for user-related data. A 'users' collection has been added to store public user profile information."
   }
 }
