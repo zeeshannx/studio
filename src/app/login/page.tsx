@@ -158,7 +158,7 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-             {role === 'talent' && (
+             {role === 'employer' && (
               <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(true)}>
                 <YouTubeIcon />
                 <span className="ml-2">Sign in with YouTube</span>
