@@ -19,6 +19,8 @@ import {
   Settings,
   LogOut,
   Bell,
+  LayoutGrid,
+  FileText,
 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useUser, useAuth } from '@/firebase'
@@ -56,13 +58,13 @@ export function DashboardSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton href="/dashboard" isActive tooltip="Dashboard">
-              <Home />
+              <LayoutGrid />
               <span>Dashboard</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton href="/dashboard/applications" tooltip="My Applications">
-              <Briefcase />
+              <FileText />
               <span>My Applications</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
