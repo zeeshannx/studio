@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -6,11 +7,12 @@ import { signInWithGoogle } from '@/firebase/auth/google-auth';
 import { signInWithFacebook } from '@/firebase/auth/facebook-auth';
 import { useAuth, useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { Facebook } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Facebook, Users, Briefcase } from 'lucide-react';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function GoogleIcon() {
   return (
@@ -39,6 +41,7 @@ export default function LoginPage() {
   const auth = useAuth();
   const { user } = useUser();
   const router = useRouter();
+  const [role, setRole] = useState<'employer' | 'talent' | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -58,23 +61,40 @@ export default function LoginPage() {
     }
   };
 
-  return (
-    <div className="relative flex min-h-screen items-center justify-center bg-background overflow-hidden">
-       <GridPattern
-        width={40}
-        height={40}
-        x={-1}
-        y={-1}
-        className={cn(
-          '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
-          'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
-        )}
-      />
-      <SocialIconsAnimation />
-      <Card className="w-full max-w-md z-10">
+  const roleSelection = (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+      <CardHeader className="text-center">
+        <CardTitle className="text-2xl">Join as a Client or Talent</CardTitle>
+        <CardDescription>Are you here to hire or to find work?</CardDescription>
+      </CardHeader>
+      <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card
+          className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all"
+          onClick={() => setRole('employer')}
+        >
+          <Users className="h-12 w-12 mx-auto mb-4 text-primary" />
+          <h3 className="font-semibold text-lg">I want to hire</h3>
+          <p className="text-sm text-muted-foreground">Post jobs and find the best talent.</p>
+        </Card>
+        <Card
+          className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all"
+          onClick={() => setRole('talent')}
+        >
+          <Briefcase className="h-12 w-12 mx-auto mb-4 text-primary" />
+          <h3 className="font-semibold text-lg">I want to apply</h3>
+          <p className="text-sm text-muted-foreground">Find your next big opportunity.</p>
+        </Card>
+      </CardContent>
+    </motion.div>
+  );
+
+  const authButtons = (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Welcome to CredAble</CardTitle>
-          <CardDescription>Sign in to find your next opportunity in the creator economy.</CardDescription>
+          <CardDescription>
+            Sign in to {role === 'employer' ? 'hire amazing talent' : 'find your next opportunity'}.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
@@ -87,8 +107,43 @@ export default function LoginPage() {
               Sign in with Facebook
             </Button>
           </div>
+           <p className="text-center text-xs text-muted-foreground mt-4">
+            <a href="#" onClick={(e) => { e.preventDefault(); setRole(null); }} className="underline hover:text-primary">
+              Back to role selection
+            </a>
+          </p>
         </CardContent>
+    </motion.div>
+  );
+
+
+  return (
+    <div className="relative flex min-h-screen items-center justify-center bg-background overflow-hidden p-4">
+       <GridPattern
+        width={40}
+        height={40}
+        x={-1}
+        y={-1}
+        className={cn(
+          '[mask-image:radial-gradient(ellipse_at_center,white,transparent)]',
+          'absolute inset-0 z-0 h-full w-full skew-y-12 opacity-50'
+        )}
+      />
+      <SocialIconsAnimation />
+      <Card className="w-full max-w-lg z-10">
+        <AnimatePresence mode="wait">
+            <motion.div
+                key={role || 'selection'}
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 50 }}
+                transition={{ duration: 0.3 }}
+            >
+                {!role ? roleSelection : authButtons}
+            </motion.div>
+        </AnimatePresence>
       </Card>
     </div>
   );
 }
+
