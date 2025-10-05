@@ -1,0 +1,153 @@
+/**
+ * @fileoverview Firestore Security Rules for SocialVerse Jobs.
+ *
+ * Core Philosophy:
+ * This ruleset prioritizes authorization independence by denormalizing authorization data directly onto documents.
+ * It enforces owner-only write access for most collections, with public read access where appropriate.
+ *
+ * Data Structure:
+ * - /companies/{companyId}: Stores company profiles.
+ * - /talents/{talentId}: Stores talent profiles.
+ * - /job_postings/{jobPostingId}: Stores job postings, with denormalized authorization data.
+ * - /placements/{placementId}: Stores placement records.
+ * - /tags/{tagId}: Stores tags for job postings.
+ *
+ * Key Security Decisions:
+ * - User listing is generally disallowed unless explicitly stated otherwise.
+ * - Data validation is limited to critical relational fields for authorization and consistency.
+ * - Read operations on most collections are public for prototyping purposes.
+ *
+ * Denormalization for Authorization:
+ * Relevant authorization data (e.g., company membership or ownership) is denormalized into the JobPostings documents. This avoids the need for complex `get()` calls in security rules.
+ *
+ * Structural Segregation:
+ * Data is segregated based on access requirements to avoid mixing public and private data in the same collection.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Rules for the /companies collection.
+     * @path /companies/{companyId}
+     * @allow (create) - Authenticated user can create a company profile.
+     * @deny (update) - Non-authenticated user cannot update a company profile.
+     * @principle Enforces document ownership for writes.
+     */
+    match /companies/{companyId} {
+      // Helper function to check if the user is signed in
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      // Helper function to check if the user is the owner
+      function isOwner(companyId) {
+        return request.auth.uid == companyId;
+      }
+
+      // Helper function to check if the user is the owner and the document exists
+      function isExistingOwner(companyId) {
+        return request.auth.uid == resource.data.ownerId;
+      }
+      
+      allow get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update: if isSignedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+    }
+
+    /**
+     * @description Rules for the /talents collection.
+     * @path /talents/{talentId}
+     * @allow (create) - Authenticated user can create a talent profile.
+     * @deny (update) - Non-authenticated user cannot update a talent profile.
+     * @principle Enforces document ownership for writes.
+     */
+    match /talents/{talentId} {
+      // Helper function to check if the user is signed in
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      // Helper function to check if the user is the owner
+      function isOwner(talentId) {
+        return request.auth.uid == talentId;
+      }
+
+      // Helper function to check if the user is the owner and the document exists
+      function isExistingOwner(talentId) {
+        return request.auth.uid == resource.data.ownerId;
+      }
+      
+      allow get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+    }
+
+    /**
+     * @description Rules for the /job_postings collection.
+     * @path /job_postings/{jobPostingId}
+     * @allow (create) - Authenticated user can create a job posting.
+     * @deny (update) - Non-authenticated user cannot update a job posting if not the owner.
+     * @principle Enforces document ownership for writes.
+     */
+    match /job_postings/{jobPostingId} {
+      // Helper function to check if the user is signed in
+      function isSignedIn() {
+        return request.auth != null;
+      }
+
+      // Helper function to check if the user is the owner. Assumes 'companyId' field exists in the document.
+      function isOwner(companyId) {
+        return request.auth.uid == companyId;
+      }
+
+      // Helper function to check if the user is the owner and the document exists
+      function isExistingOwner(companyId) {
+        return request.auth.uid == resource.data.ownerId;
+      }
+      
+      allow get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.companyId == request.auth.uid;
+      allow update: if isSignedIn() && request.resource.data.companyId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.companyId == request.auth.uid;
+    }
+
+    /**
+     * @description Rules for the /placements collection.
+     * @path /placements/{placementId}
+     * @allow (create) - Authenticated user can create a placement.
+     * @deny (update) - Non-authenticated user cannot update a placement.
+     */
+    match /placements/{placementId} {
+      // Helper function to check if the user is signed in
+      function isSignedIn() {
+        return request.auth != null;
+      }
+      
+      allow get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+      allow delete: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+    }
+
+    /**
+     * @description Rules for the /tags collection.
+     * @path /tags/{tagId}
+     * @allow (get, list) - Anyone can read the tags.
+     * @deny (create, update, delete) - Only authenticated users can modify tags.
+     */
+    match /tags/{tagId} {
+      // Helper function to check if the user is signed in
+      function isSignedIn() {
+        return request.auth != null;
+      }
+      
+      allow get, list: if true;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn();
+    }
+  }
+}

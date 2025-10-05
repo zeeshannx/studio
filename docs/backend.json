@@ -1,0 +1,279 @@
+{
+  "entities": {
+    "JobPosting": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "JobPosting",
+      "type": "object",
+      "description": "Represents a job posting on the SocialVerse Jobs platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the job posting."
+        },
+        "platform": {
+          "type": "string",
+          "description": "The social media platform for the job (e.g., Instagram, LinkedIn)."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the job posting."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the job responsibilities and requirements."
+        },
+        "compensation": {
+          "type": "string",
+          "description": "Information about salary, benefits, or other compensation."
+        },
+        "postedDate": {
+          "type": "string",
+          "description": "Date and time when the job posting was created.",
+          "format": "date-time"
+        },
+        "companyId": {
+          "type": "string",
+          "description": "Reference to the Company that posted this job. (Relationship: Company 1:N JobPosting)"
+        },
+        "talentId": {
+          "type": "string",
+          "description": "Reference to the Talent that this JobPosting has been assigned to. (Relationship: Talent 1:N JobPosting)"
+        },
+        "tags": {
+          "type": "array",
+          "description": "References to Tags. (Relationship: Tag N:N JobPosting)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "platform",
+        "title",
+        "description",
+        "compensation",
+        "postedDate",
+        "companyId"
+      ]
+    },
+    "Company": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Company",
+      "type": "object",
+      "description": "Represents a company posting jobs on the platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the company."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the company."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the company."
+        },
+        "website": {
+          "type": "string",
+          "description": "The company's website URL.",
+          "format": "uri"
+        },
+        "logoUrl": {
+          "type": "string",
+          "description": "URL of the company logo.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "website"
+      ]
+    },
+    "Talent": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Talent",
+      "type": "object",
+      "description": "Represents a talent profile on the platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the talent profile."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the talent."
+        },
+        "platform": {
+          "type": "string",
+          "description": "The social media platform where the talent is active (e.g., Instagram, TikTok)."
+        },
+        "username": {
+          "type": "string",
+          "description": "The talent's username or handle on the platform."
+        },
+        "profileUrl": {
+          "type": "string",
+          "description": "URL to the talent's profile on the social media platform.",
+          "format": "uri"
+        },
+        "rankingScore": {
+          "type": "number",
+          "description": "The talent's ranking score based on the AI algorithm."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "platform",
+        "username",
+        "profileUrl"
+      ]
+    },
+    "Placement": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Placement",
+      "type": "object",
+      "description": "Represents a successful placement of a talent in a job.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the placement."
+        },
+        "jobPostingId": {
+          "type": "string",
+          "description": "Reference to the JobPosting that was filled. (Relationship: JobPosting 1:N Placement)"
+        },
+        "talentId": {
+          "type": "string",
+          "description": "Reference to the Talent that was placed. (Relationship: Talent 1:N Placement)"
+        },
+        "placementDate": {
+          "type": "string",
+          "description": "The date when the placement was made.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "jobPostingId",
+        "talentId",
+        "placementDate"
+      ]
+    },
+    "Tag": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Tag",
+      "type": "object",
+      "description": "Represents a tag or category that can be applied to job postings.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the tag."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the tag (e.g., 'marketing', 'design')."
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/companies/{companyId}",
+        "definition": {
+          "entityName": "Company",
+          "schema": {
+            "$ref": "#/backend/entities/Company"
+          },
+          "description": "Stores company profiles. Each document represents a company.",
+          "params": [
+            {
+              "name": "companyId",
+              "description": "The unique identifier for the company."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/talents/{talentId}",
+        "definition": {
+          "entityName": "Talent",
+          "schema": {
+            "$ref": "#/backend/entities/Talent"
+          },
+          "description": "Stores talent profiles. Each document represents a talent.",
+          "params": [
+            {
+              "name": "talentId",
+              "description": "The unique identifier for the talent."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/job_postings/{jobPostingId}",
+        "definition": {
+          "entityName": "JobPosting",
+          "schema": {
+            "$ref": "#/backend/entities/JobPosting"
+          },
+          "description": "Stores job postings. Includes denormalized data for authorization independence, such as company membership or ownership, copied from the Companies collection.",
+          "params": [
+            {
+              "name": "jobPostingId",
+              "description": "The unique identifier for the job posting."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/placements/{placementId}",
+        "definition": {
+          "entityName": "Placement",
+          "schema": {
+            "$ref": "#/backend/entities/Placement"
+          },
+          "description": "Stores placement records, linking JobPostings and Talents.",
+          "params": [
+            {
+              "name": "placementId",
+              "description": "The unique identifier for the placement."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/tags/{tagId}",
+        "definition": {
+          "entityName": "Tag",
+          "schema": {
+            "$ref": "#/backend/entities/Tag"
+          },
+          "description": "Stores tags or categories for job postings.",
+          "params": [
+            {
+              "name": "tagId",
+              "description": "The unique identifier for the tag."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to support SocialVerse Jobs, a job board for social media platforms. It emphasizes authorization independence and QAPs. The structure includes collections for Companies, Talents, JobPostings, Placements, and Tags. To ensure authorization independence, any relevant authorization data (like company membership or ownership) would be denormalized into the JobPostings documents. This avoids the need for complex `get()` calls in security rules and allows for atomic operations. The structure supports QAPs by segregating data based on access requirements (e.g., no mixing public and private data in the same collection) and using path-based ownership for user-related data."
+  }
+}
