@@ -120,7 +120,7 @@ export default function LoginPage() {
 
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-background overflow-hidden p-4">
+    <div className="relative flex min-h-screen items-start justify-center bg-background overflow-hidden p-4 pt-24 md:pt-32">
         <Link href="/" className="absolute top-4 left-4 z-20">
             <Image
                 src="https://i.ibb.co/4gdcKdk/Cred-Able-1.png"
@@ -145,9 +145,9 @@ export default function LoginPage() {
         <AnimatePresence mode="wait">
             <motion.div
                 key={role || 'selection'}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
                 transition={{ duration: 0.3 }}
             >
                 {!role ? roleSelection : authButtons}
