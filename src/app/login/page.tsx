@@ -71,7 +71,7 @@ export default function LoginPage() {
       </CardHeader>
       <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card
-          className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all"
+          className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1"
           onClick={() => setRole('employer')}
         >
           <Users className="h-12 w-12 mx-auto mb-4 text-primary" />
@@ -79,7 +79,7 @@ export default function LoginPage() {
           <p className="text-sm text-muted-foreground">I want to log in to my creator account or Company account, where I can post jobs, find professionals, etc.</p>
         </Card>
         <Card
-          className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all"
+          className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1"
           onClick={() => setRole('talent')}
         >
           <Briefcase className="h-12 w-12 mx-auto mb-4 text-primary" />
