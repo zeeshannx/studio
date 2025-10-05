@@ -121,7 +121,7 @@ export default function LoginPage() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-background overflow-hidden p-4">
-        <Link href="/" className="absolute top-4 right-4 z-20">
+        <Link href="/" className="absolute top-4 left-4 z-20">
             <Image
                 src="https://media.discordapp.net/attachments/1386576152503652472/1413874366982258829/Cred_Able_1.png?ex=68c6bf1d&is=68c56d9d&hm=d9a52cd4b2a5ec705c69431feccb397810761b0c250875b23fa1558c6108a92a&=&format=webp&quality=lossless&width=625&height=625"
                 alt="CredAble Logo"
