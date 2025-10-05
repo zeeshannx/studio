@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { signInWithGoogle } from '@/firebase/auth/google-auth';
 import { signInWithFacebook } from '@/firebase/auth/facebook-auth';
-import { useAuth, useUser } from '@/firebase';
+import { useAuth, useUser, useFirestore } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Facebook, Users, Briefcase } from 'lucide-react';
@@ -22,10 +22,8 @@ import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { initiateEmailSignIn, initiateEmailSignUp } from '@/firebase/non-blocking-login';
-import { addDoc, collection } from 'firebase/firestore';
-import { useFirestore } from '@/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 function GoogleIcon() {
   return (
@@ -154,9 +152,13 @@ export default function LoginPage() {
     }
   };
 
-  const handleEmailSignIn = (values: z.infer<typeof formSchema>) => {
+  const handleEmailSignIn = async (values: z.infer<typeof formSchema>) => {
     if (auth) {
-      initiateEmailSignIn(auth, values.email, values.password);
+      try {
+        await signInWithEmailAndPassword(auth, values.email, values.password);
+      } catch (error) {
+        console.error("Email sign-in failed:", error);
+      }
     }
   };
   
@@ -166,6 +168,16 @@ export default function LoginPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
       const user = userCredential.user;
       if (user) {
+        // Create a public user profile
+        const userRef = doc(firestore, 'users', user.uid);
+        await setDoc(userRef, {
+            uid: user.uid,
+            displayName: values.companyName,
+            email: user.email,
+            photoURL: null,
+        }, { merge: true });
+
+        // Create the company profile
         await addDoc(collection(firestore, 'companies'), {
           ownerUid: user.uid,
           name: values.companyName,
@@ -177,9 +189,22 @@ export default function LoginPage() {
     }
   };
   
-  const handleTalentSignUp = (values: z.infer<typeof formSchema>) => {
-    if (auth) {
-      initiateEmailSignUp(auth, values.email, values.password);
+  const handleTalentSignUp = async (values: z.infer<typeof formSchema>) => {
+    if (!auth || !firestore) return;
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+        const user = userCredential.user;
+        if (user) {
+            const userRef = doc(firestore, 'users', user.uid);
+            await setDoc(userRef, {
+                uid: user.uid,
+                displayName: user.email?.split('@')[0] || 'New User',
+                email: user.email,
+                photoURL: null,
+            }, { merge: true });
+        }
+    } catch (error) {
+        console.error("Talent sign-up failed:", error);
     }
   };
 
@@ -283,12 +308,12 @@ export default function LoginPage() {
             </a>
           </p>
         ) : (
-          <p className="text-center text-sm text-muted-foreground mt-4">
-            No account?{' '}
-            <a href="#" onClick={(e) => { e.preventDefault(); handleTalentSignUp(signInForm.getValues()); }} className="underline hover:text-primary">
-              Sign up
-            </a>
-          </p>
+           <p className="text-center text-sm text-muted-foreground mt-4">
+             No account?{' '}
+             <a href="#" onClick={(e) => { e.preventDefault(); handleTalentSignUp(signInForm.getValues()); }} className="underline hover:text-primary">
+               Sign up
+             </a>
+           </p>
         )}
     </>
   );
@@ -488,5 +513,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-    
