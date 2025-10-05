@@ -559,17 +559,6 @@ const SidebarMenuButton = React.forwardRef<
     ref
   ) => {
     const { isMobile, state } = useSidebar()
-
-    const buttonContent = (
-      <Comp
-        ref={ref as any}
-        data-sidebar="menu-button"
-        data-size={size}
-        data-active={isActive}
-        className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
-        {...props}
-      />
-    );
     
     const Comp = href ? (asChild ? Slot : Link) : (asChild ? Slot : 'button');
     const allProps = href ? { href, ...props } : props;
