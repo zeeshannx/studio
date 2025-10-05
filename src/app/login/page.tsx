@@ -84,7 +84,7 @@ export default function LoginPage() {
         >
           <Briefcase className="h-12 w-12 mx-auto mb-4 text-primary" />
           <h3 className="font-semibold text-lg">I want to apply</h3>
-          <p className="text-sm text-muted-foreground">Find your next big opportunity.</p>
+          <p className="text-sm text-muted-foreground">I want to log in to my Talent account, where I can showcase my portfolio, find job positions, and apply for them.</p>
         </Card>
       </CardContent>
     </motion.div>
