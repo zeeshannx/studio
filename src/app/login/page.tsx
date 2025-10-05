@@ -141,7 +141,7 @@ export default function LoginPage() {
         )}
       />
       <SocialIconsAnimation />
-      <Card className="w-full max-w-lg z-10">
+      <Card className="w-full max-w-2xl z-10">
         <AnimatePresence mode="wait">
             <motion.div
                 key={role || 'selection'}
