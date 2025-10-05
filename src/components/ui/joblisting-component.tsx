@@ -11,21 +11,10 @@ import { Badge } from "./badge"
 import { Card, CardContent } from "./card"
 import { MapPin, Clock, DollarSign, Users } from "lucide-react"
 import Link from "next/link"
+import { JobPosting } from "@/lib/jobs"
+import { WithId } from "@/firebase"
 
-export interface Job {
-  id: string;
-  company: string
-  title: string
-  logo: React.ReactNode
-  platform?: SocialPlatform
-  job_description: string
-  salary: string
-  location: string
-  remote: string
-  job_time: string
-  posted_at?: string
-  applicants?: number
-}
+export type Job = WithId<JobPosting>;
 
 export interface JobListingComponentProps {
   jobs: Job[]

@@ -1,7 +1,5 @@
-
 'use client'
 
-import { getJobById } from '@/lib/jobs'
 import { notFound } from 'next/navigation'
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -11,15 +9,38 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { SocialIcon } from '@/components/shared/social-icon'
 import { MapPin, Clock, DollarSign, Briefcase, Building, Calendar, Tv, MessageSquare, Link as LinkIcon, Twitter, Facebook, Copy } from 'lucide-react'
 import JobListingComponent from '@/components/ui/joblisting-component'
-import { allJobs as fetchAllJobs } from '@/lib/jobs';
 import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
+import { useDoc, useCollection, useFirestore, useMemoFirebase } from '@/firebase';
+import { doc, collection, query, where, limit } from 'firebase/firestore';
+import { JobPosting } from '@/lib/jobs';
+
 
 export default function JobPage({ params }: { params: { id: string } }) {
-  const job = getJobById(params.id)
+  const firestore = useFirestore();
+  
+  const jobRef = useMemoFirebase(() => firestore ? doc(firestore, 'job_postings', params.id) : null, [firestore, params.id]);
+  const { data: job, isLoading: isJobLoading } = useDoc<JobPosting>(jobRef);
+
+  const jobsCollection = useMemoFirebase(() => firestore ? collection(firestore, 'job_postings') : null, [firestore]);
+
+  const relatedJobsQuery = useMemoFirebase(() => {
+    if (!job || !jobsCollection) return null;
+    return query(
+        jobsCollection,
+        where('id', '!=', job.id),
+        limit(3)
+    );
+  }, [jobsCollection, job]);
+
+  const { data: relatedJobsData, isLoading: areRelatedJobsLoading } = useCollection<JobPosting>(relatedJobsQuery);
+
+  if (isJobLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (!job) {
     notFound()
@@ -27,13 +48,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
 
   const jobLogo = <Avatar className="h-20 w-20"><AvatarImage data-ai-hint={job.logo['data-ai-hint']} src={job.logo.src} alt={job.logo.alt} /><AvatarFallback className="text-3xl">{job.logo.children}</AvatarFallback></Avatar>
   
-  const relatedJobs = fetchAllJobs
-    .filter(j => j.id !== job.id && (j.platform === job.platform || j.title === job.title))
-    .slice(0,3)
-    .map(relatedJob => {
-        if (React.isValidElement(relatedJob.logo)) {
-            return { ...relatedJob, logo: relatedJob.logo };
-        }
+  const relatedJobs = (relatedJobsData || []).map(relatedJob => {
         const logoData = relatedJob.logo as unknown as { 'data-ai-hint': string, src: string, alt: string, children: string };
         return {
             ...relatedJob,
@@ -209,7 +224,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <JobListingComponent jobs={relatedJobs} className="grid-cols-1 md:grid-cols-2" />
+                        {areRelatedJobsLoading ? <p>Loading related jobs...</p> : <JobListingComponent jobs={relatedJobs} className="grid-cols-1 md:grid-cols-2" />}
                     </CardContent>
                 </Card>
 
@@ -265,5 +280,3 @@ export default function JobPage({ params }: { params: { id: string } }) {
     </div>
   )
 }
-
-    

@@ -1,60 +1,71 @@
-
 'use client';
-import { useState, useEffect, isValidElement } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import JobListingComponent, { Job } from '@/components/ui/joblisting-component';
+import JobListingComponent from '@/components/ui/joblisting-component';
 import { Search } from 'lucide-react';
-import { allJobs as fetchAllJobs } from '@/lib/jobs';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
-
-const allJobs = fetchAllJobs.map(job => {
-    if (isValidElement(job.logo)) {
-        return {
-        ...job,
-        logo: job.logo,
-        };
-    }
-    const logoData = job.logo as unknown as { 'data-ai-hint': string; src: string; alt: string; children: string; };
-    return {
-        ...job,
-        logo: <Avatar className="h-12 w-12"><AvatarImage data-ai-hint={logoData['data-ai-hint']} src={logoData.src} alt={logoData.alt} /><AvatarFallback>{logoData.children}</AvatarFallback></Avatar>
-    }
-});
+import { useCollection, useFirestore } from '@/firebase';
+import { collection } from 'firebase/firestore';
+import { JobPosting } from '@/lib/jobs';
 
 const JOBS_PER_PAGE = 8;
 
 export default function JobsPage() {
-    const [filteredJobs, setFilteredJobs] = useState(allJobs);
+    const firestore = useFirestore();
     const [visibleJobsCount, setVisibleJobsCount] = useState(JOBS_PER_PAGE);
     const [searchQuery, setSearchQuery] = useState('');
     const [platformFilter, setPlatformFilter] = useState('All Platforms');
     const [typeFilter, setTypeFilter] = useState('All Types');
 
-    const platforms = ['All Platforms', ...Array.from(new Set(allJobs.map(job => job.platform).filter(Boolean))) as string[]];
-    const jobTypes = ['All Types', ...Array.from(new Set(allJobs.map(job => job.job_time)))];
+    const jobsCollection = useMemo(() => collection(firestore, 'job_postings'), [firestore]);
 
-    useEffect(() => {
-        const filtered = allJobs.filter(job => {
+    const { data: allJobs, isLoading: isLoadingJobs } = useCollection<JobPosting>(jobsCollection);
+
+    const filteredJobs = useMemo(() => {
+        if (!allJobs) return [];
+        return allJobs.filter(job => {
             const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) || job.company.toLowerCase().includes(searchQuery.toLowerCase());
             const matchesPlatform = platformFilter === 'All Platforms' || job.platform === platformFilter;
             const matchesType = typeFilter === 'All Types' || job.job_time === typeFilter;
             return matchesSearch && matchesPlatform && matchesType;
         });
-        setFilteredJobs(filtered);
+    }, [allJobs, searchQuery, platformFilter, typeFilter]);
+
+    useEffect(() => {
         setVisibleJobsCount(JOBS_PER_PAGE);
     }, [searchQuery, platformFilter, typeFilter]);
 
-    const jobs = filteredJobs.slice(0, visibleJobsCount);
+    const jobsWithAvatars = useMemo(() => {
+        if (!filteredJobs) return [];
+        return filteredJobs.map(job => {
+            const logoData = job.logo as unknown as { 'data-ai-hint': string; src: string; alt: string; children: string; };
+            return {
+                ...job,
+                logo: <Avatar className="h-12 w-12"><AvatarImage data-ai-hint={logoData['data-ai-hint']} src={logoData.src} alt={logoData.alt} /><AvatarFallback>{logoData.children}</AvatarFallback></Avatar>
+            }
+        });
+    }, [filteredJobs]);
+
+    const visibleJobs = jobsWithAvatars.slice(0, visibleJobsCount);
+
+    const platforms = useMemo(() => {
+        if (!allJobs) return ['All Platforms'];
+        return ['All Platforms', ...Array.from(new Set(allJobs.map(job => job.platform).filter(Boolean))) as string[]];
+    }, [allJobs]);
+
+    const jobTypes = useMemo(() => {
+        if (!allJobs) return ['All Types'];
+        return ['All Types', ...Array.from(new Set(allJobs.map(job => job.job_time)))];
+    }, [allJobs]);
 
     const handleLoadMore = () => {
         setVisibleJobsCount(prevCount => prevCount + JOBS_PER_PAGE);
     };
-
 
     return (
         <div className="bg-background min-h-screen relative overflow-hidden">
@@ -111,14 +122,20 @@ export default function JobsPage() {
                 </div>
 
                 <main className="w-full">
-                    <div className="flex justify-between items-center mb-6">
-                        <p className="text-muted-foreground">Showing {jobs.length} of {filteredJobs.length} results</p>
-                    </div>
-                    <JobListingComponent jobs={jobs} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" />
-                    {visibleJobsCount < filteredJobs.length && (
-                        <div className="text-center mt-12">
-                            <Button onClick={handleLoadMore} className="bg-primary-gradient">Load More</Button>
-                        </div>
+                    {isLoadingJobs ? (
+                        <p>Loading jobs...</p>
+                    ) : (
+                        <>
+                            <div className="flex justify-between items-center mb-6">
+                                <p className="text-muted-foreground">Showing {visibleJobs.length} of {filteredJobs.length} results</p>
+                            </div>
+                            <JobListingComponent jobs={visibleJobs} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" />
+                            {visibleJobsCount < filteredJobs.length && (
+                                <div className="text-center mt-12">
+                                    <Button onClick={handleLoadMore} className="bg-primary-gradient">Load More</Button>
+                                </div>
+                            )}
+                        </>
                     )}
                 </main>
             </div>
