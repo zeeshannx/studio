@@ -39,6 +39,55 @@ function GoogleIcon() {
   );
 }
 
+const GradientUsersIcon = () => (
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="url(#icon-gradient)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="mx-auto mb-4 transition-transform duration-300 group-hover:scale-110"
+    >
+      <defs>
+        <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: 'hsl(var(--primary-gradient-start))' }} />
+          <stop offset="100%" style={{ stopColor: 'hsl(var(--primary-gradient-end))' }} />
+        </linearGradient>
+      </defs>
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+);
+
+const GradientBriefcaseIcon = () => (
+    <svg
+        width="40"
+        height="40"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="url(#icon-gradient)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="mx-auto mb-4 transition-transform duration-300 group-hover:scale-110"
+    >
+       <defs>
+        <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: 'hsl(var(--primary-gradient-start))' }} />
+          <stop offset="100%" style={{ stopColor: 'hsl(var(--primary-gradient-end))' }} />
+        </linearGradient>
+      </defs>
+      <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+    </svg>
+);
+
+
 export default function LoginPage() {
   const auth = useAuth();
   const { user } = useUser();
@@ -74,7 +123,7 @@ export default function LoginPage() {
           className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1 group"
           onClick={() => setRole('employer')}
         >
-          <Users className="h-10 w-10 mx-auto mb-4 text-primary transition-transform duration-300 group-hover:scale-110" />
+          <GradientUsersIcon />
           <h3 className="font-semibold text-lg">I want to hire</h3>
           <p className="text-sm text-muted-foreground">I want to log in to my creator account or Company account, where I can post jobs, find professionals, etc.</p>
         </Card>
@@ -82,7 +131,7 @@ export default function LoginPage() {
           className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1 group"
           onClick={() => setRole('talent')}
         >
-          <Briefcase className="h-10 w-10 mx-auto mb-4 text-primary transition-transform duration-300 group-hover:scale-110" />
+          <GradientBriefcaseIcon />
           <h3 className="font-semibold text-lg">I want to apply</h3>
           <p className="text-sm text-muted-foreground">I want to log in to my Talent account, where I can showcase my portfolio, find job positions, and apply for them.</p>
         </Card>
