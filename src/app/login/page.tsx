@@ -66,7 +66,7 @@ export default function LoginPage() {
   const roleSelection = (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Join as a Client or Talent</CardTitle>
+        <CardTitle className="text-4xl font-headline">Join as a Client or Talent</CardTitle>
         <CardDescription>Are you here to hire or to find work?</CardDescription>
       </CardHeader>
       <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
