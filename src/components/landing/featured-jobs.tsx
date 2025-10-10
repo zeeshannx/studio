@@ -1,3 +1,4 @@
+
 'use client';
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -11,8 +12,8 @@ import type { JobPosting } from '@/lib/jobs';
 
 export function FeaturedJobs() {
     const firestore = useFirestore();
-    const jobsCollection = useMemoFirebase(() => collection(firestore, 'job_postings'), [firestore]);
-    const jobsQuery = useMemoFirebase(() => query(jobsCollection, limit(6)), [jobsCollection]);
+    const jobsCollection = useMemoFirebase(() => firestore ? collection(firestore, 'job_postings') : null, [firestore]);
+    const jobsQuery = useMemoFirebase(() => jobsCollection ? query(jobsCollection, limit(6)) : null, [jobsCollection]);
     const { data: jobs, isLoading } = useCollection<JobPosting>(jobsQuery);
 
     const jobsWithLogo = jobs?.map(job => {

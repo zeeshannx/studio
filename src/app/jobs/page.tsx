@@ -1,3 +1,4 @@
+
 'use client';
 import { useState, useEffect, useMemo } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -9,7 +10,7 @@ import { Search } from 'lucide-react';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
-import { useCollection, useFirestore } from '@/firebase';
+import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
 import { collection } from 'firebase/firestore';
 import { JobPosting } from '@/lib/jobs';
 
@@ -22,7 +23,7 @@ export default function JobsPage() {
     const [platformFilter, setPlatformFilter] = useState('All Platforms');
     const [typeFilter, setTypeFilter] = useState('All Types');
 
-    const jobsCollection = useMemo(() => collection(firestore, 'job_postings'), [firestore]);
+    const jobsCollection = useMemoFirebase(() => firestore ? collection(firestore, 'job_postings') : null, [firestore]);
 
     const { data: allJobs, isLoading: isLoadingJobs } = useCollection<JobPosting>(jobsCollection);
 
