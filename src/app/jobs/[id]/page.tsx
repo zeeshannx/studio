@@ -14,53 +14,32 @@ import { Separator } from '@/components/ui/separator';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
-import { useDoc, useCollection, useFirestore, useMemoFirebase } from '@/firebase';
-import { doc, collection, query, where, limit } from 'firebase/firestore';
+import { allJobs } from '@/lib/placeholder-data/jobs'
 import { JobPosting } from '@/lib/jobs';
 
 
 export default function JobPage({ params }: { params: { id: string } }) {
-  const firestore = useFirestore();
   
-  const jobRef = useMemoFirebase(() => firestore ? doc(firestore, 'job_postings', params.id) : null, [firestore, params.id]);
-  const { data: job, isLoading: isJobLoading } = useDoc<JobPosting>(jobRef);
-
-  const jobsCollection = useMemoFirebase(() => firestore ? collection(firestore, 'job_postings') : null, [firestore]);
-
-  const relatedJobsQuery = useMemoFirebase(() => {
-    if (!job || !jobsCollection) return null;
-    return query(
-        jobsCollection,
-        where('id', '!=', job.id),
-        limit(3)
-    );
-  }, [jobsCollection, job]);
-
-  const { data: relatedJobsData, isLoading: areRelatedJobsLoading } = useCollection<JobPosting>(relatedJobsQuery);
-
-  if (isJobLoading) {
-    return <div>Loading...</div>;
-  }
-
+  const job = allJobs.find(job => job.id === params.id)
+  
   if (!job) {
     notFound()
   }
 
-  const jobLogo = <Avatar className="h-20 w-20"><AvatarImage data-ai-hint={job.logo['data-ai-hint']} src={job.logo.src} alt={job.logo.alt} /><AvatarFallback className="text-3xl">{job.logo.children}</AvatarFallback></Avatar>
-  
-  const relatedJobs = (relatedJobsData || []).map(relatedJob => {
-        const logoData = relatedJob.logo as unknown as { 'data-ai-hint': string, src: string, alt: string, children: string };
+  const relatedJobs = allJobs.filter(relatedJob => relatedJob.id !== job.id).slice(0,3).map(relatedJob => {
         return {
             ...relatedJob,
             logo: (
                 <Avatar className="h-12 w-12">
-                    <AvatarImage data-ai-hint={logoData['data-ai-hint']} src={logoData.src} alt={logoData.alt} />
-                    <AvatarFallback>{logoData.children}</AvatarFallback>
+                    <AvatarImage data-ai-hint={relatedJob.logo['data-ai-hint']} src={relatedJob.logo.src} alt={relatedJob.logo.alt} />
+                    <AvatarFallback>{relatedJob.logo.children}</AvatarFallback>
                 </Avatar>
             )
         };
     });
 
+  const jobLogo = <Avatar className="h-20 w-20"><AvatarImage data-ai-hint={job.logo['data-ai-hint']} src={job.logo.src} alt={job.logo.alt} /><AvatarFallback className="text-3xl">{job.logo.children}</AvatarFallback></Avatar>
+  
   const shareIcons = [
     { icon: <Twitter className="h-5 w-5" />, label: 'Twitter' },
     { icon: <Facebook className="h-5 w-5" />, label: 'Facebook' },
@@ -192,7 +171,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
                                 <div key={category}>
                                     <p className="font-semibold mb-2">{category}</p>
                                     <div className="flex flex-wrap gap-2">
-                                        {skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
+                                        {(skills as string[]).map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
                                     </div>
                                 </div>
                             ))}
@@ -224,7 +203,7 @@ export default function JobPage({ params }: { params: { id: string } }) {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        {areRelatedJobsLoading ? <p>Loading related jobs...</p> : <JobListingComponent jobs={relatedJobs} className="grid-cols-1 md:grid-cols-2" />}
+                        <JobListingComponent jobs={relatedJobs} className="grid-cols-1 md:grid-cols-2" />
                     </CardContent>
                 </Card>
 

@@ -84,6 +84,14 @@
           "type": "string",
           "description": "URL of the company logo.",
           "format": "uri"
+        },
+        "logo": {
+            "type": "object",
+            "description": "The logo object for the company."
+        },
+        "followers": {
+            "type": "string",
+            "description": "Number of followers the company has."
         }
       },
       "required": [

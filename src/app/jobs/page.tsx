@@ -10,22 +10,25 @@ import { Search } from 'lucide-react';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
-import { useCollection, useFirestore, useMemoFirebase } from '@/firebase';
-import { collection } from 'firebase/firestore';
 import { JobPosting } from '@/lib/jobs';
+import { allJobs as fetchAllJobs } from '@/lib/placeholder-data/jobs';
 
 const JOBS_PER_PAGE = 8;
 
 export default function JobsPage() {
-    const firestore = useFirestore();
+    const [allJobs, setAllJobs] = useState<JobPosting[]>([]);
+    const [isLoadingJobs, setIsLoadingJobs] = useState(true);
+
+    useEffect(() => {
+        // Simulate fetching data
+        setAllJobs(fetchAllJobs);
+        setIsLoadingJobs(false);
+    }, []);
+    
     const [visibleJobsCount, setVisibleJobsCount] = useState(JOBS_PER_PAGE);
     const [searchQuery, setSearchQuery] = useState('');
     const [platformFilter, setPlatformFilter] = useState('All Platforms');
     const [typeFilter, setTypeFilter] = useState('All Types');
-
-    const jobsCollection = useMemoFirebase(() => firestore ? collection(firestore, 'job_postings') : null, [firestore]);
-
-    const { data: allJobs, isLoading: isLoadingJobs } = useCollection<JobPosting>(jobsCollection);
 
     const filteredJobs = useMemo(() => {
         if (!allJobs) return [];

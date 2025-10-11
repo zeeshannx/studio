@@ -18,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { allJobs } from '@/lib/placeholder-data/jobs'
 
 export default function DashboardPage() {
   const { user } = useUser()
@@ -30,11 +31,7 @@ export default function DashboardPage() {
     { title: 'Search Appearances', value: '890', icon: <BarChart className="h-6 w-6 text-primary" />, change: '-3%', changeType: 'decrease' },
   ];
   
-  const recommendedJobs = [
-    { id: '1', title: 'Senior Video Editor', company: 'MrBeast', logo: 'https://yt3.ggpht.com/-egl0BJumF1A/AAAAAAAAAAI/AAAAAAAAAAA/zk1ch1-WaY8/s900-c-k-no-mo-rj-c0xffffff/photo.jpg', platform: 'YouTube' },
-    { id: '2', title: 'Thumbnail Designer', company: 'PewDiePie', logo: 'https://i.pinimg.com/originals/7e/f7/77/7ef7776d02efd1c241bf547b0a8cb719.png', platform: 'YouTube' },
-    { id: '3', title: 'Community Manager', company: 'Pokimane', logo: 'https://dotesports.com/wp-content/uploads/2022/08/22211037/Feature-Image-58.jpg?w=1200', platform: 'Twitch' },
-  ]
+  const recommendedJobs = allJobs.slice(0, 3);
   
   const recentApplications = [
       { id: '1', title: 'Creative Director', company: 'Like Nastya', status: 'Viewed', date: '2 days ago' },
@@ -86,7 +83,7 @@ export default function DashboardPage() {
                         <div key={job.id} className="flex items-center justify-between gap-4 p-3 rounded-lg hover:bg-muted">
                             <div className="flex items-center gap-4">
                                 <Avatar>
-                                    <AvatarImage src={job.logo} alt={job.company} data-ai-hint="logo" />
+                                    <AvatarImage src={job.logo.src} alt={job.company} data-ai-hint={job.logo['data-ai-hint']} />
                                     <AvatarFallback>{job.company.charAt(0)}</AvatarFallback>
                                 </Avatar>
                                 <div>
