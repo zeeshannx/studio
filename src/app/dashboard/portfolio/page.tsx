@@ -43,7 +43,7 @@ const roles = [
   'Graphic Designer', 'Podcast Editor', 'Livestream Producer', 'UGC Specialist'
 ];
 const connectionSources = [
-  'YT Jobs', 'LinkedIn', 'X (Twitter)', 'Upwork', 'Fiverr'
+  'LinkedIn', 'X (Twitter)', 'Upwork', 'Fiverr'
 ];
 
 const AddVideoDialog = ({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void }) => {
@@ -293,3 +293,5 @@ export default function PortfolioPage() {
     </>
   )
 }
+
+    
