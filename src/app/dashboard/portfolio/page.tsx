@@ -60,7 +60,7 @@ const AddVideoDialog = ({ open, onOpenChange }: { open: boolean, onOpenChange: (
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[525px] bg-card">
+      <DialogContent className="sm:max-w-[800px] bg-card">
         <DialogHeader>
           <DialogTitle className="text-2xl">Add Work to Portfolio</DialogTitle>
           <DialogClose asChild>
@@ -78,37 +78,39 @@ const AddVideoDialog = ({ open, onOpenChange }: { open: boolean, onOpenChange: (
             <label htmlFor="description" className="text-sm font-medium">Description (optional)</label>
             <Textarea id="description" placeholder="e.g. I was working on this project..." />
           </div>
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium">Your Role(s)</h4>
-            <div className="flex flex-wrap gap-2">
-              {roles.map(role => (
-                <Button 
-                  key={role} 
-                  variant={selectedRoles.includes(role) ? 'default' : 'outline'}
-                  onClick={() => toggleSelection(role, selectedRoles, setSelectedRoles)}
-                  className="rounded-full"
-                >
-                  {role}
-                </Button>
-              ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium">Your Role(s)</h4>
+              <div className="flex flex-wrap gap-2">
+                {roles.map(role => (
+                  <Button 
+                    key={role} 
+                    variant={selectedRoles.includes(role) ? 'default' : 'outline'}
+                    onClick={() => toggleSelection(role, selectedRoles, setSelectedRoles)}
+                    className="rounded-full"
+                  >
+                    {role}
+                  </Button>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium">How did you connect with this client?</h4>
-            <div className="flex flex-wrap gap-2">
-              {connectionSources.map(source => (
-                <Button 
-                  key={source} 
-                  variant={selectedSources.includes(source) ? 'default' : 'outline'}
-                  onClick={() => toggleSelection(source, selectedSources, setSelectedSources)}
-                  className="rounded-full"
-                >
-                  {source}
+            <div className="space-y-3">
+              <h4 className="text-sm font-medium">How did you connect with this client?</h4>
+              <div className="flex flex-wrap gap-2">
+                {connectionSources.map(source => (
+                  <Button 
+                    key={source} 
+                    variant={selectedSources.includes(source) ? 'default' : 'outline'}
+                    onClick={() => toggleSelection(source, selectedSources, setSelectedSources)}
+                    className="rounded-full"
+                  >
+                    {source}
+                  </Button>
+                ))}
+                <Button variant="outline" className="rounded-full gap-2">
+                  <Plus className="h-4 w-4" /> Add other
                 </Button>
-              ))}
-              <Button variant="outline" className="rounded-full gap-2">
-                <Plus className="h-4 w-4" /> Add other
-              </Button>
+              </div>
             </div>
           </div>
         </div>
