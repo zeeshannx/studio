@@ -62,7 +62,7 @@ const AddVideoDialog = ({ open, onOpenChange }: { open: boolean, onOpenChange: (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[525px] bg-card">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Add Video to Portfolio</DialogTitle>
+          <DialogTitle className="text-2xl">Add Work to Portfolio</DialogTitle>
           <DialogClose asChild>
             <Button variant="ghost" size="icon" className="absolute right-4 top-4">
               <X className="h-5 w-5" />
@@ -71,8 +71,8 @@ const AddVideoDialog = ({ open, onOpenChange }: { open: boolean, onOpenChange: (
         </DialogHeader>
         <div className="py-4 space-y-6">
           <div className="space-y-2">
-            <label htmlFor="video-link" className="text-sm font-medium">Video Link</label>
-            <Input id="video-link" placeholder="https://www.youtube.com/watch?v=..." />
+            <label htmlFor="work-link" className="text-sm font-medium">Work Link</label>
+            <Input id="work-link" placeholder="https://..." />
           </div>
           <div className="space-y-2">
             <label htmlFor="description" className="text-sm font-medium">Description (optional)</label>
@@ -293,5 +293,3 @@ export default function PortfolioPage() {
     </>
   )
 }
-
-    
