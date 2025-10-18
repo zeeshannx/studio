@@ -1,3 +1,4 @@
+
 'use client'
 
 import {
@@ -21,6 +22,7 @@ import {
   Bell,
   LayoutGrid,
   FileText,
+  GalleryVertical,
 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useUser, useAuth } from '@/firebase'
@@ -60,6 +62,12 @@ export function DashboardSidebar() {
             <SidebarMenuButton href="/dashboard" isActive tooltip="Dashboard">
               <LayoutGrid />
               <span>Dashboard</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/portfolio" tooltip="My Portfolio">
+              <GalleryVertical />
+              <span>My Portfolio</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
