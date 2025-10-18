@@ -232,7 +232,7 @@ export default function PortfolioPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" className="bg-red-600 hover:bg-red-700 text-white border-red-600" onClick={() => setIsAddVideoOpen(true)}>
+              <Button variant="outline" onClick={() => setIsAddVideoOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Quick Add
               </Button>
