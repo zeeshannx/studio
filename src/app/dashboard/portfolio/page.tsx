@@ -38,8 +38,9 @@ import { portfolioItems, clients } from '@/lib/placeholder-data/portfolio'
 import React, { useState } from 'react'
 
 const roles = [
-  'Video Editor', 'Creative Director', 'Thumbnail Designer',
-  'Channel Manager', 'YouTube Strategist', 'Scriptwriter', 'YouTube Producer'
+  'Video Editor', 'Creative Director', 'Thumbnail Designer', 'Channel Manager', 
+  'Content Strategist', 'Scriptwriter', 'Social Media Manager', 'Community Manager',
+  'Graphic Designer', 'Podcast Editor', 'Livestream Producer', 'UGC Specialist'
 ];
 const connectionSources = [
   'YT Jobs', 'LinkedIn', 'X (Twitter)', 'Upwork', 'Fiverr'
@@ -70,12 +71,12 @@ const AddVideoDialog = ({ open, onOpenChange }: { open: boolean, onOpenChange: (
         </DialogHeader>
         <div className="py-4 space-y-6">
           <div className="space-y-2">
-            <label htmlFor="video-link" className="text-sm font-medium">YouTube Video Link</label>
+            <label htmlFor="video-link" className="text-sm font-medium">Video Link</label>
             <Input id="video-link" placeholder="https://www.youtube.com/watch?v=..." />
           </div>
           <div className="space-y-2">
             <label htmlFor="description" className="text-sm font-medium">Description (optional)</label>
-            <Textarea id="description" placeholder="e.g. I was working in this project ..." />
+            <Textarea id="description" placeholder="e.g. I was working on this project..." />
           </div>
           <div className="space-y-3">
             <h4 className="text-sm font-medium">Your Role(s)</h4>
