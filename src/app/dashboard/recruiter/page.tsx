@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { ApplicantsChart } from './_components/applicants-chart'
 import { RecentApplicants } from './_components/recent-applicants'
-import { ResponsiveContainer, LineChart, Line, SparkLineChart } from 'recharts'
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis } from 'recharts'
 import { ApplicationSummary } from './_components/application-summary'
 import { TodaySchedule } from './_components/today-schedule'
 import { cn } from '@/lib/utils'
@@ -59,7 +59,9 @@ export default function RecruiterDashboardPage() {
                 </div>
                 <div className="h-12 w-24 flex-shrink">
                     <ResponsiveContainer width="100%" height="100%">
-                        <SparkLineChart data={sparklineData}>
+                        <LineChart data={sparklineData}>
+                            <XAxis hide dataKey="name" />
+                            <YAxis hide domain={['dataMin', 'dataMax']} />
                             <Line
                                 type="monotone"
                                 dataKey="value"
@@ -67,7 +69,7 @@ export default function RecruiterDashboardPage() {
                                 strokeWidth={2}
                                 dot={false}
                             />
-                        </SparkLineChart>
+                        </LineChart>
                     </ResponsiveContainer>
                 </div>
             </CardContent>
