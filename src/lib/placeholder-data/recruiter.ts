@@ -68,7 +68,7 @@ export const activeJobs = [
 export const scheduleItems = [
   { 
     id: 1, 
-    title: 'Fresher UI/UX Interview', 
+    title: 'Video Editor Interviews', 
     startTime: '08:00', 
     endTime: '11:00', 
     avatars: ['https://picsum.photos/seed/s1/32/32', 'https://picsum.photos/seed/s2/32/32', 'https://picsum.photos/seed/s3/32/32'],
@@ -76,7 +76,7 @@ export const scheduleItems = [
   },
   { 
     id: 2, 
-    title: 'Onboard Intern UI/UX Desi...', 
+    title: 'Content Strategist Onboarding', 
     startTime: '12:00', 
     endTime: '15:00', 
     avatars: ['https://picsum.photos/seed/s4/32/32', 'https://picsum.photos/seed/s5/32/32', 'https://picsum.photos/seed/s6/32/32'],
@@ -84,10 +84,11 @@ export const scheduleItems = [
   },
   { 
     id: 3, 
-    title: 'Online Intern HRM Interv...', 
+    title: 'Thumbnail Designer Review', 
     startTime: '08:00', 
     endTime: '11:00', 
     avatars: ['https://picsum.photos/seed/s7/32/32', 'https://picsum.photos/seed/s8/32/32', 'https://picsum.photos/seed/s9/32/32'],
     more: 2 
   }
 ];
+
