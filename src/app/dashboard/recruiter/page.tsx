@@ -7,10 +7,12 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { ApplicantsChart } from './_components/applicants-chart'
 import { RecentApplicants } from './_components/recent-applicants'
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis } from 'recharts'
+import { ResponsiveContainer, LineChart, Line } from 'recharts'
 import { ApplicationSummary } from './_components/application-summary'
 import { TodaySchedule } from './_components/today-schedule'
 import { cn } from '@/lib/utils'
+import { RankedApplicants } from './_components/ranked-applicants'
+import { ActiveJobs } from './_components/active-jobs'
 
 const sparklineData = [
   { value: 10 }, { value: 20 }, { value: 15 }, { value: 30 },
@@ -60,8 +62,6 @@ export default function RecruiterDashboardPage() {
                 <div className="h-12 w-24 flex-shrink">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={sparklineData}>
-                            <XAxis hide dataKey="name" />
-                            <YAxis hide domain={['dataMin', 'dataMax']} />
                             <Line
                                 type="monotone"
                                 dataKey="value"
@@ -81,12 +81,16 @@ export default function RecruiterDashboardPage() {
         <div className="lg:col-span-2">
             <ApplicantsChart />
         </div>
-        <div className="lg:row-span-2 flex flex-col gap-6">
+        <div className="lg:row-span-3 flex flex-col gap-6">
+            <ActiveJobs />
             <RecentApplicants />
             <ApplicationSummary />
         </div>
          <div className="lg:col-span-2">
            <TodaySchedule />
+        </div>
+        <div className="lg:col-span-2">
+           <RankedApplicants />
         </div>
       </div>
     </div>

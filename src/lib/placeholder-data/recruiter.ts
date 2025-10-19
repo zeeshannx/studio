@@ -4,37 +4,43 @@ export const recentApplicants = [
         id: '1',
         name: 'Jermaine Kuhlman',
         appliedFor: 'Video Editor',
-        avatarUrl: 'https://picsum.photos/seed/jk/40/40'
+        avatarUrl: 'https://picsum.photos/seed/jk/40/40',
+        badge: 'Gold'
     },
     {
         id: '2',
         name: 'Sadie Yost',
         appliedFor: 'Content Strategist',
-        avatarUrl: 'https://picsum.photos/seed/sy/40/40'
+        avatarUrl: 'https://picsum.photos/seed/sy/40/40',
+        badge: 'Silver'
     },
     {
         id: '3',
         name: 'Ben Langworth',
         appliedFor: 'Thumbnail Designer',
-        avatarUrl: 'https://picsum.photos/seed/bl/40/40'
+        avatarUrl: 'https://picsum.photos/seed/bl/40/40',
+        badge: 'Bronze'
     },
     {
         id: '4',
         name: 'Raymond Raynor',
         appliedFor: 'Community Manager',
-        avatarUrl: 'https://picsum.photos/seed/rr1/40/40'
+        avatarUrl: 'https://picsum.photos/seed/rr1/40/40',
+        badge: 'Gold'
     },
      {
         id: '5',
         name: 'Betty Buckridge',
         appliedFor: 'Shorts Editor',
-        avatarUrl: 'https://picsum.photos/seed/bb/40/40'
+        avatarUrl: 'https://picsum.photos/seed/bb/40/40',
+        badge: 'Diamond'
     },
      {
         id: '6',
-        name: 'Raymond Raynor',
+        name: 'Kyle Collier',
         appliedFor: 'Creative Director',
-        avatarUrl: 'https://picsum.photos/seed/rr2/40/40'
+        avatarUrl: 'https://picsum.photos/seed/rr2/40/40',
+        badge: 'Diamond'
     },
 ];
 
@@ -91,4 +97,3 @@ export const scheduleItems = [
     more: 2 
   }
 ];
-
