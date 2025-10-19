@@ -5,16 +5,58 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { scheduleItems } from "@/lib/placeholder-data/recruiter"
+import { scheduleItems as allScheduleItems } from "@/lib/placeholder-data/recruiter"
+import { useMemo } from "react"
 
 const timeSlots = Array.from({ length: 11 }, (_, i) => `${String(i + 8).padStart(2, '0')}:00`);
 
+// Function to convert time string "HH:MM" to minutes from the start of the day (00:00)
+const timeToMinutes = (time: string) => {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+};
+
+// Function to process schedule items to handle overlaps
+const processScheduleItems = (items: typeof allScheduleItems) => {
+    const sortedItems = [...items].sort((a, b) => timeToMinutes(a.startTime) - timeToMinutes(b.startTime));
+    const processedItems: (typeof items[0] & { level: number })[] = [];
+    
+    // This array keeps track of the end time of the last item on each level
+    const levelEndTimes: number[] = [];
+
+    for (const item of sortedItems) {
+        const start = timeToMinutes(item.startTime);
+        let placed = false;
+        // Find the first level where the item does not overlap
+        for (let i = 0; i < levelEndTimes.length; i++) {
+            if (start >= levelEndTimes[i]) {
+                processedItems.push({ ...item, level: i });
+                levelEndTimes[i] = timeToMinutes(item.endTime);
+                placed = true;
+                break;
+            }
+        }
+        // If no available level was found, create a new one
+        if (!placed) {
+            processedItems.push({ ...item, level: levelEndTimes.length });
+            levelEndTimes.push(timeToMinutes(item.endTime));
+        }
+    }
+    return { processedItems, totalLevels: levelEndTimes.length };
+};
+
+
 export function TodaySchedule() {
+    const { processedItems, totalLevels } = useMemo(() => processScheduleItems(allScheduleItems), [allScheduleItems]);
+
     const timeToPosition = (time: string) => {
         const [hour, minute] = time.split(':').map(Number);
         const totalMinutes = (hour - 8) * 60 + minute;
-        return (totalMinutes / (10 * 60)) * 100; // 10 hours from 8:00 to 18:00
+        // 10 hours from 8:00 to 18:00
+        return (totalMinutes / (10 * 60)) * 100; 
     };
+    
+    const scheduleHeight = totalLevels * 96 + 16; // 96px per level (h-24) + 16px padding
 
   return (
     <Card>
@@ -37,8 +79,8 @@ export function TodaySchedule() {
           <div className="flex justify-between text-xs text-muted-foreground mb-2" style={{ width: '100%' }}>
             {timeSlots.map((time) => <div key={time} className="flex-1 text-center">{time}</div>)}
           </div>
-          <div className="relative h-24 border-t border-dashed">
-            {scheduleItems.map((item) => {
+          <div className="relative border-t border-dashed" style={{ height: `${scheduleHeight}px` }}>
+            {processedItems.map((item) => {
                 const start = timeToPosition(item.startTime);
                 const end = timeToPosition(item.endTime);
                 const width = end - start;
@@ -46,8 +88,12 @@ export function TodaySchedule() {
                 return (
                     <div
                         key={item.id}
-                        className="absolute top-4 h-16 rounded-lg bg-muted p-2 flex items-center gap-2"
-                        style={{ left: `${start}%`, width: `${width}%` }}
+                        className="absolute h-20 rounded-lg bg-muted p-2 flex items-center gap-2 transition-all duration-300"
+                        style={{ 
+                            left: `${start}%`, 
+                            width: `${width}%`,
+                            top: `${item.level * 96 + 16}px`, // 96px (h-24) per level + 16px top padding
+                        }}
                     >
                          <div className="flex -space-x-2">
                             {item.avatars.map((src, index) => (
