@@ -16,9 +16,8 @@ import { addDays, format, startOfWeek, isSameDay, isBefore } from 'date-fns'
 import { cn } from '@/lib/utils'
 
 const timeSlots = [
-  '10:30 AM', '11:00 AM', '11:30 AM',
-  '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM',
-  '02:00 PM', '02:30 PM', '03:00 PM',
+  '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', 
+  '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM',
 ]
 
 const generateWeekDays = (start: Date) => {
@@ -43,7 +42,12 @@ export function ScheduleInterviewDialog({ applicant, open, onOpenChange }: {
   const weekDays = generateWeekDays(weekStart)
 
   const handleNextWeek = () => setWeekStart(addDays(weekStart, 7))
-  const handlePrevWeek = () => setWeekStart(addDays(weekStart, -7))
+  const handlePrevWeek = () => {
+    const newWeekStart = addDays(weekStart, -7);
+    if (!isBefore(newWeekStart, startOfWeek(today, { weekStartsOn: 1 }))) {
+        setWeekStart(newWeekStart);
+    }
+  }
 
   const handleDateSelect = (day: Date) => {
     if (isBefore(day, today) && !isSameDay(day, today)) return
@@ -73,48 +77,56 @@ export function ScheduleInterviewDialog({ applicant, open, onOpenChange }: {
           </div>
         </DialogHeader>
 
-        <div className="py-4">
-          <div className="flex items-center justify-between mb-4">
-            <Button variant="ghost" size="icon" onClick={handlePrevWeek} disabled={isSameDay(weekStart, startOfWeek(today, { weekStartsOn: 1 }))}>
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <div className="font-semibold">
-              {format(weekStart, 'MMM d')} - {format(addDays(weekStart, 6), 'MMM d, yyyy')}
+        <div className="py-4 space-y-6">
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <Button variant="ghost" size="icon" onClick={handlePrevWeek} disabled={isSameDay(weekStart, startOfWeek(today, { weekStartsOn: 1 }))}>
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <div className="font-semibold text-sm">
+                {format(weekStart, 'MMM d')} - {format(addDays(weekStart, 6), 'd, yyyy')}
+              </div>
+              <Button variant="ghost" size="icon" onClick={handleNextWeek}>
+                <ChevronRight className="h-5 w-5" />
+              </Button>
             </div>
-            <Button variant="ghost" size="icon" onClick={handleNextWeek}>
-              <ChevronRight className="h-5 w-5" />
-            </Button>
-          </div>
-          
-          <div className="space-y-4">
-            {weekDays.map(day => {
-              const isPast = isBefore(day, today) && !isSameDay(day, today);
-              return (
-                <div key={day.toString()} className={cn("p-3 rounded-lg", isSameDay(day, selectedDate) && "bg-muted")}>
+            
+            <div className="grid grid-cols-7 gap-2">
+              {weekDays.map(day => {
+                const isPast = isBefore(day, today) && !isSameDay(day, today);
+                return (
                   <button 
-                    className={cn("font-semibold text-left w-full", isPast && "text-muted-foreground/50 cursor-not-allowed")}
+                    key={day.toString()}
+                    className={cn(
+                        "text-center p-2 rounded-lg transition-colors",
+                        isSameDay(day, selectedDate) ? "bg-primary text-primary-foreground" : "hover:bg-muted",
+                        isPast ? "text-muted-foreground/50 cursor-not-allowed" : "cursor-pointer"
+                    )}
                     onClick={() => handleDateSelect(day)}
                     disabled={isPast}
                   >
-                    {isSameDay(day, today) ? 'Today' : format(day, 'E')}, {format(day, 'MMM d')}
+                    <p className="text-xs">{format(day, 'E')}</p>
+                    <p className="font-bold text-lg">{format(day, 'd')}</p>
                   </button>
-                  {isSameDay(day, selectedDate) && !isPast && (
-                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mt-3">
-                      {timeSlots.map(slot => (
-                        <Button 
-                          key={slot}
-                          variant={selectedTime === slot ? "default" : "outline"}
-                          className={cn(selectedTime === slot && "bg-primary-gradient")}
-                          onClick={() => setSelectedTime(slot)}
-                        >
-                          {slot}
-                        </Button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
+          </div>
+
+          <div>
+             <h3 className="font-semibold mb-3 text-center">{format(selectedDate, 'EEEE, MMMM d')}</h3>
+             <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                {timeSlots.map(slot => (
+                  <Button 
+                    key={slot}
+                    variant={selectedTime === slot ? "default" : "outline"}
+                    className={cn(selectedTime === slot && "bg-primary-gradient")}
+                    onClick={() => setSelectedTime(slot)}
+                  >
+                    {slot}
+                  </Button>
+                ))}
+              </div>
           </div>
         </div>
 
