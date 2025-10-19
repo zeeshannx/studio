@@ -6,13 +6,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { recentApplicants } from '@/lib/placeholder-data/recruiter'
 import Link from "next/link"
+import { ArrowRight, MessageSquare, Mail, Phone } from "lucide-react"
 
 export function RecentApplicants() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Recent Applicants</CardTitle>
-        <CardDescription>New candidates waiting for review.</CardDescription>
+         <div className="flex justify-between items-center">
+            <CardTitle>New Applicant</CardTitle>
+            <Button variant="ghost" size="sm" asChild>
+                <Link href="#">See all</Link>
+            </Button>
+        </div>
+        <CardDescription>Fresh faces awaiting your review.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {recentApplicants.map(applicant => (
@@ -27,11 +33,11 @@ export function RecentApplicants() {
                 <p className="text-sm text-muted-foreground">{applicant.appliedFor}</p>
               </div>
             </div>
-            <Button variant="outline" size="sm" asChild>
-                <Link href={`/talent/${applicant.name.toLowerCase().replace(/ /g, '-')}`}>
-                    View
-                </Link>
-            </Button>
+            <div className="flex items-center gap-1">
+                <Button variant="ghost" size="icon"><MessageSquare className="h-4 w-4" /></Button>
+                <Button variant="ghost" size="icon"><Mail className="h-4 w-4" /></Button>
+                <Button variant="ghost" size="icon"><Phone className="h-4 w-4" /></Button>
+            </div>
           </div>
         ))}
       </CardContent>

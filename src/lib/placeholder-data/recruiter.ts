@@ -2,33 +2,39 @@
 export const recentApplicants = [
     {
         id: '1',
-        name: 'Sophie Chen',
-        appliedFor: 'Community Manager',
-        avatarUrl: 'https://picsum.photos/seed/p4/40/40'
+        name: 'Jermaine Kuhlman',
+        appliedFor: 'Human Interactions Agent',
+        avatarUrl: 'https://picsum.photos/seed/jk/40/40'
     },
     {
         id: '2',
-        name: 'Alex Rodriguez',
-        appliedFor: 'Content Strategist',
-        avatarUrl: 'https://picsum.photos/seed/p5/40/40'
+        name: 'Sadie Yost',
+        appliedFor: 'International Functionality...',
+        avatarUrl: 'https://picsum.photos/seed/sy/40/40'
     },
     {
         id: '3',
-        name: 'Ben Carter',
-        appliedFor: 'Social Media Manager',
-        avatarUrl: 'https://picsum.photos/seed/p6/40/40'
+        name: 'Ben Langworth',
+        appliedFor: 'Future Web Representative',
+        avatarUrl: 'https://picsum.photos/seed/bl/40/40'
     },
     {
         id: '4',
-        name: 'Jared Klein',
-        appliedFor: 'Thumbnail Designer',
-        avatarUrl: 'https://picsum.photos/seed/p1/40/40'
+        name: 'Raymond Raynor',
+        appliedFor: 'Human Creative Designer',
+        avatarUrl: 'https://picsum.photos/seed/rr1/40/40'
     },
      {
         id: '5',
-        name: 'Misha Karpenko',
-        appliedFor: 'Video Editor',
-        avatarUrl: 'https://picsum.photos/seed/p3/40/40'
+        name: 'Betty Buckridge',
+        appliedFor: 'Direct Solutions Executive',
+        avatarUrl: 'https://picsum.photos/seed/bb/40/40'
+    },
+     {
+        id: '6',
+        name: 'Raymond Raynor',
+        appliedFor: 'Human Creative Designer',
+        avatarUrl: 'https://picsum.photos/seed/rr2/40/40'
     },
 ];
 
@@ -57,4 +63,31 @@ export const activeJobs = [
         applicants: 45,
         status: 'Active'
     },
+];
+
+export const scheduleItems = [
+  { 
+    id: 1, 
+    title: 'Fresher UI/UX Interview', 
+    startTime: '08:00', 
+    endTime: '11:00', 
+    avatars: ['https://picsum.photos/seed/s1/32/32', 'https://picsum.photos/seed/s2/32/32', 'https://picsum.photos/seed/s3/32/32'],
+    more: 2 
+  },
+  { 
+    id: 2, 
+    title: 'Onboard Intern UI/UX Desi...', 
+    startTime: '12:00', 
+    endTime: '15:00', 
+    avatars: ['https://picsum.photos/seed/s4/32/32', 'https://picsum.photos/seed/s5/32/32', 'https://picsum.photos/seed/s6/32/32'],
+    more: 2 
+  },
+  { 
+    id: 3, 
+    title: 'Online Intern HRM Interv...', 
+    startTime: '08:00', 
+    endTime: '11:00', 
+    avatars: ['https://picsum.photos/seed/s7/32/32', 'https://picsum.photos/seed/s8/32/32', 'https://picsum.photos/seed/s9/32/32'],
+    more: 2 
+  }
 ];

@@ -4,27 +4,34 @@
 import { useUser } from '@/firebase'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus, Briefcase, Users, CalendarCheck, CheckCircle2 } from 'lucide-react'
-import Link from 'next/link'
-import { ActiveJobs } from './_components/active-jobs'
+import { Plus } from 'lucide-react'
 import { ApplicantsChart } from './_components/applicants-chart'
 import { RecentApplicants } from './_components/recent-applicants'
+import { ResponsiveContainer, LineChart, Line, SparkLineChart } from 'recharts'
+import { ApplicationSummary } from './_components/application-summary'
+import { TodaySchedule } from './_components/today-schedule'
+import { cn } from '@/lib/utils'
+
+const sparklineData = [
+  { value: 10 }, { value: 20 }, { value: 15 }, { value: 30 },
+  { value: 25 }, { value: 40 }, { value: 35 },
+]
 
 export default function RecruiterDashboardPage() {
   const { user } = useUser()
 
   const stats = [
-    { title: 'Active Jobs', value: '12', icon: <Briefcase className="h-6 w-6 text-primary" />, change: '+2 from last month' },
-    { title: 'Total Applicants', value: '2,345', icon: <Users className="h-6 w-6 text-primary" />, change: '+15% from last month' },
-    { title: 'Interviews Today', value: '6', icon: <CalendarCheck className="h-6 w-6 text-primary" />, change: '3 scheduled' },
-    { title: 'Hired This Month', value: '5', icon: <CheckCircle2 className="h-6 w-6 text-green-500" />, change: 'Target: 8' },
+    { title: 'Candidates', value: '3918', change: '+53.43%', changeType: 'increase' },
+    { title: 'Onboarding', value: '3918', change: '-10.21%', changeType: 'decrease' },
+    { title: 'Appointment', value: '3918', change: '+53.43%', changeType: 'increase' },
+    { title: 'Passed', value: '3918', change: '+53.43%', changeType: 'increase' },
   ];
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-headline">Recruiter Dashboard</h1>
+          <h1 className="text-3xl font-bold font-headline">Dashboard</h1>
           <p className="text-muted-foreground">Welcome back, {user?.displayName?.split(' ')[0] || 'Recruiter'}!</p>
         </div>
         <Button className="bg-primary-gradient">
@@ -36,15 +43,33 @@ export default function RecruiterDashboardPage() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
           <Card key={index}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
-              {stat.icon}
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base font-medium">{stat.title}</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
-              <p className="text-xs text-muted-foreground">
-                {stat.change}
-              </p>
+            <CardContent className="flex items-end justify-between gap-4">
+                <div className="flex-shrink-0">
+                    <div className="text-3xl font-bold">{stat.value}</div>
+                    <p className="text-xs text-muted-foreground">since last week</p>
+                    <p className={cn(
+                        "text-sm font-semibold",
+                        stat.changeType === 'increase' ? 'text-green-500' : 'text-red-500'
+                    )}>
+                        {stat.change}
+                    </p>
+                </div>
+                <div className="h-12 w-24 flex-shrink">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <SparkLineChart data={sparklineData}>
+                            <Line
+                                type="monotone"
+                                dataKey="value"
+                                stroke={stat.changeType === 'increase' ? "hsl(var(--primary))" : "hsl(var(--destructive))"}
+                                strokeWidth={2}
+                                dot={false}
+                            />
+                        </SparkLineChart>
+                    </ResponsiveContainer>
+                </div>
             </CardContent>
           </Card>
         ))}
@@ -54,11 +79,12 @@ export default function RecruiterDashboardPage() {
         <div className="lg:col-span-2">
             <ApplicantsChart />
         </div>
-        <div className="lg:row-span-2">
+        <div className="lg:row-span-2 flex flex-col gap-6">
             <RecentApplicants />
+            <ApplicationSummary />
         </div>
          <div className="lg:col-span-2">
-           <ActiveJobs />
+           <TodaySchedule />
         </div>
       </div>
     </div>
