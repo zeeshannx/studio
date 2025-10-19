@@ -55,6 +55,9 @@ export function RecentApplicants() {
                       {badgeConfig[applicant.badge].icon}
                       {applicant.badge}
                   </Badge>
+                   <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <MessageSquare className="h-4 w-4" />
+                    </Button>
                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedApplicant(applicant)}>
                         <Video className="h-4 w-4" />
                     </Button>
