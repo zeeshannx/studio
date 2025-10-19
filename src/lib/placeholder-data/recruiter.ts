@@ -122,3 +122,38 @@ export const scheduleItems: ScheduleItem[] = [
     more: 2 
   }
 ];
+
+export const recentChats = [
+    {
+        id: '1',
+        name: 'Jermaine Kuhlman',
+        avatarUrl: 'https://picsum.photos/seed/jk/40/40',
+        lastMessage: 'Sure, I can send over my portfolio right away.',
+        time: '5m ago',
+        unread: true,
+    },
+    {
+        id: '2',
+        name: 'Sadie Yost',
+        avatarUrl: 'https://picsum.photos/seed/sy/40/40',
+        lastMessage: 'That sounds great! I am available for a call...',
+        time: '1h ago',
+        unread: false,
+    },
+    {
+        id: '3',
+        name: 'Ben Langworth',
+        avatarUrl: 'https://picsum.photos/seed/bl/40/40',
+        lastMessage: 'Thanks for reaching out! Looking forward to it.',
+        time: '3h ago',
+        unread: false,
+    },
+    {
+        id: '4',
+        name: 'Betty Buckridge',
+        avatarUrl: 'https://picsum.photos/seed/bb/40/40',
+        lastMessage: 'Just sent over my availability for the interview.',
+        time: '1d ago',
+        unread: true,
+    },
+];

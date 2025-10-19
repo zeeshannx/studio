@@ -8,7 +8,7 @@ import { Plus } from 'lucide-react'
 import { ApplicantsChart } from './_components/applicants-chart'
 import { RecentApplicants } from './_components/recent-applicants'
 import { ResponsiveContainer, LineChart, Line } from 'recharts'
-import { ApplicationSummary } from './_components/application-summary'
+import { RecentChats } from './_components/recent-chats'
 import { TodaySchedule } from './_components/today-schedule'
 import { cn } from '@/lib/utils'
 import { ActiveJobs } from './_components/active-jobs'
@@ -23,7 +23,7 @@ export default function RecruiterDashboardPage() {
 
   const stats = [
     { title: 'Candidates', value: '3918', change: '+53.43%', changeType: 'increase' },
-    { title: 'On Hold', value: '25', change: '+5.21%', changeType: 'increase' },
+    { title: 'On Hold', value: '25', change: '-10.21%', changeType: 'decrease' },
     { title: 'Appointment', value: '3918', change: '+53.43%', changeType: 'increase' },
     { title: 'Passed', value: '3918', change: '+53.43%', changeType: 'increase' },
   ];
@@ -79,12 +79,12 @@ export default function RecruiterDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
             <ApplicantsChart />
-            <ActiveJobs />
             <TodaySchedule />
+            <ActiveJobs />
         </div>
         <div className="lg:col-span-1 flex flex-col gap-6">
             <RecentApplicants />
-            <ApplicationSummary />
+            <RecentChats />
         </div>
       </div>
     </div>
