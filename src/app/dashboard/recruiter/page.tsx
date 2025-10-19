@@ -11,7 +11,6 @@ import { ResponsiveContainer, LineChart, Line } from 'recharts'
 import { ApplicationSummary } from './_components/application-summary'
 import { TodaySchedule } from './_components/today-schedule'
 import { cn } from '@/lib/utils'
-import { RankedApplicants } from './_components/ranked-applicants'
 import { ActiveJobs } from './_components/active-jobs'
 
 const sparklineData = [
@@ -81,7 +80,6 @@ export default function RecruiterDashboardPage() {
         <div className="lg:col-span-2 space-y-6">
             <ApplicantsChart />
             <TodaySchedule />
-            <RankedApplicants />
         </div>
         <div className="lg:col-span-1 flex flex-col gap-6">
             <ActiveJobs />
