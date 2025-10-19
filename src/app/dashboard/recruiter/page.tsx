@@ -12,6 +12,7 @@ import { RecentChats } from './_components/recent-chats'
 import { TodaySchedule } from './_components/today-schedule'
 import { cn } from '@/lib/utils'
 import { ActiveJobs } from './_components/active-jobs'
+import { RecommendedTalent } from './_components/recommended-talent'
 
 const sparklineData = [
   { value: 10 }, { value: 20 }, { value: 15 }, { value: 30 },
@@ -84,6 +85,7 @@ export default function RecruiterDashboardPage() {
         </div>
         <div className="lg:col-span-1 flex flex-col gap-6">
             <RecentApplicants />
+            <RecommendedTalent />
             <RecentChats />
         </div>
       </div>

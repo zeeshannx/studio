@@ -157,3 +157,33 @@ export const recentChats = [
         unread: true,
     },
 ];
+
+export const recommendedTalent = [
+    {
+        id: '1',
+        name: 'Sergey Dolgov',
+        avatarUrl: 'https://picsum.photos/seed/tt1/40/40',
+        role: 'Creative Director',
+        match: 98,
+        jobTitle: 'Senior Video Editor',
+        jobId: '1',
+    },
+    {
+        id: '2',
+        name: 'TKG',
+        avatarUrl: 'https://picsum.photos/seed/tt7/40/40',
+        role: 'Thumbnail Designer',
+        match: 95,
+        jobTitle: 'Thumbnail Designer',
+        jobId: '2',
+    },
+    {
+        id: '3',
+        name: 'Markus Black',
+        avatarUrl: 'https://picsum.photos/seed/tt13/40/40',
+        role: 'Community Moderator',
+        match: 92,
+        jobTitle: 'Community Manager',
+        jobId: '3',
+    },
+];
