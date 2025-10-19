@@ -1,6 +1,16 @@
 
 import type { SocialPlatform } from "@/components/shared/social-icon";
 
+export interface ScheduleItem {
+    id: number;
+    title: string;
+    startTime: string;
+    endTime: string;
+    avatars: string[];
+    more: number;
+}
+
+
 export const recentApplicants: {
     id: string;
     name: string;
@@ -86,7 +96,7 @@ export const activeJobs = [
     },
 ];
 
-export const scheduleItems = [
+export const scheduleItems: ScheduleItem[] = [
   { 
     id: 1, 
     title: 'Video Editor Interviews', 
