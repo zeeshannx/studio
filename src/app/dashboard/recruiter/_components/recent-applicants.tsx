@@ -6,7 +6,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { recentApplicants } from '@/lib/placeholder-data/recruiter'
 import Link from "next/link"
-import { ArrowRight, MessageSquare, Mail, Phone } from "lucide-react"
+import { ArrowRight, MessageSquare, Mail, Phone, Gem, Medal, Star, Shield, ShieldCheck } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { SocialIcon } from "@/components/shared/social-icon"
+
+const badgeConfig = {
+  Diamond: { icon: <Gem className="h-3 w-3" />, color: 'border-cyan-400/50 bg-cyan-400/10 text-cyan-300' },
+  Gold: { icon: <Medal className="h-3 w-3" />, color: 'border-amber-400/50 bg-amber-400/10 text-amber-300' },
+  Silver: { icon: <Star className="h-3 w-3" />, color: 'border-slate-400/50 bg-slate-400/10 text-slate-300' },
+  Bronze: { icon: <Shield className="h-3 w-3" />, color: 'border-orange-400/50 bg-orange-400/10 text-orange-300' },
+}
 
 export function RecentApplicants() {
   return (
@@ -29,14 +38,18 @@ export function RecentApplicants() {
                 <AvatarFallback>{applicant.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-semibold">{applicant.name}</p>
-                <p className="text-sm text-muted-foreground">{applicant.appliedFor}</p>
+                <p className="font-semibold flex items-center gap-1.5">{applicant.name} <ShieldCheck className="h-4 w-4 text-primary" /></p>
+                <p className="text-sm text-muted-foreground flex items-center gap-1.5">
+                    {applicant.platform && <SocialIcon platform={applicant.platform} className="h-4 w-4" />}
+                    {applicant.appliedFor}
+                </p>
               </div>
             </div>
-            <div className="flex items-center gap-1">
-                <Button variant="ghost" size="icon"><MessageSquare className="h-4 w-4" /></Button>
-                <Button variant="ghost" size="icon"><Mail className="h-4 w-4" /></Button>
-                <Button variant="ghost" size="icon"><Phone className="h-4 w-4" /></Button>
+            <div className="flex items-center gap-2">
+                <Badge variant="outline" className={`gap-1 ${badgeConfig[applicant.badge].color}`}>
+                    {badgeConfig[applicant.badge].icon}
+                    {applicant.badge}
+                </Badge>
             </div>
           </div>
         ))}
