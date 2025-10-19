@@ -1,46 +1,61 @@
 
-export const recentApplicants = [
+import type { SocialPlatform } from "@/components/shared/social-icon";
+
+export const recentApplicants: {
+    id: string;
+    name: string;
+    appliedFor: string;
+    avatarUrl: string;
+    badge: 'Diamond' | 'Gold' | 'Silver' | 'Bronze';
+    platform: SocialPlatform;
+}[] = [
     {
         id: '1',
         name: 'Jermaine Kuhlman',
         appliedFor: 'Video Editor',
         avatarUrl: 'https://picsum.photos/seed/jk/40/40',
-        badge: 'Gold'
+        badge: 'Gold',
+        platform: 'YouTube',
     },
     {
         id: '2',
         name: 'Sadie Yost',
         appliedFor: 'Content Strategist',
         avatarUrl: 'https://picsum.photos/seed/sy/40/40',
-        badge: 'Silver'
+        badge: 'Silver',
+        platform: 'Twitch',
     },
     {
         id: '3',
         name: 'Ben Langworth',
         appliedFor: 'Thumbnail Designer',
         avatarUrl: 'https://picsum.photos/seed/bl/40/40',
-        badge: 'Bronze'
+        badge: 'Bronze',
+        platform: 'Instagram',
     },
     {
         id: '4',
         name: 'Raymond Raynor',
         appliedFor: 'Community Manager',
         avatarUrl: 'https://picsum.photos/seed/rr1/40/40',
-        badge: 'Gold'
+        badge: 'Gold',
+        platform: 'Discord',
     },
      {
         id: '5',
         name: 'Betty Buckridge',
         appliedFor: 'Shorts Editor',
         avatarUrl: 'https://picsum.photos/seed/bb/40/40',
-        badge: 'Diamond'
+        badge: 'Diamond',
+        platform: 'TikTok',
     },
      {
         id: '6',
         name: 'Kyle Collier',
         appliedFor: 'Creative Director',
         avatarUrl: 'https://picsum.photos/seed/rr2/40/40',
-        badge: 'Diamond'
+        badge: 'Diamond',
+        platform: 'YouTube',
     },
 ];
 

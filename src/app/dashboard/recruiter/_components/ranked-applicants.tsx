@@ -6,7 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { recentApplicants } from '@/lib/placeholder-data/recruiter'
 import { Badge } from "@/components/ui/badge"
-import { Gem, Medal, Star, Shield } from "lucide-react"
+import { Gem, Medal, Star, Shield, ShieldCheck } from "lucide-react"
+import { SocialIcon } from "@/components/shared/social-icon"
 
 const badgeConfig = {
   Diamond: { icon: <Gem className="h-4 w-4 text-cyan-400" />, color: 'border-cyan-400/50 bg-cyan-400/10 text-cyan-300' },
@@ -40,8 +41,11 @@ const ApplicantList = ({ applicants }: { applicants: typeof rankedApplicants }) 
             <AvatarFallback>{applicant.name.charAt(0)}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-semibold">{applicant.name}</p>
-            <p className="text-sm text-muted-foreground">{applicant.appliedFor}</p>
+            <p className="font-semibold flex items-center gap-1.5">{applicant.name} <ShieldCheck className="h-4 w-4 text-primary" /></p>
+            <p className="text-sm text-muted-foreground flex items-center gap-1.5">
+                {applicant.platform && <SocialIcon platform={applicant.platform} className="h-4 w-4" />}
+                {applicant.appliedFor}
+            </p>
           </div>
         </div>
         <Badge variant="outline" className={badgeConfig[applicant.badge].color}>
