@@ -3,37 +3,37 @@ export const recentApplicants = [
     {
         id: '1',
         name: 'Jermaine Kuhlman',
-        appliedFor: 'Human Interactions Agent',
+        appliedFor: 'Video Editor',
         avatarUrl: 'https://picsum.photos/seed/jk/40/40'
     },
     {
         id: '2',
         name: 'Sadie Yost',
-        appliedFor: 'International Functionality...',
+        appliedFor: 'Content Strategist',
         avatarUrl: 'https://picsum.photos/seed/sy/40/40'
     },
     {
         id: '3',
         name: 'Ben Langworth',
-        appliedFor: 'Future Web Representative',
+        appliedFor: 'Thumbnail Designer',
         avatarUrl: 'https://picsum.photos/seed/bl/40/40'
     },
     {
         id: '4',
         name: 'Raymond Raynor',
-        appliedFor: 'Human Creative Designer',
+        appliedFor: 'Community Manager',
         avatarUrl: 'https://picsum.photos/seed/rr1/40/40'
     },
      {
         id: '5',
         name: 'Betty Buckridge',
-        appliedFor: 'Direct Solutions Executive',
+        appliedFor: 'Shorts Editor',
         avatarUrl: 'https://picsum.photos/seed/bb/40/40'
     },
      {
         id: '6',
         name: 'Raymond Raynor',
-        appliedFor: 'Human Creative Designer',
+        appliedFor: 'Creative Director',
         avatarUrl: 'https://picsum.photos/seed/rr2/40/40'
     },
 ];
