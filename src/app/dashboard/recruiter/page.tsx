@@ -23,7 +23,7 @@ export default function RecruiterDashboardPage() {
 
   const stats = [
     { title: 'Candidates', value: '3918', change: '+53.43%', changeType: 'increase' },
-    { title: 'Onboarding', value: '3918', change: '-10.21%', changeType: 'decrease' },
+    { title: 'On Hold', value: '25', change: '+5.21%', changeType: 'increase' },
     { title: 'Appointment', value: '3918', change: '+53.43%', changeType: 'increase' },
     { title: 'Passed', value: '3918', change: '+53.43%', changeType: 'increase' },
   ];
@@ -79,10 +79,10 @@ export default function RecruiterDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
             <ApplicantsChart />
+            <ActiveJobs />
             <TodaySchedule />
         </div>
         <div className="lg:col-span-1 flex flex-col gap-6">
-            <ActiveJobs />
             <RecentApplicants />
             <ApplicationSummary />
         </div>
