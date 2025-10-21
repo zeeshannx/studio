@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
   const isLoginPage = pathname === '/login';
-  const isDashboard = pathname.startsWith('/dashboard');
+  const isDashboard = pathname.startsWith('/dashboard-talent') || pathname.startsWith('/dashboard-recruiter');
 
   return (
     <html lang="en" className="dark">

@@ -136,9 +136,17 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      router.push('/dashboard');
+      // This is a simplified logic. In a real app, you'd check the user's role.
+      // For now, we assume talent goes to talent dashboard, and others (recruiters) go to recruiter dashboard.
+      // A more robust solution would involve custom claims or a 'roles' field in the user's Firestore document.
+      if (role === 'employer' || isCompanySignUp) {
+          router.push('/dashboard-recruiter');
+      } else {
+          router.push('/dashboard-talent');
+      }
     }
-  }, [user, router]);
+  }, [user, router, role, isCompanySignUp]);
+
 
   const handleGoogleSignIn = async (isEmployer: boolean = false) => {
     if (auth) {
@@ -175,6 +183,7 @@ export default function LoginPage() {
             displayName: values.companyName,
             email: user.email,
             photoURL: null,
+            role: 'recruiter', // Assign role
         }, { merge: true });
 
         // Create the company profile
@@ -201,6 +210,7 @@ export default function LoginPage() {
                 displayName: user.email?.split('@')[0] || 'New User',
                 email: user.email,
                 photoURL: null,
+                role: 'talent', // Assign role
             }, { merge: true });
         }
     } catch (error) {
