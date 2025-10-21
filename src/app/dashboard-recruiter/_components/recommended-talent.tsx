@@ -38,7 +38,8 @@ export function RecommendedTalent() {
                 <Button variant="outline" size="sm">View</Button>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
       </CardContent>
     </Card>
   )
