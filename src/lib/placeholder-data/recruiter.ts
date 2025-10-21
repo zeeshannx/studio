@@ -187,3 +187,40 @@ export const recommendedTalent = [
         jobId: '3',
     },
 ];
+
+export const automatedReminders: {
+    id: string;
+    type: 'interview' | 'feedback' | 'followup';
+    applicant: string;
+    time: string;
+    details: string;
+}[] = [
+    {
+        id: '1',
+        type: 'interview',
+        applicant: 'Jermaine Kuhlman',
+        time: 'in 30 minutes',
+        details: 'Interview for Video Editor'
+    },
+    {
+        id: '2',
+        type: 'feedback',
+        applicant: 'Sadie Yost',
+        time: 'due today',
+        details: 'Submit post-interview feedback'
+    },
+    {
+        id: '3',
+        type: 'followup',
+        applicant: 'Ben Langworth',
+        time: '3 days ago',
+        details: 'Follow up on offer'
+    },
+     {
+        id: '4',
+        type: 'interview',
+        applicant: 'Raymond Raynor',
+        time: 'tomorrow at 10 AM',
+        details: 'Interview for Community Manager'
+    }
+];
