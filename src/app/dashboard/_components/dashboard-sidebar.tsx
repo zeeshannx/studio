@@ -17,6 +17,7 @@ import {
   Briefcase,
   Star,
   User,
+  Users,
   Settings,
   LogOut,
   Bell,
@@ -65,9 +66,9 @@ export function DashboardSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard/portfolio" tooltip="My Portfolio">
-              <GalleryVertical />
-              <span>My Portfolio</span>
+            <SidebarMenuButton href="/dashboard/candidates" tooltip="Candidates">
+              <Users />
+              <span>Candidates</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
