@@ -11,7 +11,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'zod';
 
-export const GenerateJobDetailsInputSchema = z.object({
+const GenerateJobDetailsInputSchema = z.object({
   title: z.string().describe('The title of the job.'),
   companyName: z.string().describe('The name of the company posting the job.'),
   platform: z.string().describe('The social media platform the job is for (e.g., YouTube, TikTok).'),
@@ -19,7 +19,7 @@ export const GenerateJobDetailsInputSchema = z.object({
 });
 export type GenerateJobDetailsInput = z.infer<typeof GenerateJobDetailsInputSchema>;
 
-export const GenerateJobDetailsOutputSchema = z.object({
+const GenerateJobDetailsOutputSchema = z.object({
   description: z.string().describe('A detailed and engaging job description (3-4 paragraphs).'),
   responsibilities: z.array(z.string()).describe('A list of 3-5 key responsibilities for the role.'),
   requirements: z.array(z.string()).describe('A list of 3-5 key requirements for the role.'),
