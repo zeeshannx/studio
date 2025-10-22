@@ -27,9 +27,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { SocialIcon, SocialPlatform } from '@/components/shared/social-icon'
 import { Trash2, Sparkles, Loader2 } from 'lucide-react'
 import { Switch } from '@/components/ui/switch'
-import { generateJobDetails } from '@/ai/flows/generate-job-details-flow'
+import { generateJobDetails, GenerateJobDetailsInput, GenerateJobDetailsOutput } from '@/ai/flows/generate-job-details-flow'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import { useConnectedAccounts } from '@/hooks/use-connected-accounts'
 
 const socialPlatforms: SocialPlatform[] = [
   'YouTube', 'Instagram', 'X', 'Twitch', 'Discord', 'Facebook', 'LinkedIn', 'TikTok'
@@ -38,7 +39,7 @@ const socialPlatforms: SocialPlatform[] = [
 const postJobSchema = z.object({
   title: z.string().min(5, 'Job title must be at least 5 characters.'),
   companyName: z.string().min(2, "Company name is required."),
-  platform: z.enum(socialPlatforms, { required_error: 'Please select a platform.' }),
+  platform: z.string({ required_error: 'Please select a platform.' }),
   location: z.string().min(2, 'Location is required.'),
   isRemote: z.boolean().default(false),
   jobType: z.enum(['Full-time', 'Part-time', 'Contract', 'Freelance']),
@@ -54,6 +55,7 @@ type PostJobFormValues = z.infer<typeof postJobSchema>
 export default function PostJobPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
+  const { accounts: connectedAccounts, isLoading: isLoadingAccounts } = useConnectedAccounts();
 
   const form = useForm<PostJobFormValues>({
     resolver: zodResolver(postJobSchema),
@@ -167,14 +169,14 @@ export default function PostJobPage() {
                         render={({ field }) => (
                             <FormItem>
                             <FormLabel>Platform</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoadingAccounts}>
                                 <FormControl>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Select a platform" />
+                                    <SelectValue placeholder={isLoadingAccounts ? "Loading accounts..." : "Select a connected account"} />
                                 </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                {socialPlatforms.map(platform => (
+                                {connectedAccounts.map(platform => (
                                     <SelectItem key={platform} value={platform}>
                                         <div className="flex items-center gap-2">
                                             <SocialIcon platform={platform} className="h-5 w-5" />
@@ -184,6 +186,9 @@ export default function PostJobPage() {
                                 ))}
                                 </SelectContent>
                             </Select>
+                             <FormDescription>
+                                Only accounts you have connected will appear here.
+                            </FormDescription>
                             <FormMessage />
                             </FormItem>
                         )}
