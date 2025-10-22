@@ -24,10 +24,12 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
 import { SocialIcon, SocialPlatform } from '@/components/shared/social-icon'
-import { Trash2 } from 'lucide-react'
+import { Trash2, Sparkles, Loader2 } from 'lucide-react'
 import { Switch } from '@/components/ui/switch'
+import { generateJobDetails } from '@/ai/flows/generate-job-details-flow'
+import { useState } from 'react'
+import { useToast } from '@/hooks/use-toast'
 
 const socialPlatforms: SocialPlatform[] = [
   'YouTube', 'Instagram', 'X', 'Twitch', 'Discord', 'Facebook', 'LinkedIn', 'TikTok'
@@ -51,6 +53,9 @@ const postJobSchema = z.object({
 type PostJobFormValues = z.infer<typeof postJobSchema>
 
 export default function PostJobPage() {
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { toast } = useToast();
+
   const form = useForm<PostJobFormValues>({
     resolver: zodResolver(postJobSchema),
     defaultValues: {
@@ -60,15 +65,55 @@ export default function PostJobPage() {
     },
   });
 
-  const { fields: reqFields, append: appendReq, remove: removeReq } = useFieldArray({
+  const { fields: reqFields, append: appendReq, remove: removeReq, replace: replaceReq } = useFieldArray({
     control: form.control,
     name: "requirements",
   });
 
-  const { fields: respFields, append: appendResp, remove: removeResp } = useFieldArray({
+  const { fields: respFields, append: appendResp, remove: removeResp, replace: replaceResp } = useFieldArray({
     control: form.control,
     name: "responsibilities",
   });
+
+  const handleGenerateDetails = async () => {
+    const { title, companyName, platform, jobType } = form.getValues();
+    if (!title || !companyName || !platform || !jobType) {
+        toast({
+            variant: 'destructive',
+            title: 'Missing Information',
+            description: 'Please fill out the Title, Company Name, Platform, and Job Type before generating.',
+        });
+        return;
+    }
+
+    setIsGenerating(true);
+    try {
+        const result = await generateJobDetails({ title, companyName, platform, jobType });
+        if (result.description) {
+            form.setValue('description', result.description, { shouldValidate: true });
+        }
+        if (result.responsibilities && result.responsibilities.length > 0) {
+            replaceResp(result.responsibilities.map(value => ({ value })));
+        }
+        if (result.requirements && result.requirements.length > 0) {
+            replaceReq(result.requirements.map(value => ({ value })));
+        }
+        toast({
+            title: 'Content Generated',
+            description: 'AI has filled in the job details for you.',
+        });
+    } catch (error) {
+        console.error('AI generation failed', error);
+        toast({
+            variant: 'destructive',
+            title: 'Generation Failed',
+            description: 'There was an error generating the job details.',
+        });
+    } finally {
+        setIsGenerating(false);
+    }
+  }
+
 
   function onSubmit(data: PostJobFormValues) {
     console.log(data);
@@ -230,7 +275,13 @@ export default function PostJobPage() {
             <Card>
                 <CardHeader>
                     <CardTitle>Job Details</CardTitle>
-                    <CardDescription>Describe the role, responsibilities, and requirements.</CardDescription>
+                    <div className="flex justify-between items-center">
+                        <CardDescription>Describe the role, responsibilities, and requirements.</CardDescription>
+                        <Button type="button" variant="outline" size="sm" onClick={handleGenerateDetails} disabled={isGenerating}>
+                             {isGenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                            Generate with AI
+                        </Button>
+                    </div>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     <FormField
