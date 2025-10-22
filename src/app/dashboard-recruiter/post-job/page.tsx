@@ -37,6 +37,7 @@ const socialPlatforms: SocialPlatform[] = [
 
 const postJobSchema = z.object({
   title: z.string().min(5, 'Job title must be at least 5 characters.'),
+  companyName: z.string().min(2, "Company name is required."),
   platform: z.enum(socialPlatforms, { required_error: 'Please select a platform.' }),
   location: z.string().min(2, 'Location is required.'),
   isRemote: z.boolean().default(false),
@@ -46,8 +47,6 @@ const postJobSchema = z.object({
   description: z.string().min(50, 'Description must be at least 50 characters.'),
   requirements: z.array(z.object({ value: z.string().min(1, 'Requirement cannot be empty.') })).min(1, 'At least one requirement is needed.'),
   responsibilities: z.array(z.object({ value: z.string().min(1, 'Responsibility cannot be empty.') })).min(1, 'At least one responsibility is needed.'),
-  companyName: z.string().min(2, "Company name is required."),
-  companyWebsite: z.string().url("Please enter a valid URL."),
 });
 
 type PostJobFormValues = z.infer<typeof postJobSchema>
@@ -132,7 +131,7 @@ export default function PostJobPage() {
             <Card>
                 <CardHeader>
                     <CardTitle>Basic Information</CardTitle>
-                    <CardDescription>Start with the essential details about the role.</CardDescription>
+                    <CardDescription>Start with the essential details about the role and your company.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                      <FormField
@@ -143,6 +142,19 @@ export default function PostJobPage() {
                             <FormLabel>Job Title</FormLabel>
                             <FormControl>
                                 <Input placeholder="e.g., Senior Video Editor" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="companyName"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Company Name</FormLabel>
+                            <FormControl>
+                                <Input placeholder="e.g., Acme Corporation" {...field} />
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -349,41 +361,6 @@ export default function PostJobPage() {
                         </div>
                          <Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => appendReq({ value: "" })}>Add Requirement</Button>
                     </div>
-                </CardContent>
-            </Card>
-
-             <Card>
-                <CardHeader>
-                    <CardTitle>About Your Company</CardTitle>
-                    <CardDescription>Tell applicants about your organization.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                    <FormField
-                        control={form.control}
-                        name="companyName"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Company Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="e.g., Acme Corporation" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="companyWebsite"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Company Website</FormLabel>
-                            <FormControl>
-                                <Input placeholder="https://example.com" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
                 </CardContent>
             </Card>
 
