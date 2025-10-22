@@ -19,6 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { allJobs as placeholderJobs } from '@/lib/placeholder-data/jobs';
 import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
+import { SocialIcon } from '@/components/shared/social-icon';
 
 // Add a status to the placeholder jobs for demonstration
 const jobsWithStatus = placeholderJobs.map((job, index) => ({
@@ -111,6 +112,7 @@ export default function ManageJobsPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Job Title</TableHead>
+                <TableHead>Platform</TableHead>
                 <TableHead>Applicants</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Date Posted</TableHead>
@@ -123,6 +125,14 @@ export default function ManageJobsPage() {
                   <TableCell>
                     <p className="font-semibold">{job.title}</p>
                     <p className="text-sm text-muted-foreground">{job.company}</p>
+                  </TableCell>
+                  <TableCell>
+                    {job.platform && (
+                      <div className="flex items-center gap-2">
+                        <SocialIcon platform={job.platform} className="h-5 w-5" />
+                        <span>{job.platform}</span>
+                      </div>
+                    )}
                   </TableCell>
                   <TableCell>{job.applicants}</TableCell>
                   <TableCell>
