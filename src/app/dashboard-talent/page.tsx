@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useUser } from '@/firebase'
@@ -19,7 +18,7 @@ import { allJobs } from '@/lib/placeholder-data/jobs'
 import { VacancyStats } from './_components/vacancy-stats'
 import { UserProfileCard } from './_components/user-profile-card'
 
-export default function DashboardPage() {
+export default function DashboardTalentPage() {
   const { user } = useUser()
 
   const stats = [

@@ -1,4 +1,3 @@
-
 'use client'
 
 import {
@@ -57,31 +56,31 @@ export function DashboardSidebar() {
       <SidebarContent className="p-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard" isActive tooltip="Dashboard">
+            <SidebarMenuButton href="/dashboard-talent" isActive tooltip="Dashboard">
               <LayoutGrid />
               <span>Dashboard</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard/candidates" tooltip="Candidates">
+            <SidebarMenuButton href="/dashboard-talent/candidates" tooltip="Candidates">
               <Users />
               <span>Candidates</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard/applications" tooltip="My Applications">
+            <SidebarMenuButton href="/dashboard-talent/applications" tooltip="My Applications">
               <FileText />
               <span>My Applications</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard/recommendations" tooltip="Recommended Jobs">
+            <SidebarMenuButton href="/dashboard-talent/recommendations" tooltip="Recommended Jobs">
               <Star />
               <span>Recommended</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard/profile" tooltip="My Profile">
+            <SidebarMenuButton href="/dashboard-talent/profile" tooltip="My Profile">
               <User />
               <span>My Profile</span>
             </SidebarMenuButton>
@@ -92,7 +91,7 @@ export function DashboardSidebar() {
       <SidebarFooter className="p-2">
          <SidebarMenu>
            <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard/settings" tooltip="Settings">
+            <SidebarMenuButton href="/dashboard-talent/settings" tooltip="Settings">
               <Settings />
               <span>Settings</span>
             </SidebarMenuButton>
