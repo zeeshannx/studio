@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState, useMemo } from 'react';
+import { allTalents, DetailedTalent } from '@/lib/talent';
 import {
   Table,
   TableBody,
@@ -11,169 +11,148 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { MoreHorizontal, User, Briefcase, Calendar, Clock } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { SocialIcon } from '@/components/shared/social-icon';
+import { ShieldCheck, MoreHorizontal, MapPin } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useMemo, useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { allJobs } from '@/lib/placeholder-data/jobs';
-import { allTalents } from '@/lib/talent';
-import { formatDistanceToNow } from 'date-fns';
-
-const placeholderApplicants = allTalents.slice(0, 15).map((talent, index) => {
-    const job = allJobs[index % allJobs.length];
-    return {
-        id: talent.name,
-        talent: talent,
-        job: { id: job.id, title: job.title },
-        dateApplied: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
-        stage: ['New', 'Screening', 'Interview', 'Offered', 'Hired', 'Rejected'][index % 6],
-    };
-});
-
 
 export default function ApplicantsPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [jobFilter, setJobFilter] = useState('All Jobs');
-  const [statusFilter, setStatusFilter] = useState('All');
-  const [dateFilter, setDateFilter] = useState('all-time');
+  const [roleFilter, setRoleFilter] = useState('All Roles');
+  const [platformFilter, setPlatformFilter] = useState('All Platforms');
+  const [statusFilter, setStatusFilter] = useState('All Statuses');
+  const [experienceFilter, setExperienceFilter] = useState('All Levels');
+  const [skillsFilter, setSkillsFilter] = useState('All Skills');
 
-  const filteredApplicants = useMemo(() => {
-    return placeholderApplicants.filter(applicant => {
-      const matchesSearch = applicant.talent.name.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesJob = jobFilter === 'All Jobs' || applicant.job.title === jobFilter;
-      const matchesStatus = statusFilter === 'All' || applicant.stage === statusFilter;
+  const filteredCandidates = useMemo(() => {
+    return allTalents.filter((candidate) => {
+      const matchesSearch = candidate.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesRole = roleFilter === 'All Roles' || candidate.role === roleFilter;
       
-      const now = new Date();
-      let matchesDate = true;
-      if (dateFilter === 'past-24h') {
-        matchesDate = (now.getTime() - applicant.dateApplied.getTime()) < 24 * 60 * 60 * 1000;
-      } else if (dateFilter === 'past-week') {
-        matchesDate = (now.getTime() - applicant.dateApplied.getTime()) < 7 * 24 * 60 * 60 * 1000;
-      } else if (dateFilter === 'past-month') {
-        matchesDate = (now.getTime() - applicant.dateApplied.getTime()) < 30 * 24 * 60 * 60 * 1000;
-      }
-
-      return matchesSearch && matchesJob && matchesStatus && matchesDate;
+      const candidatePlatforms = [candidate.platform, ...(candidate.platforms || [])].filter(Boolean);
+      const matchesPlatform = platformFilter === 'All Platforms' || candidatePlatforms.includes(platformFilter as any);
+      
+      const matchesStatus = statusFilter === 'All Statuses' || candidate.status === statusFilter;
+      const matchesExperience = experienceFilter === 'All Levels' || (candidate.experience && candidate.experience.length > 0 && candidate.experience[0].title.includes(experienceFilter)); // Simplified logic
+      const matchesSkills = skillsFilter === 'All Skills' || (candidate.categories && candidate.categories.includes(skillsFilter));
+      
+      return matchesSearch && matchesRole && matchesPlatform && matchesStatus && matchesExperience && matchesSkills;
     });
-  }, [searchQuery, jobFilter, statusFilter, dateFilter]);
-  
-  const uniqueJobs = ['All Jobs', ...Array.from(new Set(placeholderApplicants.map(a => a.job.title)))];
-  const uniqueStatuses = ['All', 'New', 'Screening', 'Interview', 'Offered', 'Hired', 'Rejected'];
+  }, [searchQuery, roleFilter, platformFilter, statusFilter, experienceFilter, skillsFilter]);
 
-  const getStageVariant = (stage: string): 'default' | 'secondary' | 'destructive' => {
-    switch (stage) {
-      case 'Hired':
-      case 'Offered':
+  const uniqueRoles = ['All Roles', ...Array.from(new Set(allTalents.map(t => t.role)))];
+  const uniquePlatforms = ['All Platforms', ...Array.from(new Set(allTalents.flatMap(t => [t.platform, ...(t.platforms || [])]).filter(Boolean)))];
+  const uniqueStatuses = ['All Statuses', ...Array.from(new Set(allTalents.map(t => t.status).filter(Boolean)))];
+  const uniqueExperienceLevels = ['All Levels', 'Senior', 'Mid-level', 'Junior']; // Example levels
+  const uniqueSkills = ['All Skills', ...Array.from(new Set(allTalents.flatMap(t => t.categories || [])))];
+
+  const getStatusVariant = (status?: string): 'default' | 'secondary' | 'destructive' | 'outline' => {
+    switch (status) {
+      case 'Active':
         return 'default';
+      case 'On Hold':
+        return 'secondary';
       case 'Rejected':
         return 'destructive';
       default:
-        return 'secondary';
+        return 'outline';
     }
-  };
-  
-   const getStageColor = (stage: string): string => {
-    switch (stage) {
-      case 'Hired':
-        return 'bg-green-600';
-      case 'Offered':
-        return 'bg-blue-600';
-       case 'Interview':
-        return 'bg-purple-600';
-      default:
-        return '';
-    }
-  };
-
+  }
 
   return (
     <div className="space-y-8">
-        <div>
-            <h1 className="text-3xl font-bold font-headline">Applicants</h1>
-            <p className="text-muted-foreground">
-                Review and manage candidates for all your job postings.
-            </p>
-        </div>
-
+      <div>
+        <h1 className="text-3xl font-bold font-headline">Candidates</h1>
+        <p className="text-muted-foreground">
+          Manage and review all candidates for your jobs.
+        </p>
+      </div>
       <Card>
-        <CardHeader>
-            <CardTitle>All Candidates</CardTitle>
-            <CardDescription>A complete list of applicants for your jobs.</CardDescription>
-        </CardHeader>
-        <CardContent>
-            <div className="flex flex-wrap items-center gap-4 mb-6">
-                <Input 
-                    placeholder="Search by name..." 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="max-w-sm"
-                />
-                <Select value={jobFilter} onValueChange={setJobFilter}>
-                    <SelectTrigger className="w-full md:w-[200px]">
-                        <SelectValue placeholder="Filter by job" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {uniqueJobs.map(job => <SelectItem key={job} value={job}>{job}</SelectItem>)}
-                    </SelectContent>
-                </Select>
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="w-full md:w-[180px]">
-                        <SelectValue placeholder="Filter by status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {uniqueStatuses.map(status => <SelectItem key={status} value={status}>{status}</SelectItem>)}
-                    </SelectContent>
-                </Select>
-                 <Select value={dateFilter} onValueChange={setDateFilter}>
-                    <SelectTrigger className="w-full md:w-[180px]">
-                        <SelectValue placeholder="Filter by date" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all-time">All time</SelectItem>
-                        <SelectItem value="past-24h">Past 24 hours</SelectItem>
-                        <SelectItem value="past-week">Past week</SelectItem>
-                        <SelectItem value="past-month">Past month</SelectItem>
-                    </SelectContent>
-                </Select>
-            </div>
+        <CardContent className="p-4 space-y-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+             <Input 
+                placeholder="Search candidates..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="col-span-2 lg:col-span-1"
+             />
+            <Select value={roleFilter} onValueChange={setRoleFilter}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{uniqueRoles.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent>
+            </Select>
+            <Select value={platformFilter} onValueChange={setPlatformFilter}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{uniquePlatforms.map(p => <SelectItem key={p} value={p!}>{p}</SelectItem>)}</SelectContent>
+            </Select>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{uniqueStatuses.map(s => <SelectItem key={s} value={s!}>{s}</SelectItem>)}</SelectContent>
+            </Select>
+             <Select value={experienceFilter} onValueChange={setExperienceFilter}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{uniqueExperienceLevels.map(e => <SelectItem key={e} value={e}>{e}</SelectItem>)}</SelectContent>
+            </Select>
+             <Select value={skillsFilter} onValueChange={setSkillsFilter}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{uniqueSkills.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+            </Select>
+          </div>
+
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Candidate</TableHead>
-                <TableHead>Job Applied For</TableHead>
-                <TableHead>Applied</TableHead>
-                <TableHead>Stage</TableHead>
+                <TableHead>Expertise</TableHead>
+                <TableHead>Location</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Vouches</TableHead>
+                <TableHead className="text-right">Match</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredApplicants.map((applicant) => (
-                <TableRow key={applicant.id}>
+              {filteredCandidates.map((candidate) => (
+                <TableRow key={candidate.name}>
                   <TableCell>
                     <div className="flex items-center gap-3">
-                        <Avatar>
-                            <AvatarImage src={applicant.talent.src} alt={applicant.talent.name} />
-                            <AvatarFallback>{applicant.talent.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div>
-                            <p className="font-semibold">{applicant.talent.name}</p>
-                            <p className="text-sm text-muted-foreground">{applicant.talent.role}</p>
-                        </div>
+                      <Avatar>
+                        <AvatarImage src={candidate.src} alt={candidate.name} data-ai-hint="person" />
+                        <AvatarFallback>{candidate.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-semibold flex items-center gap-1.5">
+                          {candidate.name}
+                          {candidate.vouches && candidate.vouches > 0 && <ShieldCheck className="h-4 w-4 text-primary" />}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {candidate.role}
+                        </p>
+                      </div>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <p className="font-medium">{applicant.job.title}</p>
+                    <div className="flex gap-2">
+                        {candidate.platform && <SocialIcon platform={candidate.platform} className="h-5 w-5" />}
+                        {candidate.platforms && candidate.platforms.map(p => <SocialIcon key={p} platform={p} className="h-5 w-5" />)}
+                    </div>
                   </TableCell>
-                  <TableCell>{formatDistanceToNow(applicant.dateApplied, { addSuffix: true })}</TableCell>
                   <TableCell>
-                    <Badge variant={getStageVariant(applicant.stage)} className={getStageColor(applicant.stage)}>
-                      {applicant.stage}
-                    </Badge>
+                      <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
+                        {candidate.location && <MapPin className="h-4 w-4" />}
+                        {candidate.location}
+                      </div>
                   </TableCell>
+                  <TableCell>
+                     <Badge variant={getStatusVariant(candidate.status)}>{candidate.status || 'N/A'}</Badge>
+                  </TableCell>
+                  <TableCell>{candidate.vouches || 0}</TableCell>
+                   <TableCell className="text-right font-semibold">92%</TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -182,10 +161,10 @@ export default function ApplicantsPage() {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            <DropdownMenuItem><User className="mr-2 h-4 w-4" />View Application</DropdownMenuItem>
-                            <DropdownMenuItem><Clock className="mr-2 h-4 w-4" />Schedule Interview</DropdownMenuItem>
-                            <DropdownMenuItem><Briefcase className="mr-2 h-4 w-4" />Move to Hired</DropdownMenuItem>
-                            <DropdownMenuItem className="text-destructive"><Calendar className="mr-2 h-4 w-4" />Reject</DropdownMenuItem>
+                            <DropdownMenuItem>View Profile</DropdownMenuItem>
+                            <DropdownMenuItem>Message</DropdownMenuItem>
+                            <DropdownMenuItem>Put on Hold</DropdownMenuItem>
+                            <DropdownMenuItem className="text-destructive">Reject</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
