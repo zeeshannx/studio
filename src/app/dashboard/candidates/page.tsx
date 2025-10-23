@@ -33,7 +33,10 @@ export default function CandidatesPage() {
     return allTalents.filter((candidate) => {
       const matchesSearch = candidate.name.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesRole = roleFilter === 'All Roles' || candidate.role === roleFilter;
-      const matchesPlatform = platformFilter === 'All Platforms' || candidate.platform === platformFilter;
+      
+      const candidatePlatforms = [candidate.platform, ...(candidate.platforms || [])].filter(Boolean);
+      const matchesPlatform = platformFilter === 'All Platforms' || candidatePlatforms.includes(platformFilter as any);
+      
       const matchesStatus = statusFilter === 'All Statuses' || candidate.status === statusFilter;
       const matchesExperience = experienceFilter === 'All Levels' || (candidate.experience && candidate.experience.length > 0 && candidate.experience[0].title.includes(experienceFilter)); // Simplified logic
       const matchesSkills = skillsFilter === 'All Skills' || (candidate.categories && candidate.categories.includes(skillsFilter));
@@ -43,8 +46,8 @@ export default function CandidatesPage() {
   }, [searchQuery, roleFilter, platformFilter, statusFilter, experienceFilter, skillsFilter]);
 
   const uniqueRoles = ['All Roles', ...Array.from(new Set(allTalents.map(t => t.role)))];
-  const uniquePlatforms = ['All Platforms', ...Array.from(new Set(allTalents.map(t => t.platform).filter(Boolean)))];
-  const uniqueStatuses = ['All Statuses', 'Active', 'On Hold', 'Rejected'];
+  const uniquePlatforms = ['All Platforms', ...Array.from(new Set(allTalents.flatMap(t => [t.platform, ...(t.platforms || [])]).filter(Boolean)))];
+  const uniqueStatuses = ['All Statuses', ...Array.from(new Set(allTalents.map(t => t.status).filter(Boolean)))];
   const uniqueExperienceLevels = ['All Levels', 'Senior', 'Mid-level', 'Junior']; // Example levels
   const uniqueSkills = ['All Skills', ...Array.from(new Set(allTalents.flatMap(t => t.categories || [])))];
 
@@ -88,7 +91,7 @@ export default function CandidatesPage() {
             </Select>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>{uniqueStatuses.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                <SelectContent>{uniqueStatuses.map(s => <SelectItem key={s} value={s!}>{s}</SelectItem>)}</SelectContent>
             </Select>
              <Select value={experienceFilter} onValueChange={setExperienceFilter}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
@@ -173,3 +176,5 @@ export default function CandidatesPage() {
     </div>
   );
 }
+
+    

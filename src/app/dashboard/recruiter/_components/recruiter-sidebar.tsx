@@ -71,7 +71,7 @@ export function RecruiterSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard/recruiter/applicants" tooltip="Applicants">
+            <SidebarMenuButton href="/dashboard/candidates" tooltip="Candidates">
               <Users />
               <span>Applicants</span>
             </SidebarMenuButton>
@@ -104,3 +104,5 @@ export function RecruiterSidebar() {
     </>
   )
 }
+
+    
