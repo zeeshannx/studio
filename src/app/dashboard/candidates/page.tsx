@@ -1,4 +1,3 @@
-
 import type { Talent as TalentType } from '@/components/ui/talentlisting-component';
 import { SocialPlatform } from '@/components/shared/social-icon';
 

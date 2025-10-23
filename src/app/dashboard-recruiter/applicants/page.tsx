@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { allTalents, DetailedTalent } from '@/lib/talent';
@@ -21,6 +20,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useMemo, useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { allJobs } from '@/lib/placeholder-data/jobs';
 
 export default function ApplicantsPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,6 +29,8 @@ export default function ApplicantsPage() {
   const [statusFilter, setStatusFilter] = useState('All Statuses');
   const [experienceFilter, setExperienceFilter] = useState('All Levels');
   const [skillsFilter, setSkillsFilter] = useState('All Skills');
+  const [jobFilter, setJobFilter] = useState('All Jobs');
+
 
   const filteredCandidates = useMemo(() => {
     return allTalents.filter((candidate) => {
@@ -41,16 +43,19 @@ export default function ApplicantsPage() {
       const matchesStatus = statusFilter === 'All Statuses' || candidate.status === statusFilter;
       const matchesExperience = experienceFilter === 'All Levels' || (candidate.experience && candidate.experience.length > 0 && candidate.experience[0].title.includes(experienceFilter)); // Simplified logic
       const matchesSkills = skillsFilter === 'All Skills' || (candidate.categories && candidate.categories.includes(skillsFilter));
+      const matchesJob = jobFilter === 'All Jobs' || candidate.appliedFor === jobFilter;
       
-      return matchesSearch && matchesRole && matchesPlatform && matchesStatus && matchesExperience && matchesSkills;
+      return matchesSearch && matchesRole && matchesPlatform && matchesStatus && matchesExperience && matchesSkills && matchesJob;
     });
-  }, [searchQuery, roleFilter, platformFilter, statusFilter, experienceFilter, skillsFilter]);
+  }, [searchQuery, roleFilter, platformFilter, statusFilter, experienceFilter, skillsFilter, jobFilter]);
 
   const uniqueRoles = ['All Roles', ...Array.from(new Set(allTalents.map(t => t.role)))];
   const uniquePlatforms = ['All Platforms', ...Array.from(new Set(allTalents.flatMap(t => [t.platform, ...(t.platforms || [])]).filter(Boolean)))];
   const uniqueStatuses = ['All Statuses', ...Array.from(new Set(allTalents.map(t => t.status).filter(Boolean)))];
   const uniqueExperienceLevels = ['All Levels', 'Senior', 'Mid-level', 'Junior']; // Example levels
   const uniqueSkills = ['All Skills', ...Array.from(new Set(allTalents.flatMap(t => t.categories || [])))];
+  const uniqueJobs = ['All Jobs', ...Array.from(new Set(allTalents.map(t => t.appliedFor).filter(Boolean) as string[]))];
+
 
   const getStatusVariant = (status?: string): 'default' | 'secondary' | 'destructive' | 'outline' => {
     switch (status) {
@@ -75,13 +80,17 @@ export default function ApplicantsPage() {
       </div>
       <Card>
         <CardContent className="p-4 space-y-4">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4">
              <Input 
                 placeholder="Search candidates..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="col-span-2 lg:col-span-1"
              />
+             <Select value={jobFilter} onValueChange={setJobFilter}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{uniqueJobs.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent>
+            </Select>
             <Select value={roleFilter} onValueChange={setRoleFilter}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>{uniqueRoles.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent>
@@ -108,6 +117,7 @@ export default function ApplicantsPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Candidate</TableHead>
+                <TableHead>Job Applied For</TableHead>
                 <TableHead>Expertise</TableHead>
                 <TableHead>Location</TableHead>
                 <TableHead>Status</TableHead>
@@ -135,6 +145,9 @@ export default function ApplicantsPage() {
                         </p>
                       </div>
                     </div>
+                  </TableCell>
+                  <TableCell>
+                    <p className="font-semibold">{candidate.appliedFor || 'N/A'}</p>
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2">
