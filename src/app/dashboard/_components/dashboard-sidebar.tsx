@@ -66,7 +66,7 @@ export function DashboardSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard/recruiter/applicants" tooltip="Candidates">
+            <SidebarMenuButton href="/dashboard/candidates" tooltip="Candidates">
               <Users />
               <span>Candidates</span>
             </SidebarMenuButton>

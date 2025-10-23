@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -142,7 +141,7 @@ export default function LoginPage() {
       if (role === 'employer' || isCompanySignUp) {
           router.push('/dashboard-recruiter');
       } else {
-          router.push('/dashboard-talent');
+          router.push('/dashboard');
       }
     }
   }, [user, router, role, isCompanySignUp]);
@@ -523,7 +522,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-    
-
-    
