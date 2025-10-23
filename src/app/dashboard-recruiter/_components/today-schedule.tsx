@@ -1,129 +1,109 @@
-
 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { scheduleItems as allScheduleItems, type ScheduleItem } from '@/lib/placeholder-data/recruiter'
-import { useMemo, useState } from "react"
-import { ScheduleDetailDialog } from "./schedule-detail-dialog"
+import {
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar'
+import {
+  Home,
+  Briefcase,
+  Star,
+  User,
+  Users,
+  Settings,
+  LogOut,
+  LayoutGrid,
+  FileText,
+} from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useUser, useAuth } from '@/firebase'
+import { signOut } from 'firebase/auth'
 
-const timeSlots = Array.from({ length: 11 }, (_, i) => `${String(i + 8).padStart(2, '0')}:00`);
+export function DashboardSidebar() {
+  const { user } = useUser()
+  const auth = useAuth()
+  const { state } = useSidebar()
 
-const timeToMinutes = (time: string) => {
-    const [hours, minutes] = time.split(':').map(Number);
-    return hours * 60 + minutes;
-};
-
-const processScheduleItems = (items: ScheduleItem[]) => {
-    const sortedItems = [...items].sort((a, b) => timeToMinutes(a.startTime) - timeToMinutes(b.startTime));
-    const processedItems: (ScheduleItem & { level: number })[] = [];
-    
-    const levelEndTimes: number[] = [];
-
-    for (const item of sortedItems) {
-        const start = timeToMinutes(item.startTime);
-        let placed = false;
-        for (let i = 0; i < levelEndTimes.length; i++) {
-            if (start >= levelEndTimes[i]) {
-                processedItems.push({ ...item, level: i });
-                levelEndTimes[i] = timeToMinutes(item.endTime);
-                placed = true;
-                break;
-            }
-        }
-        if (!placed) {
-            processedItems.push({ ...item, level: levelEndTimes.length });
-            levelEndTimes.push(timeToMinutes(item.endTime));
-        }
+  const handleSignOut = async () => {
+    if (auth) {
+      await signOut(auth)
     }
-    return { processedItems, totalLevels: levelEndTimes.length };
-};
-
-
-export function TodaySchedule() {
-    const { processedItems, totalLevels } = useMemo(() => processScheduleItems(allScheduleItems), []);
-    const [selectedItem, setSelectedItem] = useState<ScheduleItem | null>(null);
-
-    const timeToPosition = (time: string) => {
-        const [hour, minute] = time.split(':').map(Number);
-        const totalMinutes = (hour - 8) * 60 + minute;
-        return (totalMinutes / (10 * 60)) * 100; 
-    };
-    
-    const scheduleHeight = totalLevels * 96 + 16;
+  }
 
   return (
     <>
-        <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-                <CardTitle>Today schedule</CardTitle>
-            </div>
-            <Select defaultValue="2025-02-04">
-                <SelectTrigger className="w-auto">
-                    <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="2025-02-04">February 4, 2025</SelectItem>
-                    <SelectItem value="2025-02-05">February 5, 2025</SelectItem>
-                </SelectContent>
-            </Select>
-        </CardHeader>
-        <CardContent>
-            <div className="relative overflow-x-auto">
-            <div className="flex justify-between text-xs text-muted-foreground mb-2" style={{ width: '100%' }}>
-                {timeSlots.map((time) => <div key={time} className="flex-1 text-center">{time}</div>)}
-            </div>
-            <div className="relative border-t border-dashed" style={{ height: `${scheduleHeight}px` }}>
-                {processedItems.map((item) => {
-                    const start = timeToPosition(item.startTime);
-                    const end = timeToPosition(item.endTime);
-                    const width = end - start;
-                    
-                    return (
-                        <button
-                            key={item.id}
-                            onClick={() => setSelectedItem(item)}
-                            className="absolute h-20 rounded-lg bg-muted p-2 flex items-center gap-2 transition-all duration-300 text-left hover:ring-2 hover:ring-primary z-10 hover:z-20"
-                            style={{ 
-                                left: `${start}%`, 
-                                width: `${width}%`,
-                                top: `${item.level * 96 + 16}px`,
-                            }}
-                        >
-                            <div className="flex -space-x-2">
-                                {item.avatars.map((src, index) => (
-                                    <Avatar key={index} className="size-8 border-2 border-muted">
-                                        <AvatarImage src={src} data-ai-hint="person" />
-                                        <AvatarFallback>U</AvatarFallback>
-                                    </Avatar>
-                                ))}
-                            </div>
-                            {item.more > 0 && (
-                                <div className="size-8 rounded-full bg-primary/20 text-primary text-xs font-bold flex items-center justify-center shrink-0">
-                                    +{item.more}
-                                </div>
-                            )}
-                            <div className="truncate flex-grow">
-                                <p className="text-sm font-semibold truncate">{item.title}</p>
-                                <p className="text-xs text-muted-foreground">{item.startTime} - {item.endTime}</p>
-                            </div>
-                            <div className="absolute top-1/2 -translate-y-1/2 left-0 h-4 w-1 rounded-full bg-primary" />
-                        </button>
-                    )
-                })}
-            </div>
-            </div>
-        </CardContent>
-        </Card>
-        {selectedItem && (
-            <ScheduleDetailDialog 
-                item={selectedItem}
-                open={!!selectedItem}
-                onOpenChange={(open) => !open && setSelectedItem(null)}
-            />
-        )}
+      <SidebarHeader className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8">
+                <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
+                <AvatarFallback>{user?.displayName?.charAt(0) || 'U'}</AvatarFallback>
+            </Avatar>
+            <span className="text-sm font-semibold truncate group-data-[collapsible=icon]:hidden">
+                {user?.displayName}
+            </span>
+        </div>
+        <div className="group-data-[collapsible=icon]:hidden">
+            <SidebarTrigger />
+        </div>
+      </SidebarHeader>
+
+      <SidebarContent className="p-2">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard" isActive tooltip="Dashboard">
+              <LayoutGrid />
+              <span>Dashboard</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/candidates" tooltip="Candidates">
+              <Users />
+              <span>Candidates</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/applications" tooltip="My Applications">
+              <FileText />
+              <span>My Applications</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/recommendations" tooltip="Recommended Jobs">
+              <Star />
+              <span>Recommended</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/profile" tooltip="My Profile">
+              <User />
+              <span>My Profile</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarContent>
+
+      <SidebarFooter className="p-2">
+         <SidebarMenu>
+           <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/settings" tooltip="Settings">
+              <Settings />
+              <span>Settings</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={handleSignOut} tooltip="Log Out">
+              <LogOut />
+              <span>Log Out</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </>
   )
 }

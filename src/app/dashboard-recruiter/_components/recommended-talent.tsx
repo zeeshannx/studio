@@ -1,46 +1,109 @@
-
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { recommendedTalent } from '@/lib/placeholder-data/recruiter'
-import { Progress } from "@/components/ui/progress"
-import { ShieldCheck } from "lucide-react"
+import {
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar'
+import {
+  Home,
+  Briefcase,
+  Star,
+  User,
+  Users,
+  Settings,
+  LogOut,
+  LayoutGrid,
+  FileText,
+} from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useUser, useAuth } from '@/firebase'
+import { signOut } from 'firebase/auth'
 
-export function RecommendedTalent() {
+export function DashboardSidebar() {
+  const { user } = useUser()
+  const auth = useAuth()
+  const { state } = useSidebar()
+
+  const handleSignOut = async () => {
+    if (auth) {
+      await signOut(auth)
+    }
+  }
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Recommended Talent</CardTitle>
-        <CardDescription>AI-powered recommendations for your active jobs.</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {recommendedTalent.map(talent => (
-          <div key={talent.id}>
-            <p className="text-sm font-semibold mb-2">{talent.jobTitle}</p>
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <Avatar>
-                  <AvatarImage src={talent.avatarUrl} alt={talent.name} data-ai-hint="person" />
-                  <AvatarFallback>{talent.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-semibold flex items-center gap-1.5">{talent.name} <ShieldCheck className="h-4 w-4 text-primary" /></p>
-                  <p className="text-sm text-muted-foreground">{talent.role}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-20 text-right">
-                    <p className="text-sm font-bold">{talent.match}% Match</p>
-                    <Progress value={talent.match} className="h-1.5" />
-                </div>
-                <Button variant="outline" size="sm">View</Button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
+    <>
+      <SidebarHeader className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8">
+                <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
+                <AvatarFallback>{user?.displayName?.charAt(0) || 'U'}</AvatarFallback>
+            </Avatar>
+            <span className="text-sm font-semibold truncate group-data-[collapsible=icon]:hidden">
+                {user?.displayName}
+            </span>
+        </div>
+        <div className="group-data-[collapsible=icon]:hidden">
+            <SidebarTrigger />
+        </div>
+      </SidebarHeader>
+
+      <SidebarContent className="p-2">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard" isActive tooltip="Dashboard">
+              <LayoutGrid />
+              <span>Dashboard</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/candidates" tooltip="Candidates">
+              <Users />
+              <span>Candidates</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/applications" tooltip="My Applications">
+              <FileText />
+              <span>My Applications</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/recommendations" tooltip="Recommended Jobs">
+              <Star />
+              <span>Recommended</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/profile" tooltip="My Profile">
+              <User />
+              <span>My Profile</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarContent>
+
+      <SidebarFooter className="p-2">
+         <SidebarMenu>
+           <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/settings" tooltip="Settings">
+              <Settings />
+              <span>Settings</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={handleSignOut} tooltip="Log Out">
+              <LogOut />
+              <span>Log Out</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </>
   )
 }

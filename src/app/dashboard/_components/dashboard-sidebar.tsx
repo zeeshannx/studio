@@ -9,7 +9,6 @@ import {
   SidebarMenuButton,
   SidebarFooter,
   SidebarTrigger,
-  SidebarGroup,
   useSidebar,
 } from '@/components/ui/sidebar'
 import {
@@ -20,10 +19,8 @@ import {
   Users,
   Settings,
   LogOut,
-  Bell,
   LayoutGrid,
   FileText,
-  GalleryVertical,
 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useUser, useAuth } from '@/firebase'

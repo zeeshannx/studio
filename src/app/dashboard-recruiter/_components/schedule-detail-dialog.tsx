@@ -1,63 +1,109 @@
-
 'use client'
 
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogDescription,
-} from '@/components/ui/dialog'
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar'
+import {
+  Home,
+  Briefcase,
+  Star,
+  User,
+  Users,
+  Settings,
+  LogOut,
+  LayoutGrid,
+  FileText,
+} from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Clock, Video } from 'lucide-react'
-import type { ScheduleItem } from '@/lib/placeholder-data/recruiter'
+import { useUser, useAuth } from '@/firebase'
+import { signOut } from 'firebase/auth'
 
-export function ScheduleDetailDialog({ item, open, onOpenChange }: {
-  item: ScheduleItem,
-  open: boolean,
-  onOpenChange: (open: boolean) => void,
-}) {
-  
+export function DashboardSidebar() {
+  const { user } = useUser()
+  const auth = useAuth()
+  const { state } = useSidebar()
+
+  const handleSignOut = async () => {
+    if (auth) {
+      await signOut(auth)
+    }
+  }
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md bg-card border-border">
-        <DialogHeader>
-          <DialogTitle className="text-xl">{item.title}</DialogTitle>
-          <DialogDescription className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            {item.startTime} - {item.endTime}
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="py-4 space-y-4">
-          <h4 className="font-semibold">Attendees</h4>
-          <div className="flex -space-x-2 overflow-hidden">
-            {item.avatars.map((src, index) => (
-                <Avatar key={index} className="size-10 border-2 border-card">
-                    <AvatarImage src={src} data-ai-hint="person" />
-                    <AvatarFallback>U</AvatarFallback>
-                </Avatar>
-            ))}
-            {item.more > 0 && (
-                <Avatar className="size-10 border-2 border-card bg-primary text-primary-foreground flex items-center justify-center">
-                    <AvatarFallback>+{item.more}</AvatarFallback>
-                </Avatar>
-            )}
-           </div>
+    <>
+      <SidebarHeader className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8">
+                <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
+                <AvatarFallback>{user?.displayName?.charAt(0) || 'U'}</AvatarFallback>
+            </Avatar>
+            <span className="text-sm font-semibold truncate group-data-[collapsible=icon]:hidden">
+                {user?.displayName}
+            </span>
         </div>
+        <div className="group-data-[collapsible=icon]:hidden">
+            <SidebarTrigger />
+        </div>
+      </SidebarHeader>
 
-        <DialogFooter className="sm:justify-start gap-2">
-          <Button className="bg-primary-gradient w-full sm:w-auto">
-            <Video className="mr-2 h-4 w-4" />
-            Join Meeting
-          </Button>
-          <Button variant="outline" className="w-full sm:w-auto" onClick={() => onOpenChange(false)}>
-            Reschedule
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      <SidebarContent className="p-2">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard" isActive tooltip="Dashboard">
+              <LayoutGrid />
+              <span>Dashboard</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/candidates" tooltip="Candidates">
+              <Users />
+              <span>Candidates</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/applications" tooltip="My Applications">
+              <FileText />
+              <span>My Applications</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/recommendations" tooltip="Recommended Jobs">
+              <Star />
+              <span>Recommended</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/profile" tooltip="My Profile">
+              <User />
+              <span>My Profile</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarContent>
+
+      <SidebarFooter className="p-2">
+         <SidebarMenu>
+           <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/settings" tooltip="Settings">
+              <Settings />
+              <span>Settings</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={handleSignOut} tooltip="Log Out">
+              <LogOut />
+              <span>Log Out</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </>
   )
 }

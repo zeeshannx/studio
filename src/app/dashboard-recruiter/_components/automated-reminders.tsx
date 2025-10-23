@@ -1,50 +1,109 @@
-
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Bell, Calendar, Edit, Send } from "lucide-react"
-import { automatedReminders } from '@/lib/placeholder-data/recruiter'
-import { cn } from "@/lib/utils"
+import {
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar'
+import {
+  Home,
+  Briefcase,
+  Star,
+  User,
+  Users,
+  Settings,
+  LogOut,
+  LayoutGrid,
+  FileText,
+} from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useUser, useAuth } from '@/firebase'
+import { signOut } from 'firebase/auth'
 
-const iconMap: { [key in 'interview' | 'feedback' | 'followup']: React.ReactNode } = {
-  interview: <Calendar className="h-5 w-5" />,
-  feedback: <Edit className="h-5 w-5" />,
-  followup: <Send className="h-5 w-5" />,
-};
+export function DashboardSidebar() {
+  const { user } = useUser()
+  const auth = useAuth()
+  const { state } = useSidebar()
 
-const colorMap: { [key in 'interview' | 'feedback' | 'followup']: string } = {
-    interview: 'bg-blue-500/20 text-blue-400',
-    feedback: 'bg-amber-500/20 text-amber-400',
-    followup: 'bg-violet-500/20 text-violet-400',
-}
+  const handleSignOut = async () => {
+    if (auth) {
+      await signOut(auth)
+    }
+  }
 
-export function AutomatedReminders() {
   return (
-    <Card>
-      <CardHeader>
+    <>
+      <SidebarHeader className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-            <Bell className="h-5 w-5" />
-            <CardTitle>Automated Reminders</CardTitle>
+            <Avatar className="h-8 w-8">
+                <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
+                <AvatarFallback>{user?.displayName?.charAt(0) || 'U'}</AvatarFallback>
+            </Avatar>
+            <span className="text-sm font-semibold truncate group-data-[collapsible=icon]:hidden">
+                {user?.displayName}
+            </span>
         </div>
-        <CardDescription>Upcoming interviews, feedback, and follow-ups.</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {automatedReminders.map(reminder => (
-          <div key={reminder.id} className="flex items-start gap-4">
-            <div className={cn("p-2 rounded-full", colorMap[reminder.type])}>
-              {iconMap[reminder.type]}
-            </div>
-            <div className="flex-grow">
-              <p className="font-semibold text-sm">{reminder.details}</p>
-              <p className="text-xs text-muted-foreground">
-                {reminder.applicant} &bull; <span className="font-semibold">{reminder.time}</span>
-              </p>
-            </div>
-            <Button variant="ghost" size="sm">View</Button>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
+        <div className="group-data-[collapsible=icon]:hidden">
+            <SidebarTrigger />
+        </div>
+      </SidebarHeader>
+
+      <SidebarContent className="p-2">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard" isActive tooltip="Dashboard">
+              <LayoutGrid />
+              <span>Dashboard</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/candidates" tooltip="Candidates">
+              <Users />
+              <span>Candidates</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/applications" tooltip="My Applications">
+              <FileText />
+              <span>My Applications</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/recommendations" tooltip="Recommended Jobs">
+              <Star />
+              <span>Recommended</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/profile" tooltip="My Profile">
+              <User />
+              <span>My Profile</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarContent>
+
+      <SidebarFooter className="p-2">
+         <SidebarMenu>
+           <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/settings" tooltip="Settings">
+              <Settings />
+              <span>Settings</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={handleSignOut} tooltip="Log Out">
+              <LogOut />
+              <span>Log Out</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </>
   )
 }

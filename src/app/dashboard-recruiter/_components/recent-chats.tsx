@@ -1,51 +1,109 @@
-
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { recentChats } from '@/lib/placeholder-data/recruiter'
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-import { cn } from "@/lib/utils"
+import {
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar'
+import {
+  Home,
+  Briefcase,
+  Star,
+  User,
+  Users,
+  Settings,
+  LogOut,
+  LayoutGrid,
+  FileText,
+} from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useUser, useAuth } from '@/firebase'
+import { signOut } from 'firebase/auth'
 
-export function RecentChats() {
+export function DashboardSidebar() {
+  const { user } = useUser()
+  const auth = useAuth()
+  const { state } = useSidebar()
+
+  const handleSignOut = async () => {
+    if (auth) {
+      await signOut(auth)
+    }
+  }
+
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <CardTitle>Recent Chats</CardTitle>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="#">View All <ArrowRight className="ml-2 h-4 w-4" /></Link>
-          </Button>
+    <>
+      <SidebarHeader className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8">
+                <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
+                <AvatarFallback>{user?.displayName?.charAt(0) || 'U'}</AvatarFallback>
+            </Avatar>
+            <span className="text-sm font-semibold truncate group-data-[collapsible=icon]:hidden">
+                {user?.displayName}
+            </span>
         </div>
-        <CardDescription>Your latest conversations with candidates.</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {recentChats.map(chat => (
-          <div key={chat.id} className="flex items-center justify-between gap-3 p-2 -m-2 rounded-lg hover:bg-muted cursor-pointer">
-            <div className="flex items-center gap-3">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={chat.avatarUrl} alt={chat.name} data-ai-hint="person" />
-                <AvatarFallback>{chat.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className="flex-grow">
-                <p className="font-semibold text-sm">{chat.name}</p>
-                <p className={cn(
-                    "text-xs text-muted-foreground truncate max-w-40",
-                    chat.unread && "font-bold text-foreground"
-                )}>
-                  {chat.lastMessage}
-                </p>
-              </div>
-            </div>
-            <div className="text-right shrink-0">
-                <p className="text-xs text-muted-foreground">{chat.time}</p>
-                {chat.unread && <div className="h-2 w-2 rounded-full bg-primary ml-auto mt-1"></div>}
-            </div>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
+        <div className="group-data-[collapsible=icon]:hidden">
+            <SidebarTrigger />
+        </div>
+      </SidebarHeader>
+
+      <SidebarContent className="p-2">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard" isActive tooltip="Dashboard">
+              <LayoutGrid />
+              <span>Dashboard</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/candidates" tooltip="Candidates">
+              <Users />
+              <span>Candidates</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/applications" tooltip="My Applications">
+              <FileText />
+              <span>My Applications</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/recommendations" tooltip="Recommended Jobs">
+              <Star />
+              <span>Recommended</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/profile" tooltip="My Profile">
+              <User />
+              <span>My Profile</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarContent>
+
+      <SidebarFooter className="p-2">
+         <SidebarMenu>
+           <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard/settings" tooltip="Settings">
+              <Settings />
+              <span>Settings</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={handleSignOut} tooltip="Log Out">
+              <LogOut />
+              <span>Log Out</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </>
   )
 }
