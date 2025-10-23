@@ -10,6 +10,23 @@ export interface ScheduleItem {
     more: number;
 }
 
+export interface RecentChat {
+    id: string;
+    name: string;
+    avatarUrl: string;
+    lastMessage: string;
+    time: string;
+    unread: boolean;
+}
+
+export interface Message {
+    id: string;
+    chatId: string;
+    sender: 'recruiter' | 'candidate';
+    content: string;
+    timestamp: string;
+}
+
 
 export const recentApplicants: {
     id: string;
@@ -123,7 +140,7 @@ export const scheduleItems: ScheduleItem[] = [
   }
 ];
 
-export const recentChats = [
+export const recentChats: RecentChat[] = [
     {
         id: '1',
         name: 'Jermaine Kuhlman',
@@ -156,7 +173,42 @@ export const recentChats = [
         time: '1d ago',
         unread: true,
     },
+    {
+        id: '5',
+        name: 'Kyle Collier',
+        avatarUrl: 'https://picsum.photos/seed/rr2/40/40',
+        lastMessage: 'Perfect, thank you!',
+        time: '2d ago',
+        unread: false,
+    },
 ];
+
+export const messages: Message[] = [
+    // Chat 1: Jermaine Kuhlman
+    { id: 'msg1-1', chatId: '1', sender: 'recruiter', content: 'Hi Jermaine, thanks for applying to the Video Editor role. Your profile looks great. Could you share a link to your portfolio?', timestamp: '2024-07-30T10:00:00Z' },
+    { id: 'msg1-2', chatId: '1', sender: 'candidate', content: 'Hey! Thanks for reaching out. Yes, absolutely. Here is the link: [portfolio link]', timestamp: '2024-07-30T10:02:00Z' },
+    { id: 'msg1-3', chatId: '1', sender: 'recruiter', content: 'Excellent, thanks. I\'ll take a look and get back to you shortly.', timestamp: '2024-07-30T10:03:00Z' },
+    { id: 'msg1-4', chatId: '1', sender: 'candidate', content: 'Sure, I can send over my portfolio right away.', timestamp: '2024-07-30T10:05:00Z' },
+
+    // Chat 2: Sadie Yost
+    { id: 'msg2-1', chatId: '2', sender: 'recruiter', content: 'Hi Sadie, we were impressed with your experience in content strategy. Are you available for a brief introductory call sometime this week?', timestamp: '2024-07-30T09:00:00Z' },
+    { id: 'msg2-2', chatId: '2', sender: 'candidate', content: 'That sounds great! I am available for a call anytime Wednesday or Thursday afternoon.', timestamp: '2024-07-30T09:30:00Z' },
+
+    // Chat 3: Ben Langworth
+    { id: 'msg3-1', chatId: '3', sender: 'recruiter', content: 'Hi Ben, we loved your thumbnail designs. Would you be open to a paid test project?', timestamp: '2024-07-30T07:00:00Z' },
+    { id: 'msg3-2', chatId: '3', sender: 'candidate', content: 'Thanks for reaching out! Looking forward to it.', timestamp: '2024-07-30T07:15:00Z' },
+
+    // Chat 4: Betty Buckridge
+    { id: 'msg4-1', chatId: '4', sender: 'recruiter', content: 'Hi Betty, we\'d like to schedule an interview for the Shorts Editor position. Please let us know your availability.', timestamp: '2024-07-29T15:00:00Z' },
+    { id: 'msg4-2', chatId: '4', sender: 'candidate', content: 'Just sent over my availability for the interview.', timestamp: '2024-07-29T16:00:00Z' },
+    
+    // Chat 5: Kyle Collier
+    { id: 'msg5-1', chatId: '5', sender: 'recruiter', content: 'Hi Kyle, we\'ve reviewed your application for the Creative Director role. Your experience is very impressive. We would like to move forward with the interview process.', timestamp: '2024-07-28T11:00:00Z' },
+    { id: 'msg5-2', chatId: '5', sender: 'candidate', content: 'That\'s fantastic news! I\'m very excited about this opportunity.', timestamp: '2024-07-28T11:30:00Z' },
+    { id: 'msg5-3', chatId: '5', sender: 'recruiter', content: 'Great. I\'ll send over a calendar invite for a call with our head of production shortly.', timestamp: '2024-07-28T11:32:00Z' },
+    { id: 'msg5-4', chatId: '5', sender: 'candidate', content: 'Perfect, thank you!', timestamp: '2024-07-28T11:35:00Z' },
+];
+
 
 export const recommendedTalent = [
     {
