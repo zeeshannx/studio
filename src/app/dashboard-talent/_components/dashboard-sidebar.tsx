@@ -74,12 +74,6 @@ export function DashboardSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/talent" tooltip="Find Talent">
-              <Users />
-              <span>Find Talent</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
             <SidebarMenuButton href="/talent/me" tooltip="My Profile">
               <User />
               <span>My Profile</span>
