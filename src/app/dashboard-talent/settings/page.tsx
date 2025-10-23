@@ -9,7 +9,8 @@ import { Switch } from '@/components/ui/switch'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useUser } from '@/firebase'
 import { SocialIcon, SocialPlatform } from '@/components/shared/social-icon'
-import { Upload } from 'lucide-react'
+import { CheckCircle, Edit, Link as LinkIcon, Upload, Verified } from 'lucide-react'
+import { Progress } from '@/components/ui/progress'
 
 const socialPlatforms: { platform: SocialPlatform; connected: boolean }[] = [
     { platform: 'YouTube', connected: true },
@@ -22,6 +23,16 @@ const socialPlatforms: { platform: SocialPlatform; connected: boolean }[] = [
     { platform: 'TikTok', connected: false },
 ];
 
+const completionItems = [
+    { name: 'Profile Picture', completed: true },
+    { name: 'Bio & Role', completed: true },
+    { name: 'At least 3 portfolio items', completed: true },
+    { name: 'At least 1 verified work', completed: false },
+    { name: 'At least 2 connected accounts', completed: true },
+]
+
+const profileCompletion = (completionItems.filter(item => item.completed).length / completionItems.length) * 100
+
 export default function SettingsPage() {
     const { user } = useUser();
 
@@ -29,13 +40,13 @@ export default function SettingsPage() {
         <div className="space-y-8 max-w-4xl mx-auto">
             <div>
                 <h1 className="text-3xl font-bold font-headline">Settings</h1>
-                <p className="text-muted-foreground">Manage your account, connections, and notification settings.</p>
+                <p className="text-muted-foreground">Manage your account, profile, connections, and notification settings.</p>
             </div>
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Profile Settings</CardTitle>
-                    <CardDescription>Update your public profile information.</CardDescription>
+                    <CardTitle>Profile Overview</CardTitle>
+                    <CardDescription>Update your public profile information and track your completion.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     <div className="flex items-center gap-6">
@@ -43,15 +54,15 @@ export default function SettingsPage() {
                             <AvatarImage src={user?.photoURL || undefined} alt={user?.displayName || 'User'} />
                             <AvatarFallback className="text-2xl">{user?.displayName?.charAt(0) || 'U'}</AvatarFallback>
                         </Avatar>
-                        <div className='space-y-2'>
-                             <Button variant="outline">
+                        <div className="space-y-2">
+                            <Button variant="outline">
                                 <Upload className="mr-2 h-4 w-4" />
                                 Change Photo
                             </Button>
                             <p className="text-xs text-muted-foreground">JPG, GIF or PNG. 1MB max.</p>
                         </div>
                     </div>
-                    <div className="grid sm:grid-cols-2 gap-4">
+                     <div className="grid sm:grid-cols-2 gap-4">
                         <div className="space-y-2">
                             <Label htmlFor="displayName">Display Name</Label>
                             <Input id="displayName" defaultValue={user?.displayName || ''} />
@@ -61,6 +72,43 @@ export default function SettingsPage() {
                             <Input id="email" type="email" defaultValue={user?.email || ''} disabled />
                         </div>
                     </div>
+                    <Separator />
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-medium">Profile Completion</h3>
+                        <div className="flex items-center gap-4">
+                            <Progress value={profileCompletion} className="h-2" />
+                            <span className="font-semibold text-primary">{Math.round(profileCompletion)}%</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                            {completionItems.map(item => (
+                                <div key={item.name} className="flex items-center gap-2">
+                                    <CheckCircle className={item.completed ? 'text-green-500 h-4 w-4' : 'text-muted-foreground h-4 w-4'} />
+                                    <span className={item.completed ? 'text-foreground' : 'text-muted-foreground'}>{item.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                     <Separator />
+                     <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                            <div>
+                               <h3 className="text-lg font-medium">Verification Status</h3>
+                                <p className="text-muted-foreground text-sm">2 verified works out of 5</p>
+                            </div>
+                            <Button variant="outline" size="sm" className="gap-2">
+                                <Verified className="h-4 w-4" /> Request Verification
+                            </Button>
+                        </div>
+                        <div className="flex items-center gap-4">
+                           <Button className="w-full gap-2">
+                               <Edit className="h-4 w-4" /> Edit Portfolio
+                           </Button>
+                           <Button variant="secondary" className="w-full gap-2">
+                               <LinkIcon className="h-4 w-4" /> Manage Social Links
+                           </Button>
+                        </div>
+                     </div>
+                     <Separator />
                      <Button className="bg-primary-gradient">Save Changes</Button>
                 </CardContent>
             </Card>
