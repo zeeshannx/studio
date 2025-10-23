@@ -62,25 +62,25 @@ export function DashboardSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard-talent/candidates" tooltip="Candidates">
-              <Users />
-              <span>Candidates</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
             <SidebarMenuButton href="/dashboard-talent/applications" tooltip="My Applications">
               <FileText />
               <span>My Applications</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard-talent/recommendations" tooltip="Recommended Jobs">
+            <SidebarMenuButton href="/jobs" tooltip="Recommended Jobs">
               <Star />
-              <span>Recommended</span>
+              <span>Find Jobs</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/dashboard-talent/profile" tooltip="My Profile">
+            <SidebarMenuButton href="/talent" tooltip="Find Talent">
+              <Users />
+              <span>Find Talent</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/talent/me" tooltip="My Profile">
               <User />
               <span>My Profile</span>
             </SidebarMenuButton>
