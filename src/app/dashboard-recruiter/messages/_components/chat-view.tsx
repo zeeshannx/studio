@@ -1,14 +1,16 @@
 
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { useState, FormEvent } from 'react'
+import { Card, CardHeader } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Send, Phone, Video, MoreVertical } from 'lucide-react'
+import { Phone, Video, MoreVertical, Paperclip, Mic, CornerDownLeft } from 'lucide-react'
 import { type RecentChat, type Message } from '@/lib/placeholder-data/recruiter'
-import { ChatMessage } from './chat-message'
+import { ChatMessageList } from '@/components/ui/chat-message-list'
+import { ChatBubble, ChatBubbleAvatar, ChatBubbleMessage } from '@/components/ui/chat-bubble'
+import { ChatInput } from '@/components/ui/chat-input'
+import { useUser } from '@/firebase'
 
 interface ChatViewProps {
   chat: RecentChat | null
@@ -17,24 +19,25 @@ interface ChatViewProps {
 }
 
 export function ChatView({ chat, messages, onSendMessage }: ChatViewProps) {
-  const [newMessage, setNewMessage] = useState('')
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const [input, setInput] = useState('')
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useUser()
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages])
-
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (newMessage.trim()) {
-      onSendMessage(newMessage.trim())
-      setNewMessage('')
-    }
+    if (!input.trim()) return
+
+    onSendMessage(input)
+    setInput('')
   }
+  
+  const handleAttachFile = () => {
+    //
+  };
+
+  const handleMicrophoneClick = () => {
+    //
+  };
 
   if (!chat) {
     return (
@@ -65,23 +68,79 @@ export function ChatView({ chat, messages, onSendMessage }: ChatViewProps) {
           <Button variant="ghost" size="icon"><MoreVertical className="h-5 w-5" /></Button>
         </div>
       </CardHeader>
-      <CardContent className="flex-grow p-4 overflow-y-auto space-y-6">
-        {messages.map((message) => (
-          <ChatMessage key={message.id} message={message} chat={chat} />
-        ))}
-        <div ref={messagesEndRef} />
-      </CardContent>
+      <div className="flex-1 overflow-hidden">
+        <ChatMessageList>
+          {messages.map((message) => (
+            <ChatBubble
+              key={message.id}
+              variant={message.sender === "recruiter" ? "sent" : "received"}
+            >
+              <ChatBubbleAvatar
+                className="h-8 w-8 shrink-0"
+                src={
+                  message.sender === "recruiter"
+                    ? user?.photoURL || undefined
+                    : chat.avatarUrl
+                }
+                fallback={message.sender === "recruiter" ? user?.displayName?.charAt(0) || 'R' : chat.name.charAt(0)}
+              />
+              <ChatBubbleMessage
+                variant={message.sender === "recruiter" ? "sent" : "received"}
+              >
+                {message.content}
+              </ChatBubbleMessage>
+            </ChatBubble>
+          ))}
+
+          {isLoading && (
+            <ChatBubble variant="received">
+              <ChatBubbleAvatar
+                className="h-8 w-8 shrink-0"
+                src={chat.avatarUrl}
+                fallback={chat.name.charAt(0)}
+              />
+              <ChatBubbleMessage isLoading />
+            </ChatBubble>
+          )}
+        </ChatMessageList>
+      </div>
+
       <div className="p-4 border-t">
-        <form onSubmit={handleSendMessage} className="flex items-center gap-3">
-          <Input
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type a message..."
-            autoComplete="off"
+        <form
+          onSubmit={handleSubmit}
+          className="relative rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring p-1"
+        >
+          <ChatInput
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type your message..."
+            className="min-h-12 resize-none rounded-lg bg-background border-0 p-3 shadow-none focus-visible:ring-0"
           />
-          <Button type="submit" size="icon" className="bg-primary-gradient shrink-0">
-            <Send className="h-5 w-5" />
-          </Button>
+          <div className="flex items-center p-3 pt-0 justify-between">
+            <div className="flex">
+              <Button
+                variant="ghost"
+                size="icon"
+                type="button"
+                onClick={handleAttachFile}
+              >
+                <Paperclip className="size-4" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                type="button"
+                onClick={handleMicrophoneClick}
+              >
+                <Mic className="size-4" />
+              </Button>
+            </div>
+            <Button type="submit" size="sm" className="ml-auto gap-1.5 bg-primary-gradient">
+              Send
+              <CornerDownLeft className="size-3.5" />
+            </Button>
+          </div>
         </form>
       </div>
     </Card>

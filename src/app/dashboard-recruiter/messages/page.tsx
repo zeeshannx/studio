@@ -4,15 +4,15 @@
 import { useState } from 'react'
 import { ChatList } from './_components/chat-list'
 import { ChatView } from './_components/chat-view'
-import { recentChats, messages, type Message } from '@/lib/placeholder-data/recruiter'
+import { recentChats, messages as allMessages, type Message } from '@/lib/placeholder-data/recruiter'
 import { type RecentChat } from '@/lib/placeholder-data/recruiter'
 
 export default function MessagesPage() {
   const [selectedChat, setSelectedChat] = useState<RecentChat | null>(recentChats[0])
+  const [messages, setMessages] = useState(allMessages);
 
   const handleSelectChat = (chat: RecentChat) => {
     setSelectedChat(chat)
-    // In a real app, you might mark messages as read here
   }
 
   const handleSendMessage = (content: string) => {
@@ -24,10 +24,7 @@ export default function MessagesPage() {
         content,
         timestamp: new Date().toISOString(),
       };
-      // In a real app, you would send this message to your backend.
-      // For this demo, we'll just log it.
-      console.log('Sending message:', newMessage);
-      // You could also optimistically update the UI by adding it to the local state.
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
     }
   }
 
