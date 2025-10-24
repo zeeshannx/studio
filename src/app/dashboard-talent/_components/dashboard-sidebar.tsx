@@ -20,6 +20,7 @@ import {
   LogOut,
   LayoutGrid,
   FileText,
+  FolderKanban,
 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useUser, useAuth } from '@/firebase'
@@ -65,6 +66,12 @@ export function DashboardSidebar() {
             <SidebarMenuButton href="/dashboard-talent/applications" tooltip="My Applications">
               <FileText />
               <span>My Applications</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+           <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard-talent/portfolio" tooltip="Portfolio">
+              <FolderKanban />
+              <span>Portfolio</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
