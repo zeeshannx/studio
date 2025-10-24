@@ -138,12 +138,6 @@ export default function LoginPage() {
     }
   };
 
-  const handleFacebookSignIn = async () => {
-    if (auth) {
-      await signInWithFacebook(auth);
-    }
-  };
-
   const handleEmailSignIn = async (values: z.infer<typeof formSchema>) => {
     if (!auth || !firestore) return;
 
@@ -299,12 +293,6 @@ export default function LoginPage() {
 
   const signInView = (
      <>
-        <div className="grid gap-4">
-            <Button variant="outline" className="w-full bg-[#1877F2] text-white hover:bg-[#1877F2]/90 hover:text-white" onClick={handleFacebookSignIn}>
-            <Facebook className="mr-2 h-5 w-5" />
-            Sign in with Facebook
-            </Button>
-        </div>
         <div className="relative my-6">
             <Separator />
             <div className="absolute inset-0 flex items-center">
@@ -312,7 +300,7 @@ export default function LoginPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-card px-2 text-muted-foreground">
-                    Or continue with
+                    Continue with Email
                 </span>
             </div>
         </div>
@@ -436,12 +424,6 @@ export default function LoginPage() {
     if (role === 'talent') {
       return (
         <>
-          <div className="grid gap-4">
-            <Button variant="outline" className="w-full bg-[#1877F2] text-white hover:bg-[#1877F2]/90 hover:text-white" onClick={handleFacebookSignIn}>
-              <Facebook className="mr-2 h-5 w-5" />
-              Sign in with Facebook
-            </Button>
-          </div>
             <div className="relative my-6">
                 <Separator />
                 <div className="absolute inset-0 flex items-center">
@@ -449,7 +431,7 @@ export default function LoginPage() {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                     <span className="bg-card px-2 text-muted-foreground">
-                        Or continue with
+                        Continue with Email
                     </span>
                 </div>
             </div>
@@ -567,3 +549,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+    
