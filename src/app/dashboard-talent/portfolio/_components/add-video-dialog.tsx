@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState } from 'react'
@@ -49,7 +50,7 @@ export function AddVideoDialog({ open, onOpenChange }: AddVideoDialogProps) {
 
         <div className="py-4 space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="youtube-link">YouTube Video Link</Label>
+            <Label htmlFor="youtube-link">Work Link</Label>
             <Input
               id="youtube-link"
               placeholder="https://www.youtube.com/watch?v=..."
