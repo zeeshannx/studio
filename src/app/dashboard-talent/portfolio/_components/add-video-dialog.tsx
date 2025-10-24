@@ -13,9 +13,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-import { Plus } from 'lucide-react'
+import { Plus, X } from 'lucide-react'
 
-const roles = [
+const predefinedRoles = [
   'Video Editor',
   'Creative Director',
   'Thumbnail Designer',
@@ -36,11 +36,24 @@ interface AddVideoDialogProps {
 
 export function AddVideoDialog({ open, onOpenChange }: AddVideoDialogProps) {
   const [selectedRoles, setSelectedRoles] = useState<string[]>(['Thumbnail Designer'])
+  const [isAddingCustomRole, setIsAddingCustomRole] = useState(false)
+  const [customRole, setCustomRole] = useState('')
 
   const toggleRole = (role: string) => {
     setSelectedRoles(prev =>
       prev.includes(role) ? prev.filter(r => r !== role) : [...prev, role]
     )
+  }
+  
+  const handleCustomRoleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && customRole.trim()) {
+      e.preventDefault();
+      if (!selectedRoles.includes(customRole.trim())) {
+        setSelectedRoles(prev => [...prev, customRole.trim()])
+      }
+      setCustomRole('')
+      setIsAddingCustomRole(false)
+    }
   }
 
   return (
@@ -70,7 +83,7 @@ export function AddVideoDialog({ open, onOpenChange }: AddVideoDialogProps) {
           <div className="space-y-3">
             <Label>Your Role(s)</Label>
             <div className="flex flex-wrap gap-2">
-              {roles.map(role => (
+              {predefinedRoles.map(role => (
                 <Button
                   key={role}
                   variant="outline"
@@ -86,6 +99,39 @@ export function AddVideoDialog({ open, onOpenChange }: AddVideoDialogProps) {
                   {role}
                 </Button>
               ))}
+               {selectedRoles.filter(r => !predefinedRoles.includes(r)).map(role => (
+                 <Button
+                  key={role}
+                  variant="outline"
+                  size="sm"
+                  className={'bg-primary/20 border-primary/50 text-primary hover:bg-primary/30 gap-2'}
+                  onClick={() => toggleRole(role)}
+                >
+                  {role}
+                  <X className="h-3 w-3" />
+                </Button>
+              ))}
+              {isAddingCustomRole ? (
+                 <Input
+                    type="text"
+                    placeholder="Enter role and press Enter"
+                    value={customRole}
+                    onChange={(e) => setCustomRole(e.target.value)}
+                    onKeyDown={handleCustomRoleKeyDown}
+                    onBlur={() => setIsAddingCustomRole(false)}
+                    className="h-9 w-48"
+                    autoFocus
+                  />
+              ) : (
+                <Button
+                    variant="outline"
+                    size="sm"
+                    className="gap-2 hover:bg-muted"
+                    onClick={() => setIsAddingCustomRole(true)}
+                >
+                    <Plus className="h-4 w-4" /> Add Role
+                </Button>
+              )}
             </div>
           </div>
 
