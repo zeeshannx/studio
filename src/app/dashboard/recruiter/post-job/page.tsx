@@ -2,7 +2,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useFieldArray } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,7 +13,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 import { generateJobDetails } from '@/ai/flows/generate-job-details-flow'
-import { Loader, Wand, X, Plus } from 'lucide-react'
+import { Loader, Wand, X, Plus, Trash2 } from 'lucide-react'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { SocialIcon, SocialPlatform } from '@/components/shared/social-icon'
 import { allJobs } from '@/lib/placeholder-data/jobs'
@@ -34,6 +34,7 @@ const jobPostSchema = z.object({
   location: z.string().optional(),
   isRemote: z.boolean(),
   tags: z.array(z.string()),
+  customQuestions: z.array(z.object({ text: z.string().min(1, 'Question cannot be empty') })).optional(),
 })
 
 type JobPostFormValues = z.infer<typeof jobPostSchema>
@@ -54,8 +55,14 @@ export default function PostJobPage() {
       requirements: [],
       isRemote: false,
       tags: [],
+      customQuestions: [],
     },
   })
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "customQuestions"
+  });
 
   const handleGenerateDetails = async () => {
     const { title, companyName, platform, jobType } = form.getValues();
@@ -349,6 +356,45 @@ export default function PostJobPage() {
                            </FormItem>
                         )}
                     />
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Custom Questions</CardTitle>
+                    <CardDescription>Add custom questions for applicants to answer.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    {fields.map((field, index) => (
+                        <FormField
+                            key={field.id}
+                            control={form.control}
+                            name={`customQuestions.${index}.text`}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="sr-only">Question {index + 1}</FormLabel>
+                                    <div className="flex items-center gap-2">
+                                        <FormControl>
+                                            <Input placeholder={`e.g., What's your favorite video you've edited?`} {...field} />
+                                        </FormControl>
+                                        <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)}>
+                                            <Trash2 className="h-4 w-4 text-destructive" />
+                                        </Button>
+                                    </div>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    ))}
+                    <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="gap-2"
+                        onClick={() => append({ text: "" })}
+                    >
+                        <Plus className="h-4 w-4" /> Add Question
+                    </Button>
                 </CardContent>
             </Card>
             
