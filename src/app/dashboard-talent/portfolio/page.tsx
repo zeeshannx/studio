@@ -12,10 +12,12 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { AddVideoDialog } from "./_components/add-video-dialog"
+import { AskVerificationDialog } from "./_components/ask-verification-dialog"
 
 
 export default function PortfolioPage() {
     const [isAddVideoOpen, setIsAddVideoOpen] = useState(false);
+    const [selectedClient, setSelectedClient] = useState<(typeof clients)[0] | null>(null);
 
     return (
         <>
@@ -61,9 +63,8 @@ export default function PortfolioPage() {
                                     <Image
                                         src={item.thumbnailUrl}
                                         alt={item.title}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        className="group-hover:scale-105 transition-transform duration-300"
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-300"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                                     {item.verified && (
@@ -106,7 +107,13 @@ export default function PortfolioPage() {
                                                 <p className="text-sm text-muted-foreground">{client.subscribers}</p>
                                             </div>
                                         </div>
-                                        <Link href="#" className="text-sm font-semibold text-primary hover:underline">Ask</Link>
+                                        <Button
+                                            variant="link"
+                                            className="text-sm font-semibold text-primary hover:underline"
+                                            onClick={() => setSelectedClient(client)}
+                                        >
+                                            Ask
+                                        </Button>
                                     </div>
                                 ))}
                             </div>
@@ -115,6 +122,13 @@ export default function PortfolioPage() {
                 </aside>
             </div>
             <AddVideoDialog open={isAddVideoOpen} onOpenChange={setIsAddVideoOpen} />
+            {selectedClient && (
+                <AskVerificationDialog
+                    client={selectedClient}
+                    open={!!selectedClient}
+                    onOpenChange={(open) => !open && setSelectedClient(null)}
+                />
+            )}
         </>
     )
 }
