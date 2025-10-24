@@ -1,3 +1,4 @@
+
 'use client';
 
 import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar';
@@ -8,6 +9,14 @@ import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
+import { Button } from '@/components/ui/button';
+import { PenSquare } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export default function DashboardTalentLayout({
     children,
@@ -50,6 +59,19 @@ export default function DashboardTalentLayout({
                     </div>
                     {children}
                 </div>
+                 <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-primary-gradient gap-2">
+                                <PenSquare className="h-6 w-6" />
+                                <span className="sr-only">Submit Feedback</span>
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="left">
+                            <p>Submit Feedback</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
             </SidebarInset>
         </SidebarProvider>
     );
