@@ -11,12 +11,12 @@ import { Film, Image as ImageIcon, Plus, SortAsc } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
-import { AddVideoDialog } from "./_components/add-video-dialog"
+import { AddWorkDialog } from "./_components/add-work-dialog"
 import { AskVerificationDialog } from "./_components/ask-verification-dialog"
 
 
 export default function PortfolioPage() {
-    const [isAddVideoOpen, setIsAddVideoOpen] = useState(false);
+    const [isAddWorkOpen, setIsAddWorkOpen] = useState(false);
     const [selectedClient, setSelectedClient] = useState<(typeof clients)[0] | null>(null);
 
     return (
@@ -29,7 +29,7 @@ export default function PortfolioPage() {
                         <div className="flex items-center gap-2">
                             <Button
                                 className="bg-primary-gradient gap-2"
-                                onClick={() => setIsAddVideoOpen(true)}
+                                onClick={() => setIsAddWorkOpen(true)}
                             >
                                 <Plus className="h-4 w-4" /> Add Work
                             </Button>
@@ -121,7 +121,7 @@ export default function PortfolioPage() {
                     </Card>
                 </aside>
             </div>
-            <AddVideoDialog open={isAddVideoOpen} onOpenChange={setIsAddVideoOpen} />
+            <AddWorkDialog open={isAddWorkOpen} onOpenChange={setIsAddWorkOpen} />
             {selectedClient && (
                 <AskVerificationDialog
                     client={selectedClient}
