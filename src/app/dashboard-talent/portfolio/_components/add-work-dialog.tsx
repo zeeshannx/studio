@@ -59,12 +59,12 @@ export function AddWorkDialog({ open, onOpenChange }: AddWorkDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-2xl bg-card border-border">
+      <DialogContent className="sm:max-w-2xl bg-card border-border grid-rows-[auto_1fr_auto] max-h-[90vh]">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold font-headline">Add Work to Portfolio</DialogTitle>
         </DialogHeader>
 
-        <div className="py-4 space-y-6">
+        <div className="py-4 space-y-6 overflow-y-auto pr-6">
             <div className="space-y-2">
                 <Label>Upload File</Label>
                 <div className="flex items-center justify-center w-full">
@@ -175,7 +175,7 @@ export function AddWorkDialog({ open, onOpenChange }: AddWorkDialogProps) {
           </div>
         </div>
 
-        <DialogFooter className="gap-2">
+        <DialogFooter className="gap-2 pt-4">
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
