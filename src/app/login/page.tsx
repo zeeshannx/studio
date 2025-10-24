@@ -3,12 +3,10 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { signInWithGoogle } from '@/firebase/auth/google-auth';
-import { signInWithFacebook } from '@/firebase/auth/facebook-auth';
 import { useAuth, useUser, useFirestore } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Facebook, Users, Briefcase, Building, User } from 'lucide-react';
+import { Users, Briefcase, Building, User } from 'lucide-react';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
@@ -23,38 +21,6 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
-
-function GoogleIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-      <path
-        fill="#4285F4"
-        d="M21.35 11.1h-9.1v2.7h5.2c-.2 1.7-1.3 3.2-3.1 4.2v2.2h2.8c1.6-1.5 2.6-3.8 2.6-6.4 0-.6-.1-1.2-.2-1.7z"
-      />
-      <path
-        fill="#34A853"
-        d="M12.25 22c2.4 0 4.5-.8 6-2.2l-2.8-2.2c-.8.5-1.8.9-3.2.9-2.5 0-4.6-1.7-5.3-4H3.1v2.3c1.5 3 4.6 5 8.15 5z"
-      />
-      <path
-        fill="#FBBC05"
-        d="M6.95 14.7c-.2-.6-.3-1.2-.3-1.8s.1-1.2.3-1.8V8.9H3.1c-.6 1.2-1 2.6-1 4.1s.4 2.9 1 4.1l3.85-2.4z"
-      />
-      <path
-        fill="#EA4335"
-        d="M12.25 6.2c1.3 0 2.5.5 3.4 1.4l2.5-2.5C16.7 3.2 14.6 2 12.25 2c-3.55 0-6.65 2-8.15 5l3.85 2.4c.7-2.3 2.8-4 5.3-4z"
-      />
-    </svg>
-  );
-}
-
-function YouTubeIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="mr-2">
-      <path fill="#FF0000" d="M21.582,6.186 C21.325,5.253 20.628,4.557 19.694,4.299 C18.006,3.875 12,3.875 12,3.875 C12,3.875 5.994,3.875 4.306,4.299 C3.372,4.557 2.675,5.253 2.418,6.186 C2,7.875 2,12 2,12 C2,12 2,16.125 2.418,17.814 C2.675,18.747 3.372,19.443 4.306,19.701 C5.994,20.125 12,20.125 12,20.125 C12,20.125 18.006,20.125 19.694,19.701 C20.628,19.443 21.325,18.747 21.582,17.814 C22,16.125 22,12 22,12 C22,12 22,7.875 21.582,6.186 Z"/>
-      <path d="M10,15.5 L15.5,12 L10,8.5 L10,15.5 Z" fill="#FFFFFF"/>
-    </svg>
-  )
-}
 
 const GradientIcon = ({ icon: Icon }: { icon: React.ElementType }) => (
     <svg
@@ -119,24 +85,6 @@ export default function LoginPage() {
     }
   }, [user, router, role, isCompanySignUp]);
 
-
-  const handleGoogleSignIn = async (isCreatorRecruiter: boolean = false) => {
-    if (auth && firestore) {
-      const userCredential = await signInWithGoogle(auth, isCreatorRecruiter);
-      if(userCredential?.user) {
-        const user = userCredential.user;
-        const userRef = doc(firestore, 'users', user.uid);
-        await setDoc(userRef, {
-            uid: user.uid,
-            displayName: user.displayName,
-            email: user.email,
-            photoURL: user.photoURL,
-            role: role,
-            recruiterType: recruiterType,
-        }, { merge: true });
-      }
-    }
-  };
 
   const handleEmailSignIn = async (values: z.infer<typeof formSchema>) => {
     if (!auth || !firestore) return;
@@ -272,7 +220,7 @@ export default function LoginPage() {
             >
                 <GradientIcon icon={User} />
                 <h3 className="font-semibold text-lg">I am a Creator</h3>
-                <p className="text-sm text-muted-foreground">Sign in with your social or email account to hire talent.</p>
+                <p className="text-sm text-muted-foreground">Sign in with your email account to hire talent.</p>
             </Card>
             <Card
                 className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1 group"
@@ -293,17 +241,6 @@ export default function LoginPage() {
 
   const signInView = (
      <>
-        <div className="relative my-6">
-            <Separator />
-            <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-card px-2 text-muted-foreground">
-                    Continue with Email
-                </span>
-            </div>
-        </div>
         <Form {...signInForm}>
             <form onSubmit={signInForm.handleSubmit(handleEmailSignIn)} className="space-y-4">
             <FormField
@@ -424,17 +361,6 @@ export default function LoginPage() {
     if (role === 'talent') {
       return (
         <>
-            <div className="relative my-6">
-                <Separator />
-                <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-card px-2 text-muted-foreground">
-                        Continue with Email
-                    </span>
-                </div>
-            </div>
             <Form {...signInForm}>
               <form onSubmit={signInForm.handleSubmit(handleEmailSignIn)} className="space-y-4">
                  <FormField
