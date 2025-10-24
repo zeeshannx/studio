@@ -4,7 +4,7 @@
 import { useUser } from '@/firebase'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, BarChart, Eye, FileText, Briefcase, Star, CheckCircle, Clock, Mail } from 'lucide-react'
+import { ArrowRight, BarChart, Eye, FileText, Briefcase, Star, CheckCircle, Clock, Mail, Handshake } from 'lucide-react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
@@ -27,7 +27,7 @@ export default function DashboardTalentPage() {
     { title: 'Profile Views', value: '45,673', icon: <Eye className="h-6 w-6 text-primary" />, change: '+12%', changeType: 'increase' },
     { title: 'Applications Sent', value: '75', icon: <FileText className="h-6 w-6 text-primary" />, change: '+5', changeType: 'increase' },
     { title: 'Interviews Scheduled', value: '86', icon: <Briefcase className="h-6 w-6 text-primary" />, change: '-3', changeType: 'decrease' },
-    { title: 'Search Appearances', value: '93', icon: <BarChart className="h-6 w-6 text-primary" />, change: '+20', changeType: 'increase' },
+    { title: 'Vouches', value: '27', icon: <Handshake className="h-6 w-6 text-primary" />, change: '+8', changeType: 'increase' },
   ];
   
   const recommendedJobs = allJobs.slice(0, 3);
