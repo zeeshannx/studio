@@ -1,3 +1,4 @@
+
 'use client'
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -24,12 +25,11 @@ export default function PortfolioPage() {
                     <div className="flex flex-wrap items-center justify-between gap-4">
                         <h1 className="text-3xl font-bold font-headline">Portfolio</h1>
                         <div className="flex items-center gap-2">
-                            <Button 
-                                variant="outline" 
-                                className="gap-2 bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20 hover:text-red-300"
+                            <Button
+                                className="bg-primary-gradient gap-2"
                                 onClick={() => setIsAddVideoOpen(true)}
                             >
-                                <Plus className="h-4 w-4" /> Add video
+                                <Plus className="h-4 w-4" /> Add Work
                             </Button>
                             <Button variant="outline" className="gap-2">
                                <Plus className="h-4 w-4" /> Quick Add
@@ -58,10 +58,10 @@ export default function PortfolioPage() {
                         {portfolioItems.map(item => (
                             <Card key={item.id} className="overflow-hidden group">
                                 <div className="relative aspect-video">
-                                    <Image 
-                                        src={item.thumbnailUrl} 
-                                        alt={item.title} 
-                                        layout="fill" 
+                                    <Image
+                                        src={item.thumbnailUrl}
+                                        alt={item.title}
+                                        layout="fill"
                                         objectFit="cover"
                                         className="group-hover:scale-105 transition-transform duration-300"
                                     />

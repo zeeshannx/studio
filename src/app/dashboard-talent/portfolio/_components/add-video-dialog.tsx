@@ -19,13 +19,15 @@ const roles = [
   'Video Editor',
   'Creative Director',
   'Thumbnail Designer',
-  'Channel Manager',
-  'YouTube Strategist',
+  'Social Media Manager',
+  'Content Strategist',
   'Scriptwriter',
-  'Youtube Producer',
+  'Content Producer',
+  'Short-form Video Specialist',
+  'Community Manager',
 ]
 
-const connectionSources = ['YT Jobs', 'LinkedIn', 'X (Twitter)', 'Upwork', 'Fiverr']
+const connectionSources = ['SocialVerse', 'LinkedIn', 'X (Twitter)', 'Upwork', 'Fiverr', 'Direct', 'Referral']
 
 interface AddVideoDialogProps {
   open: boolean
@@ -45,23 +47,23 @@ export function AddVideoDialog({ open, onOpenChange }: AddVideoDialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg bg-card border-border">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold font-headline">Add Video to Portfolio</DialogTitle>
+          <DialogTitle className="text-2xl font-bold font-headline">Add Work to Portfolio</DialogTitle>
         </DialogHeader>
 
         <div className="py-4 space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="youtube-link">Work Link</Label>
+            <Label htmlFor="work-link">Work Link</Label>
             <Input
-              id="youtube-link"
+              id="work-link"
               placeholder="https://www.youtube.com/watch?v=..."
-              defaultValue="https://www.youtube.com/watch?v+JNQXA C9IVRw"
+              defaultValue="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="description">Description (optional)</Label>
             <Input
               id="description"
-              placeholder="e.g. I was working in this project ..."
+              placeholder="e.g. I was responsible for the full edit of this video..."
             />
           </div>
 
@@ -76,7 +78,7 @@ export function AddVideoDialog({ open, onOpenChange }: AddVideoDialogProps) {
                   className={cn(
                     'transition-all',
                     selectedRoles.includes(role)
-                      ? 'bg-red-500/20 border-red-500/50 text-red-300 hover:bg-red-500/30'
+                      ? 'bg-primary/20 border-primary/50 text-primary hover:bg-primary/30'
                       : 'hover:bg-muted'
                   )}
                   onClick={() => toggleRole(role)}
@@ -106,7 +108,7 @@ export function AddVideoDialog({ open, onOpenChange }: AddVideoDialogProps) {
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button className="bg-red-700 hover:bg-red-800 text-white">Save</Button>
+          <Button className="bg-primary-gradient">Save</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
