@@ -18,9 +18,11 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { SocialIcon, SocialPlatform } from '@/components/shared/social-icon'
 import { allJobs } from '@/lib/placeholder-data/jobs'
 import { Switch } from '@/components/ui/switch'
+import { cn } from '@/lib/utils'
 
 const platforms = [...new Set(allJobs.map(job => job.platform).filter(Boolean))] as SocialPlatform[];
 const jobTypes = [...new Set(allJobs.map(job => job.job_time))];
+const answerTypes = ['Text', 'Number', 'Link'] as const;
 
 const jobPostSchema = z.object({
   title: z.string().min(3, 'Job title must be at least 3 characters'),
@@ -34,7 +36,11 @@ const jobPostSchema = z.object({
   location: z.string().optional(),
   isRemote: z.boolean(),
   tags: z.array(z.string()),
-  customQuestions: z.array(z.object({ text: z.string().min(1, 'Question cannot be empty') })).optional(),
+  customQuestions: z.array(z.object({ 
+    text: z.string().min(1, 'Question cannot be empty'),
+    isRequired: z.boolean(),
+    answerType: z.enum(answerTypes),
+  })).optional(),
 })
 
 type JobPostFormValues = z.infer<typeof jobPostSchema>
@@ -366,32 +372,69 @@ export default function PostJobPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {fields.map((field, index) => (
-                        <FormField
-                            key={field.id}
-                            control={form.control}
-                            name={`customQuestions.${index}.text`}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="sr-only">Question {index + 1}</FormLabel>
-                                    <div className="flex items-center gap-2">
+                       <div key={field.id} className="p-4 border rounded-lg space-y-4">
+                            <FormField
+                                control={form.control}
+                                name={`customQuestions.${index}.text`}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Question {index + 1}</FormLabel>
                                         <FormControl>
                                             <Input placeholder={`e.g., What's your favorite video you've edited?`} {...field} />
                                         </FormControl>
-                                        <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)}>
-                                            <Trash2 className="h-4 w-4 text-destructive" />
-                                        </Button>
-                                    </div>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <div className="flex flex-wrap items-center gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name={`customQuestions.${index}.answerType`}
+                                    render={({ field }) => (
+                                        <FormItem className="w-full sm:w-auto sm:flex-grow">
+                                            <FormLabel className="text-xs text-muted-foreground">Answer Type</FormLabel>
+                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <FormControl>
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Select answer type" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    {answerTypes.map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
+                                                </SelectContent>
+                                            </Select>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={`customQuestions.${index}.isRequired`}
+                                    render={({ field }) => (
+                                        <FormItem className="flex items-center gap-2 pt-5">
+                                            <FormControl>
+                                                <Switch
+                                                    checked={field.value}
+                                                    onCheckedChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                            <FormLabel className="text-sm font-normal">Mandatory</FormLabel>
+                                        </FormItem>
+                                    )}
+                                />
+                                <div className="flex-grow flex justify-end pt-5">
+                                    <Button type="button" variant="ghost" size="icon" onClick={() => remove(index)}>
+                                        <Trash2 className="h-4 w-4 text-destructive" />
+                                    </Button>
+                                </div>
+                            </div>
+                       </div>
                     ))}
                     <Button
                         type="button"
                         variant="outline"
                         size="sm"
                         className="gap-2"
-                        onClick={() => append({ text: "" })}
+                        onClick={() => append({ text: "", answerType: 'Text', isRequired: false })}
                     >
                         <Plus className="h-4 w-4" /> Add Question
                     </Button>
@@ -410,3 +453,5 @@ export default function PostJobPage() {
     </div>
   )
 }
+
+    
