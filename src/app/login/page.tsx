@@ -157,10 +157,23 @@ export default function LoginPage() {
   };
 
   const handleEmailSignIn = async (values: z.infer<typeof formSchema>) => {
-    if (auth) {
-      try {
-        await signInWithEmailAndPassword(auth, values.email, values.password);
-      } catch (error) {
+    if (!auth || !firestore) return;
+
+    try {
+      // First, try to sign in
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+    } catch (error: any) {
+      // If sign-in fails because the user doesn't exist, try to sign them up
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found') {
+        if (role === 'talent') {
+           await handleTalentSignUp(values);
+        } else {
+            // For recruiters, direct them to the sign-up form
+            console.error("Recruiter account not found. Please sign up.");
+            setIsCompanySignUp(true);
+        }
+      } else {
+        // Handle other errors (e.g., wrong password)
         console.error("Email sign-in failed:", error);
       }
     }
@@ -301,23 +314,16 @@ export default function LoginPage() {
                 </FormItem>
                 )}
             />
-            <Button type="submit" className="w-full bg-primary-gradient">Sign In</Button>
+            <Button type="submit" className="w-full bg-primary-gradient">Sign In or Sign Up</Button>
             </form>
         </Form>
-        {role === 'employer' ? (
+        {role === 'employer' && (
           <p className="text-center text-sm text-muted-foreground mt-4">
             No account?{' '}
             <a href="#" onClick={(e) => { e.preventDefault(); setIsCompanySignUp(true); }} className="underline hover:text-primary">
               Sign up as a company
             </a>
           </p>
-        ) : (
-           <p className="text-center text-sm text-muted-foreground mt-4">
-             No account?{' '}
-             <a href="#" onClick={(e) => { e.preventDefault(); handleTalentSignUp(signInForm.getValues()); }} className="underline hover:text-primary">
-               Sign up
-             </a>
-           </p>
         )}
     </>
   );
@@ -414,7 +420,7 @@ export default function LoginPage() {
                 </div>
             </div>
             <Form {...signInForm}>
-              <form className="space-y-4">
+              <form onSubmit={signInForm.handleSubmit(handleEmailSignIn)} className="space-y-4">
                  <FormField
                   control={signInForm.control}
                   name="email"
@@ -441,10 +447,7 @@ export default function LoginPage() {
                     </FormItem>
                   )}
                 />
-                <div className="flex gap-4">
-                    <Button onClick={signInForm.handleSubmit(handleEmailSignIn)} className="w-full bg-primary-gradient">Sign In</Button>
-                    <Button onClick={signInForm.handleSubmit(handleTalentSignUp)} variant="secondary" className="w-full">Sign Up</Button>
-                </div>
+                <Button type="submit" className="w-full bg-primary-gradient">Sign In or Sign Up</Button>
               </form>
             </Form>
         </>
@@ -517,3 +520,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+    
