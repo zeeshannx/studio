@@ -300,10 +300,6 @@ export default function LoginPage() {
   const signInView = (
      <>
         <div className="grid gap-4">
-            <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(false)}>
-            <GoogleIcon />
-            <span className="ml-2">Sign in with Google</span>
-            </Button>
             <Button variant="outline" className="w-full bg-[#1877F2] text-white hover:bg-[#1877F2]/90 hover:text-white" onClick={handleFacebookSignIn}>
             <Facebook className="mr-2 h-5 w-5" />
             Sign in with Facebook
@@ -441,10 +437,6 @@ export default function LoginPage() {
       return (
         <>
           <div className="grid gap-4">
-            <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(false)}>
-              <GoogleIcon />
-              <span className="ml-2">Sign in with Google</span>
-            </Button>
             <Button variant="outline" className="w-full bg-[#1877F2] text-white hover:bg-[#1877F2]/90 hover:text-white" onClick={handleFacebookSignIn}>
               <Facebook className="mr-2 h-5 w-5" />
               Sign in with Facebook
