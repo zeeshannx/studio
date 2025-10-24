@@ -59,7 +59,7 @@ export function AddWorkDialog({ open, onOpenChange }: AddWorkDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg bg-card border-border">
+      <DialogContent className="sm:max-w-2xl bg-card border-border">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold font-headline">Add Work to Portfolio</DialogTitle>
         </DialogHeader>
