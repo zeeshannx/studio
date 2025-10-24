@@ -17,15 +17,15 @@ export default function DashboardTalentLayout({
     const { user, isUserLoading } = useUser();
     const router = useRouter();
 
-    // useEffect(() => {
-    //     if (!isUserLoading && !user) {
-    //         router.push('/login');
-    //     }
-    // }, [user, isUserLoading, router]);
+    useEffect(() => {
+        if (!isUserLoading && !user) {
+            router.push('/login');
+        }
+    }, [user, isUserLoading, router]);
 
-    // if (isUserLoading || !user) {
-    //     return <div>Loading...</div>; // Or a loading spinner
-    // }
+    if (isUserLoading || !user) {
+        return <div>Loading...</div>; // Or a loading spinner
+    }
 
     return (
         <SidebarProvider>

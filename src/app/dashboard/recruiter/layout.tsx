@@ -18,15 +18,15 @@ export default function RecruiterDashboardLayout({
     const router = useRouter();
 
     // Basic auth protection, can be expanded
-    // useEffect(() => {
-    //     if (!isUserLoading && !user) {
-    //         router.push('/login');
-    //     }
-    // }, [user, isUserLoading, router]);
+    useEffect(() => {
+        if (!isUserLoading && !user) {
+            router.push('/login');
+        }
+    }, [user, isUserLoading, router]);
 
-    // if (isUserLoading || !user) {
-    //     return <div>Loading...</div>; // Or a loading spinner
-    // }
+    if (isUserLoading || !user) {
+        return <div>Loading...</div>; // Or a loading spinner
+    }
 
     return (
         <SidebarProvider>
