@@ -27,7 +27,7 @@ const roles = [
   'Community Manager',
 ]
 
-const connectionSources = ['SocialVerse', 'LinkedIn', 'X (Twitter)', 'Upwork', 'Fiverr', 'Direct', 'Referral']
+const connectionSources = ['LinkedIn', 'X (Twitter)', 'Upwork', 'Fiverr', 'Direct', 'Referral']
 
 interface AddVideoDialogProps {
   open: boolean
