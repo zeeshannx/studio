@@ -62,7 +62,7 @@ export default function DashboardTalentLayout({
                  <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-primary-gradient gap-2">
+                            <Button className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-primary-gradient gap-2 z-50">
                                 <PenSquare className="h-6 w-6" />
                                 <span className="sr-only">Submit Feedback</span>
                             </Button>
