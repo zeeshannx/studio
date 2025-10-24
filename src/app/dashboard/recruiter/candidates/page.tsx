@@ -21,7 +21,7 @@ import { Progress } from '@/components/ui/progress'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
 import { allJobs } from '@/lib/placeholder-data/jobs'
-import { ScheduleInterviewDialog } from '../recruiter/_components/schedule-interview-dialog'
+import { ScheduleInterviewDialog } from '../_components/schedule-interview-dialog'
 
 const statusColors = {
   'Hired': 'bg-green-500/20 text-green-400 border-green-500/30',
@@ -208,4 +208,3 @@ export default function CandidatesPage() {
     </>
   )
 }
-
