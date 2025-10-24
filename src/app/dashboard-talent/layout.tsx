@@ -5,7 +5,7 @@ import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset } from '@/compon
 import { DashboardSidebar } from './_components/dashboard-sidebar';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
@@ -17,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { FeedbackDialog } from '@/components/shared/feedback-dialog';
 
 export default function DashboardTalentLayout({
     children,
@@ -25,6 +26,7 @@ export default function DashboardTalentLayout({
 }) {
     const { user, isUserLoading } = useUser();
     const router = useRouter();
+    const [isFeedbackDialogOpen, setIsFeedbackDialogOpen] = useState(false);
 
     useEffect(() => {
         if (!isUserLoading && !user) {
@@ -62,7 +64,10 @@ export default function DashboardTalentLayout({
                  <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-primary-gradient gap-2 z-50">
+                            <Button 
+                                className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-primary-gradient gap-2 z-50"
+                                onClick={() => setIsFeedbackDialogOpen(true)}
+                            >
                                 <PenSquare className="h-6 w-6" />
                                 <span className="sr-only">Submit Feedback</span>
                             </Button>
@@ -72,6 +77,7 @@ export default function DashboardTalentLayout({
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
+                <FeedbackDialog open={isFeedbackDialogOpen} onOpenChange={setIsFeedbackDialogOpen} />
             </SidebarInset>
         </SidebarProvider>
     );
