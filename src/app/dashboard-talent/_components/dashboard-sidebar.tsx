@@ -1,4 +1,3 @@
-
 'use client'
 
 import {
@@ -89,7 +88,7 @@ export function DashboardSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton href="/talent/me" tooltip="My Profile">
+            <SidebarMenuButton href="/dashboard-talent/settings" tooltip="My Profile">
               <User />
               <span>My Profile</span>
             </SidebarMenuButton>
