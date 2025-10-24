@@ -300,12 +300,6 @@ export default function LoginPage() {
   const signInView = (
      <>
         <div className="grid gap-4">
-            {(role === 'employer' && recruiterType === 'creator') && (
-            <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(true)}>
-                <YouTubeIcon />
-                <span className="ml-2">Sign in with YouTube</span>
-            </Button>
-            )}
             <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(false)}>
             <GoogleIcon />
             <span className="ml-2">Sign in with Google</span>
