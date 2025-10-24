@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/table"
 import { allJobs } from '@/lib/placeholder-data/jobs'
 import { VacancyStats } from './_components/vacancy-stats'
-import { UserProfileCard } from './_components/user-profile-card'
 import { TodaySchedule } from './_components/today-schedule'
 
 export default function DashboardTalentPage() {
@@ -105,7 +104,6 @@ export default function DashboardTalentPage() {
         </div>
         
         <div className="space-y-6">
-            <UserProfileCard />
             <Card>
                 <CardHeader>
                     <CardTitle>Recent Activities</CardTitle>
