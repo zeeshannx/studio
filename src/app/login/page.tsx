@@ -8,7 +8,7 @@ import { signInWithFacebook } from '@/firebase/auth/facebook-auth';
 import { useAuth, useUser, useFirestore } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Facebook, Users, Briefcase } from 'lucide-react';
+import { Facebook, Users, Briefcase, Building, User } from 'lucide-react';
 import { SocialIconsAnimation } from '@/components/landing/social-icons-animation';
 import { GridPattern } from '@/components/ui/grid-pattern';
 import { cn } from '@/lib/utils';
@@ -56,7 +56,7 @@ function YouTubeIcon() {
   )
 }
 
-const GradientUsersIcon = () => (
+const GradientIcon = ({ icon: Icon }: { icon: React.ElementType }) => (
     <svg
       width="40"
       height="40"
@@ -74,35 +74,10 @@ const GradientUsersIcon = () => (
           <stop offset="100%" style={{ stopColor: 'hsl(var(--primary-gradient-end))' }} />
         </linearGradient>
       </defs>
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      <Icon />
     </svg>
 );
 
-const GradientBriefcaseIcon = () => (
-    <svg
-        width="40"
-        height="40"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="url(#icon-gradient)"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="mx-auto mb-4 transition-transform duration-300 group-hover:scale-110"
-    >
-       <defs>
-        <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: 'hsl(var(--primary-gradient-start))' }} />
-          <stop offset="100%" style={{ stopColor: 'hsl(var(--primary-gradient-end))' }} />
-        </linearGradient>
-      </defs>
-      <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
-      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-    </svg>
-);
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -121,6 +96,7 @@ export default function LoginPage() {
   const { user } = useUser();
   const router = useRouter();
   const [role, setRole] = useState<'employer' | 'talent' | null>(null);
+  const [recruiterType, setRecruiterType] = useState<'creator' | 'company' | null>(null);
   const [isCompanySignUp, setIsCompanySignUp] = useState(false);
 
   const signInForm = useForm<z.infer<typeof formSchema>>({
@@ -144,9 +120,21 @@ export default function LoginPage() {
   }, [user, router, role, isCompanySignUp]);
 
 
-  const handleGoogleSignIn = async (isEmployer: boolean = false) => {
-    if (auth) {
-      await signInWithGoogle(auth, isEmployer);
+  const handleGoogleSignIn = async (isCreatorRecruiter: boolean = false) => {
+    if (auth && firestore) {
+      const userCredential = await signInWithGoogle(auth, isCreatorRecruiter);
+      if(userCredential?.user) {
+        const user = userCredential.user;
+        const userRef = doc(firestore, 'users', user.uid);
+        await setDoc(userRef, {
+            uid: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            role: role,
+            recruiterType: recruiterType,
+        }, { merge: true });
+      }
     }
   };
 
@@ -160,24 +148,42 @@ export default function LoginPage() {
     if (!auth || !firestore) return;
 
     try {
-      // First, try to sign in
       await signInWithEmailAndPassword(auth, values.email, values.password);
     } catch (error: any) {
-      // If sign-in fails because the user doesn't exist, try to sign them up
       if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found') {
         if (role === 'talent') {
            await handleTalentSignUp(values);
+        } else if (role === 'employer' && recruiterType === 'creator') {
+            await handleCreatorRecruiterSignUp(values);
         } else {
-            // For recruiters, direct them to the sign-up form
-            console.error("Recruiter account not found. Please sign up.");
             setIsCompanySignUp(true);
         }
       } else {
-        // Handle other errors (e.g., wrong password)
         console.error("Email sign-in failed:", error);
       }
     }
   };
+
+  const handleCreatorRecruiterSignUp = async (values: z.infer<typeof formSchema>) => {
+     if (!auth || !firestore) return;
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+        const user = userCredential.user;
+        if (user) {
+            const userRef = doc(firestore, 'users', user.uid);
+            await setDoc(userRef, {
+                uid: user.uid,
+                displayName: user.email?.split('@')[0] || 'New Creator',
+                email: user.email,
+                photoURL: null,
+                role: 'recruiter',
+                recruiterType: 'creator',
+            }, { merge: true });
+        }
+    } catch (error) {
+        console.error("Creator recruiter sign-up failed:", error);
+    }
+  }
   
   const handleCompanySignUp = async (values: z.infer<typeof companySignUpSchema>) => {
     if (!auth || !firestore) return;
@@ -192,6 +198,7 @@ export default function LoginPage() {
             email: user.email,
             photoURL: null,
             role: 'recruiter',
+            recruiterType: 'company',
         }, { merge: true });
 
         await addDoc(collection(firestore, 'companies'), {
@@ -227,6 +234,7 @@ export default function LoginPage() {
 
   const resetForms = () => {
     setRole(null);
+    setRecruiterType(null);
     setIsCompanySignUp(false);
   }
 
@@ -241,15 +249,15 @@ export default function LoginPage() {
           className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1 group"
           onClick={() => setRole('employer')}
         >
-          <GradientUsersIcon />
+          <GradientIcon icon={Users} />
           <h3 className="font-semibold text-lg">I want to hire</h3>
-          <p className="text-sm text-muted-foreground">Post jobs, find professionals, and manage your company account.</p>
+          <p className="text-sm text-muted-foreground">Post jobs, find professionals, and manage your account.</p>
         </Card>
         <Card
           className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1 group"
           onClick={() => setRole('talent')}
         >
-          <GradientBriefcaseIcon />
+          <GradientIcon icon={Briefcase} />
           <h3 className="font-semibold text-lg">I want to apply</h3>
           <p className="text-sm text-muted-foreground">Showcase your portfolio, find jobs, and apply for positions.</p>
         </Card>
@@ -257,10 +265,42 @@ export default function LoginPage() {
     </motion.div>
   );
 
+  const recruiterTypeSelection = (
+     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-headline">Are you a Creator or a Company?</CardTitle>
+            <CardDescription>This helps us tailor your experience.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Card
+                className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1 group"
+                onClick={() => setRecruiterType('creator')}
+            >
+                <GradientIcon icon={User} />
+                <h3 className="font-semibold text-lg">I am a Creator</h3>
+                <p className="text-sm text-muted-foreground">Sign in with your social or email account to hire talent.</p>
+            </Card>
+            <Card
+                className="p-6 text-center cursor-pointer hover:bg-accent hover:border-primary transition-all shadow-md hover:shadow-xl hover:-translate-y-1 group"
+                onClick={() => setRecruiterType('company')}
+            >
+                <GradientIcon icon={Building} />
+                <h3 className="font-semibold text-lg">I am a Company</h3>
+                <p className="text-sm text-muted-foreground">Sign up with your business email to post jobs and manage your team.</p>
+            </Card>
+        </CardContent>
+         <div className="text-center mt-4">
+            <a href="#" onClick={(e) => { e.preventDefault(); resetForms(); }} className="text-sm text-muted-foreground underline hover:text-primary">
+                Back to role selection
+            </a>
+        </div>
+    </motion.div>
+  );
+
   const signInView = (
      <>
         <div className="grid gap-4">
-            {role === 'employer' && (
+            {(role === 'employer' && recruiterType === 'creator') && (
             <Button variant="outline" className="w-full" onClick={() => handleGoogleSignIn(true)}>
                 <YouTubeIcon />
                 <span className="ml-2">Sign in with YouTube</span>
@@ -317,7 +357,7 @@ export default function LoginPage() {
             <Button type="submit" className="w-full bg-primary-gradient">Sign In or Sign Up</Button>
             </form>
         </Form>
-        {role === 'employer' && (
+        {(role === 'employer' && recruiterType === 'company') && (
           <p className="text-center text-sm text-muted-foreground mt-4">
             No account?{' '}
             <a href="#" onClick={(e) => { e.preventDefault(); setIsCompanySignUp(true); }} className="underline hover:text-primary">
@@ -393,7 +433,15 @@ export default function LoginPage() {
 
   const authContent = () => {
     if (role === 'employer') {
-      return isCompanySignUp ? companySignUpView : signInView;
+        if (!recruiterType) {
+            return recruiterTypeSelection;
+        }
+        if (recruiterType === 'company') {
+            return isCompanySignUp ? companySignUpView : signInView;
+        }
+        if (recruiterType === 'creator') {
+            return signInView;
+        }
     }
     if (role === 'talent') {
       return (
@@ -458,7 +506,8 @@ export default function LoginPage() {
 
   const authFlow = (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-       { (!isCompanySignUp) && <CardHeader className="text-center">
+       { (!isCompanySignUp && (role !== 'employer' || recruiterType)) && 
+        <CardHeader className="text-center">
           <CardTitle className="text-2xl">Welcome to CredAble</CardTitle>
           <CardDescription>
             Sign in to {role === 'employer' ? 'hire amazing talent' : 'find your next opportunity'}.
@@ -474,6 +523,18 @@ export default function LoginPage() {
         </CardContent>
     </motion.div>
   );
+
+    const getAnimationKey = () => {
+        if (!role) return 'selection';
+        if (role === 'employer') {
+            if (!recruiterType) return 'recruiter-type-selection';
+            if (recruiterType === 'company') {
+                return isCompanySignUp ? 'company-signup' : 'company-signin';
+            }
+            return 'creator-signin';
+        }
+        return 'talent-signin';
+    }
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -501,7 +562,7 @@ export default function LoginPage() {
         <Card className="w-full max-w-2xl z-10 bg-transparent border-none shadow-none">
             <AnimatePresence mode="wait">
                 <motion.div
-                    key={role ? (isCompanySignUp ? 'company-signup' : 'auth') : 'selection'}
+                    key={getAnimationKey()}
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 50 }}
@@ -520,5 +581,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-    
