@@ -1,3 +1,4 @@
+
 'use client'
 
 import {
@@ -21,6 +22,7 @@ import {
   LayoutGrid,
   FileText,
   FolderKanban,
+  MessageSquare,
 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useUser, useAuth } from '@/firebase'
@@ -78,6 +80,12 @@ export function DashboardSidebar() {
             <SidebarMenuButton href="/jobs" tooltip="Recommended Jobs">
               <Star />
               <span>Find Jobs</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton href="/dashboard-talent/messages" tooltip="Messages">
+              <MessageSquare />
+              <span>Messages</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
