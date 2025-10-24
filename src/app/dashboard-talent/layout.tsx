@@ -18,6 +18,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { FeedbackDialog } from '@/components/shared/feedback-dialog';
+import PulsatingDots from '@/components/ui/pulsating-loader';
 
 export default function DashboardTalentLayout({
     children,
@@ -35,7 +36,11 @@ export default function DashboardTalentLayout({
     }, [user, isUserLoading, router]);
 
     if (isUserLoading || !user) {
-        return <div>Loading...</div>; // Or a loading spinner
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <PulsatingDots />
+            </div>
+        );
     }
 
     return (
