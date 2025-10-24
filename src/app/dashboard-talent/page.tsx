@@ -66,8 +66,8 @@ export default function DashboardTalentPage() {
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-            <TodaySchedule />
             <VacancyStats />
+            <TodaySchedule />
             <Card>
                 <CardHeader>
                     <div className="flex justify-between items-center">
